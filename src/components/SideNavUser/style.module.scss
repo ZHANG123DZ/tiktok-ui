@@ -1,0 +1,390 @@
+.DivSideNavPlaceholderContainer {
+  width: 15rem;
+  flex-shrink: 0;
+  z-index: 99;
+}
+
+@media screen and (max-width: 1024px) {
+  .DivSideNavPlaceholderContainer {
+    width: 4.5rem;
+  }
+}
+
+.DivSideNavContainer {
+  width: 15rem;
+  height: 100vh;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  overflow: clip hidden;
+  overscroll-behavior: contain;
+  flex-direction: column;
+  flex-shrink: 0;
+  background-color: var(--ui-page-flat-1);
+  position: fixed;
+  box-sizing: content-box;
+}
+
+@media screen and (max-width: 1024px) {
+  .DivSideNavContainer {
+    width: 4.5rem;
+    border-right: 1px solid rgba(255, 255, 255, 0.12);
+  }
+}
+
+.DivAnimationCover {
+  position: absolute;
+  height: 100%;
+  width: calc(12.5rem);
+  transition: width 400ms;
+  top: 0px;
+  left: 0px;
+  background-color: var(--ui-page-flat-1);
+}
+
+//DivFixedContentContainer: BEGIN
+.DivFixedContentContainer {
+  display: flex;
+  flex-direction: column;
+  padding-top: 1.25rem;
+  padding-bottom: 0.5rem;
+  flex-shrink: 0;
+  gap: 1rem;
+  width: 100%;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+//DivLogoWrapper
+
+.DivLogoWrapper {
+  display: flex;
+  padding-inline-start: 0.5rem;
+  width: 13rem;
+  -webkit-box-pack: start;
+  justify-content: start;
+}
+
+@media screen and (max-width: 1024px) {
+  .DivLogoWrapper {
+    padding-inline-start: unset;
+    -webkit-box-pack: center;
+    justify-content: center;
+  }
+}
+
+.StyledLinkLogo {
+  font-size: 0px;
+}
+
+@media screen and (max-width: 1024px) {
+  .StyledLinkLogo {
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-inline-start: unset !important;
+  }
+}
+
+//DivSearchWrapper
+.DivSearchWrapper {
+  display: flex;
+}
+
+@media screen and (max-width: 1024px) {
+  .DivSearchWrapper {
+    padding-inline-start: unset;
+    -webkit-box-pack: center;
+    justify-content: center;
+  }
+}
+
+//DivFixedContentContainer: END
+
+//DivScrollingContentContainer
+.DivScrollingContentContainer {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  width: 100%;
+  -webkit-box-align: center;
+  align-items: center;
+  padding-top: 0.25rem;
+  padding-bottom: 0.5rem;
+  scrollbar-width: none;
+}
+.DivMainNavContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+//
+
+.SubMainNavContentContainer {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  opacity: 1;
+  transition: opacity 400ms;
+}
+
+@media screen and (max-width: 1024px) {
+  .SubMainNavContentContainer {
+    display: none !important;
+  }
+}
+
+.DivUserContainer {
+  padding: 16px 0px;
+  color: rgba(255, 255, 255, 0.75);
+  font-family: 'IBM Plex Sans', 'Montserrat', Arial, Tahoma, PingFangSC,
+    sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  position: relative;
+}
+
+@media screen and (max-width: 1071px) {
+  .DivUserContainer {
+    padding: 8px 0px;
+  }
+}
+
+.UlAccountList {
+  padding: 0px;
+  margin: 0px;
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+//
+
+.SubMainNavFooterContainer {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+}
+
+@media screen and (max-width: 1024px) {
+  .SubMainNavFooterContainer {
+    display: none !important;
+  }
+}
+
+.DivFooterContainer {
+  position: relative;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-top: 16px;
+  width: 12.5rem;
+}
+.H4LinkListHeader {
+  font-size: 15px;
+  line-height: 22px;
+  margin-top: 0px;
+  cursor: pointer;
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 700;
+}
+
+.DivMoreContainer {
+  margin-bottom: 8px;
+  position: relative;
+}
+.SpanMoreText {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  display: inline-block;
+  margin-right: 6px;
+  margin-top: 5px;
+  cursor: pointer;
+}
+
+.SpanCopyright {
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 16px;
+  display: inline-block;
+  margin-right: 6px;
+  margin-top: 5px;
+}
+///* NavButton: BEGIN */
+.StyledTUXNavButton:not(:hover) {
+  background-color: unset;
+}
+
+.StyledTUXNavButton:global(.TUXButton):global(.TUXButton) {
+  min-width: 0px;
+  height: 2.5rem;
+  padding: 0px;
+}
+@media screen and (min-width: 1025px) {
+  .StyledTUXNavButton > div > :global(.TUXButton-label) {
+    opacity: 1;
+    transition: opacity 400ms;
+    margin: 0px !important;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .StyledTUXNavButton {
+    width: 2.5rem;
+  }
+}
+
+.StyledTUXNavButton:global(.TUXButton):global(.TUXButton):global(.active) {
+  color: var(--ui-text-primary-display);
+}
+@media screen and (min-width: 1025px) {
+  .StyledTUXNavButton {
+    width: 13rem;
+  }
+}
+@media screen and (min-width: 1025px) {
+  .StyledTUXNavButton > div {
+    gap: 0.75rem;
+    -webkit-box-pack: start;
+    justify-content: start;
+    margin-inline-start: 0.25rem;
+  }
+}
+/* NavButton: END */
+.StyledTUXSearchButton:global(.TUXButton):global(.TUXButton) {
+  background-color: rgb(31, 31, 31);
+  min-width: 0px;
+  height: 2.5rem;
+  padding: 0px;
+}
+
+@media screen and (min-width: 1025px) {
+  .StyledTUXSearchButton {
+    width: 13rem;
+    transition: width 400ms;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .StyledTUXNavButton > div > :global(.TUXButton-label) {
+    display: none;
+  }
+  .StyledTUXSearchButton {
+    background-color: rgb(31, 31, 31);
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    left: -8px;
+    margin-left: 15px;
+  }
+}
+
+/* SearchButton: BEGIN */
+@media screen and (min-width: 1025px) {
+  .StyledTUXSearchButton > div {
+    gap: 0.25rem;
+    -webkit-box-pack: start;
+    justify-content: start;
+    margin-inline-start: 0.25rem;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .StyledTUXSearchButton > div > :global(.TUXButton-label) {
+    font-weight: normal;
+    font-size: 14px;
+    color: var(--ui-text-placeholder);
+    margin: 0px 10px 0px 0px !important;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .StyledTUXSearchButton {
+    width: 2.5rem;
+  }
+}
+@media screen and (max-width: 1024px) {
+  .StyledTUXSearchButton > div > :global(.TUXButton-label) {
+    display: none;
+  }
+}
+
+/* SearchButton: END */
+
+//Khi mở drawer
+@media screen and (max-width: 1024px) {
+  .DivSideNavContainerOnDrawer {
+    width: 4.5rem;
+  }
+}
+.DivSideNavContainerOnDrawer {
+  width: 4.5rem;
+  height: 100vh;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  overflow: clip hidden;
+  overscroll-behavior: contain;
+  flex-direction: column;
+  flex-shrink: 0;
+  background-color: var(--ui-page-flat-1);
+  position: fixed;
+  box-sizing: content-box;
+}
+.DivSideNavPlaceholderContainerOnDrawer {
+  width: 4.5rem;
+  flex-shrink: 0;
+  z-index: 99;
+}
+.DivAnimationCoverOnDrawer {
+  position: absolute;
+  height: 100%;
+  width: 4.5rem;
+  transition: width 400ms;
+  top: 0px;
+  left: 0px;
+  background-color: var(--ui-page-flat-1);
+}
+.DivLogoWrapperOnDrawer {
+  display: flex;
+  padding-inline-start: unset;
+  width: 2.5rem;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+@media screen and (min-width: 1025px) {
+  .DivSearchWrapperOnDrawer {
+    width: 2.5rem;
+  }
+}
+.StyledTUXSearchButtonOnDrawer > div > :global(.TUXButton-label) {
+  display: none;
+}
+
+.StyledTUXNavButtonOnDrawer > div > :global(.TUXButton-label) {
+  width: 0px;
+  opacity: 0;
+  transition: opacity 400ms;
+  margin: 0px !important;
+}
+@media screen and (min-width: 1025px) {
+  .StyledTUXNavButtonOnDrawer {
+    width: 2.5rem;
+  }
+}
+.StyledTUXText {
+  line-height: 1.1375rem;
+  letter-spacing: 0.0938px;
+  font-size: 0.875rem !important;
+}

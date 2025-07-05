@@ -1,0 +1,164 @@
+.imageWrapper {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.coverImg {
+  object-fit: cover;
+}
+
+.DivUserCard {
+  width: 226px;
+  height: 302px;
+  border-radius: 8px;
+  margin-bottom: 18px;
+  display: block;
+  float: left;
+  overflow: hidden;
+  margin-inline-end: 18px;
+}
+.AUserCard {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: rgba(255, 255, 255, 0.12);
+}
+.DivContainer {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  background-color: rgb(37, 37, 37);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+.DivInfoContainer {
+  position: absolute;
+  background: transparent;
+  bottom: 0px;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  box-sizing: border-box;
+  -webkit-box-pack: end;
+  justify-content: flex-end;
+  -webkit-box-align: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 30px 12px 20px;
+  text-align: center;
+}
+.SpanAvatarContainer {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  font-feature-settings: 'tnum';
+  position: relative;
+  overflow: hidden;
+  color: rgb(255, 255, 255);
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 32px;
+  border-radius: 50%;
+  background-color: rgba(136, 136, 136, 0.5);
+}
+.ImgAvatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.H3Username {
+  color: rgb(255, 255, 255);
+  font-family: 'Montserrat', Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+  width: 100%;
+  margin: 0px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.H4UniqueIdContainer {
+  max-width: 100%;
+  margin: 0px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.SpanUniqueId {
+  color: rgb(255, 255, 255);
+  font-family: 'Montserrat', Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  max-width: 180px;
+  margin: 0px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.DivVerifiedBadgeContainer {
+  margin-left: 4px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  flex-shrink: 0;
+}
+.DivButtonContainer {
+  margin-top: 8px;
+}
+.followButton {
+  border-radius: 4px;
+  border: none;
+  color: rgb(255, 255, 255);
+  background-color: rgb(255, 59, 92);
+  min-width: 164px;
+  min-height: 36px;
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 600;
+  font-family: TikTokDisplayFont, PingFangSC, sans-serif;
+  display: flex;
+  position: relative;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 6px 8px;
+  user-select: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.DivContainer {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
+  background-color: rgb(37, 37, 37);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+}

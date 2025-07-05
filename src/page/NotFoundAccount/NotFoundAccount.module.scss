@@ -1,0 +1,55 @@
+.UserContainer {
+  flex: 1 1 auto;
+  overflow: hidden;
+}
+.DivShareLayoutBase-StyledShareLayoutV2 {
+  display: flex;
+  padding: 32px 24px 36px;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: calc(1px + 100vh);
+  margin: 0px auto;
+  box-sizing: content-box;
+}
+.DivShareLayoutContentV2 {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+.MainDetailWrapper {
+  flex: 0 0 auto;
+  -webkit-box-pack: center;
+  justify-content: center;
+  display: flex;
+  flex-direction: column;
+  min-height: 490px;
+  -webkit-box-align: center;
+  align-items: center;
+  margin: 0px auto;
+}
+.DivErrorContainer {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0px auto;
+}
+.PTitle {
+  font-size: 24px;
+  line-height: 30px;
+  font-family: TikTokDisplayFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 24px;
+}
+.PDesc {
+  font-size: 16px;
+  line-height: 21px;
+  font-family: 'Montserrat', Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 8px;
+}

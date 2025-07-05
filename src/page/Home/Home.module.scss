@@ -1,0 +1,42 @@
+.DivMainContainer {
+    position: relative;
+    margin: 0px auto;
+    width: 100%;
+    min-width: 420px;
+    flex-shrink: 1;
+    display: flex;
+    -webkit-box-pack: center;
+    justify-content: center;
+    -webkit-box-align: stretch;
+    align-items: stretch;
+}
+
+//DivColumnListContainer: BEGIN
+
+.DivColumnListContainer {
+    display: flex;
+    flex-direction: column;
+    gap: 100px;
+    width: 100%;
+    background-color: var(--ui-page-flat-1);
+    position: relative;
+    max-height: calc(0px + 100vh);
+    scroll-snap-type: y mandatory;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+    padding-inline-end: calc(var(--feed-nav-button-width) + 1rem);
+    --feed-nav-button-width: 3rem;
+}
+
+@media screen and (max-width: 768px) {
+    .DivColumnListContainer {
+        --feed-nav-button-width: 0;
+    }
+}
+
+//ArticleItemContainer
+.DivArticle {
+    display: flex;
+    height: 100%;
+}

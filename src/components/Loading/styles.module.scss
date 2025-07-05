@@ -1,0 +1,71 @@
+.SvgContainer {
+    display: block;
+    margin: 6px auto;
+}
+.DivLoading {
+    z-index: 999;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.09);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.CircleBlack {
+    stroke-width: 0;
+    fill: rgb(15, 15, 15);
+    animation: circleBlue 1s cubic-bezier(0.05, 0, 1, 1) 0s infinite normal none running;
+}
+
+.CircleBlue {
+    stroke-width: 0;
+    fill: rgb(58, 242, 255);
+    animation: circleBlue 1s cubic-bezier(0.05, 0, 1, 1) 0s infinite normal none running;
+}
+
+.CircleRed {
+    stroke-width: 0;
+    fill: rgb(254, 44, 85);
+    animation: circleRed 1s cubic-bezier(0.05, 0, 1, 1) 0s infinite normal none running;
+}
+
+.CircleRedHole {
+    stroke-width: 0;
+    animation: circleRed 1s cubic-bezier(0.05, 0, 1, 1) 0s infinite normal none running;
+    fill: rgb(0, 0, 0);
+}
+.CircleBlueHole {
+    stroke-width: 0;
+    animation: circleBlue 1s cubic-bezier(0.05, 0, 1, 1) 0s infinite normal none running;
+    fill: rgb(0, 0, 0);
+}
+@keyframes circleBlue {
+    25% {
+        transform: translateX(40px) scale(1.2);
+    }
+    50% {
+        transform: translateX(80px) scale(1);
+    }
+    75% {
+        transform: translateX(40px) scale(0.6);
+    }
+    100% {
+        transform: translateX(0px) scale(1);
+    }
+}
+@keyframes circleRed {
+    25% {
+        transform: translateX(-28px) scale(0.67);
+    }
+    50% {
+        transform: translateX(-68px) scale(1);
+    }
+    75% {
+        transform: translateX(-28px) scale(1.2);
+    }
+    100% {
+        transform: translateX(12px) scale(1);
+    }
+}
+

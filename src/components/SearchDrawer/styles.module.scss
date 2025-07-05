@@ -1,0 +1,114 @@
+//DivSearchContainer: BEGIN
+.DivSearchContainer {
+  padding: 0.5rem;
+  padding-inline-end: 0px;
+}
+.DivSearchDriverHeader {
+  height: 4.5rem;
+  padding-top: 1rem;
+  padding-left: 0.5rem;
+}
+
+//DivSearchFormContainer: BEGIN
+.DivSearchFormContainer {
+  position: relative;
+}
+
+.FormElement {
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 10px 4px 10px 16px;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 92px;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+  margin: 0px;
+  margin-inline-end: 0.5rem;
+}
+.InputElement:placeholder-shown {
+  text-overflow: ellipsis;
+}
+.InputElement {
+  font-family: 'IBM Plex Sans', 'Montserrat', Arial, Tahoma, PingFangSC,
+    sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 21px;
+  border: none;
+  background: transparent;
+  outline: none;
+  padding: 0px;
+  width: 100%;
+  color: rgba(255, 255, 255, 0.9);
+  caret-color: rgb(255, 59, 92);
+  appearance: textfield;
+}
+.InputElement ~ .e14ntknm1 {
+  display: none;
+}
+.DivInputBorder {
+  display: none;
+  position: absolute;
+  inset: 0px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 92px;
+  z-index: -1;
+}
+
+.UlContainer {
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+  max-height: min(-150px + 100vh, 734px);
+  overflow: hidden auto;
+  list-style-type: none;
+  padding-inline-start: 0px;
+}
+.DivHeader {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 22px;
+  color: rgba(255, 255, 255, 0.75);
+  padding: 5px 12px 3px;
+}
+.LiItemContainer {
+  padding: 9px 16px;
+  cursor: pointer;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.H4ItemText {
+  font-family: 'Montserrat';
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 12px;
+  padding-left: 8px;
+}
+.DivMark {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  flex-shrink: 0;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.DivMarkDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.34);
+}
+//DivSearchFormContainer: END
+
+//DivSearchContainer: END

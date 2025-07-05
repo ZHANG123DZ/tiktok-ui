@@ -1,0 +1,252 @@
+.AsideOneColumnSidebar {
+  position: relative;
+  transition-duration: 300ms;
+  transition-property: width, max-width;
+}
+
+@media screen and (max-width: 768px) {
+  .AsideOneColumnSidebar {
+    --display-feed-nav-buttons: none;
+  }
+}
+
+//DivFeedNavigationContainer: BEGIN
+.DivFeedNavigationContainer {
+  position: absolute;
+  inset-inline-end: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: max-content;
+}
+
+//DivFeedNavigationContainer: END
+
+//DivCommentSidebarTransitionWrapper: BEGIN
+
+.DivCommentSidebarTransitionWrapper {
+  overflow: visible;
+  flex-basis: 24rem;
+  width: 24rem;
+}
+
+.DivCommentSidebarTransitionWrapper {
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  overflow: hidden;
+  z-index: 8;
+  height: 100%;
+  transition-duration: 300ms;
+  transition-timing-function: linear;
+}
+@media screen and (max-width: 1280px) {
+  .DivCommentSidebarTransitionWrapper {
+    flex-basis: 21rem;
+    width: 21rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .DivCommentSidebarTransitionWrapper {
+    flex-basis: 18rem;
+    width: 18rem;
+  }
+}
+
+.BaseCommentContainerStyles-SectionCommentSidebarContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: var(--ui-sheet-flat-1);
+  min-width: 18rem;
+  max-width: 24rem;
+  --comment-panel-max-width: 24rem;
+  padding: 0.75rem;
+  z-index: 10;
+  transition: width 300ms;
+  position: sticky;
+  top: 0px;
+  bottom: 0px;
+  height: 100%;
+  max-height: calc(0px + 100vh);
+  padding-inline-end: 0px;
+  inset-inline-end: 0px;
+  box-shadow: rgba(255, 255, 255, 0.12) -1px 0px 1px;
+}
+
+@media screen and (max-width: 768px) {
+  .BaseCommentContainerStyles-SectionCommentSidebarContainer {
+    max-width: 18rem;
+    --comment-panel-max-width: 18rem;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .BaseCommentContainerStyles-SectionCommentSidebarContainer {
+    max-width: 21rem;
+    --comment-panel-max-width: 21rem;
+  }
+}
+
+//-DivCommentHeader: BEGIN
+.BaseCommentContainerStyles-SectionCommentSidebarContainer .ejc82cd1,
+.BaseCommentContainerStyles-SectionCommentSidebarContainer .ejc82cd4 {
+  padding-inline-end: 0.5rem;
+}
+
+.DivCommentHeader {
+  -webkit-box-flex: 0;
+  flex-grow: 0;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+  padding-inline-end: 0.25rem;
+}
+.DivCommentHeaderTextWrapper {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 0.25rem;
+}
+.DivCloseButtonWrapper {
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+//-DivCommentHeader: END
+
+//-DivCommentMain: BEGIN
+.DivCommentMain {
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  overflow-y: scroll;
+  overscroll-behavior: contain;
+  padding-inline-end: 0.5rem;
+  scrollbar-width: none;
+}
+.DivCommentListContainer {
+  padding-top: 24px;
+}
+.DivCommentObjectWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+//-DivCommentMain: END
+
+//-DivCommentFooter: BEGIN
+.DivCommentFooter {
+  -webkit-box-flex: 0;
+  flex-grow: 0;
+  padding-inline-end: 0.25rem;
+}
+.DivCommentBarContainer {
+  display: flex;
+  margin-top: 16px;
+}
+.DivCommentFooter .eqi68xd2 {
+  margin: 0px;
+  border-bottom: none;
+  padding: 0px;
+}
+
+.DivCommentInputWrapper {
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  cursor: pointer;
+  flex: 1 1 0%;
+  box-sizing: content-box;
+}
+.DivCommentInputContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+.DivLayoutContainer {
+  flex: 1 1 auto;
+}
+.DivInputAreaContainer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: end;
+  align-items: end;
+  background-color: rgba(255, 255, 255, 0.12);
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0px 9px;
+  cursor: text;
+}
+.DivInputEditorContainer {
+  flex: 1 1 auto;
+  height: auto;
+  margin: 10px 0px;
+  margin-inline-end: 8px;
+  align-self: center;
+}
+.DivInputAreaContainer {
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'IBM Plex Sans', 'Montserrat', Arial, Tahoma, PingFangSC,
+    sans-serif;
+  min-height: 24px;
+  max-height: 96px;
+  word-break: break-all;
+  overflow-y: auto;
+  font-size: 16px;
+  line-height: 24px;
+}
+.DivInputAreaContainer .public-DraftEditorPlaceholder-root {
+  color: rgba(255, 255, 255, 0.34);
+  font-family: 'IBM Plex Sans', 'Montserrat', Arial, Tahoma, PingFangSC,
+    sans-serif;
+  position: absolute;
+  font-size: 16px;
+  line-height: 24px;
+}
+.DivInputAreaContainer .public-DraftEditor-content {
+  caret-color: rgb(255, 59, 92);
+}
+.PostButton {
+  margin: 0px;
+  padding: 0px;
+  color: rgba(255, 255, 255, 0.34);
+  background-color: inherit;
+  font-family: 'IBM Plex Sans', 'Montserrat', Arial, Tahoma, PingFangSC,
+    sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  flex: 0 0 48px;
+  font-size: 14px;
+  line-height: 39px;
+  text-align: right;
+  margin-right: 4px;
+}
+//-DivCommentFooter: END
+
+//DivCommentSidebarTransitionWrapper: END
+.InputContainer {
+  background-color: inherit;
+  border: 0px;
+  outline: 0px;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+}
+
+.InputContainer:focus {
+  caret-color: var(--ui-text-primary-display);
+}
+
+.DivCommentFooter .eqi68xd1,
+.DivCommentFooter .eqi68xd2 {
+  margin: 0px;
+  border-bottom: none;
+  padding: 0px;
+}

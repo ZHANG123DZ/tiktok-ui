@@ -1,0 +1,42 @@
+.ArticleItemContainer {
+  min-height: calc(0px + 100vh);
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  padding-inline-start: calc(var(--feed-nav-button-width) + 1rem);
+  padding-inline-end: calc(15rem - var(--feed-nav-button-width) - 1rem);
+  padding-block: calc(0.5rem);
+  margin: 0px auto;
+  transition-property: margin, width, padding;
+  transition-duration: 300ms;
+  transition-timing-function: linear;
+  overflow: hidden clip;
+  scroll-snap-stop: always;
+  scroll-snap-align: start center;
+}
+
+@media screen and (max-width: 1280px) {
+  .ArticleItemContainer {
+    padding-inline-start: 1rem;
+    padding-inline-end: calc(15rem - (var(--feed-nav-button-width) * 2) - 1rem);
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .ArticleItemContainer {
+    padding-inline-start: var(--feed-nav-button-width);
+    padding-inline-end: 1rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .ArticleItemContainer {
+    padding-inline: 1rem;
+  }
+}

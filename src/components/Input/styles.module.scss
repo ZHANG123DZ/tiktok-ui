@@ -1,0 +1,43 @@
+.DivIconContainer {
+  position: absolute;
+  right: 12px;
+  top: 16px;
+}
+.DivIconContainer:hover {
+  cursor: pointer;
+}
+.DivTextContainer {
+  font-family: 'Montserrat';
+  font-size: 15px;
+  line-height: 15px;
+  margin: 0px 0px;
+  color: rgb(255, 76, 58);
+  display: flex;
+}
+.DivInputContainer {
+  position: relative;
+}
+.DivInputContainer-StyledBaseInput {
+  position: relative;
+  flex: 1 1 0%;
+  width: 0px;
+  margin-bottom: 0px;
+}
+.DivInputContainer-StyledBaseInput > input {
+  background: transparent !important;
+}
+
+.InputContainer {
+  border-radius: 2px;
+  background-color: rgba(255, 255, 255, 0.12);
+  border: none rgba(255, 255, 255, 0);
+  padding-inline-start: 12px;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 100%;
+  outline: none;
+  font-size: 16px;
+  height: 44px;
+  caret-color: rgb(255, 59, 92);
+  width: 100%;
+  padding-inline-end: unset;
+}

@@ -1,0 +1,161 @@
+//*DivVideoProgressContainer: BEGIN
+.DivVideoProgressContainer {
+  position: absolute;
+  inset-inline: 0px;
+  bottom: 0px;
+  background-color: rgba(255, 255, 255, 0.266);
+  width: 100%;
+  z-index: 100;
+}
+.DivProgressBar {
+  position: relative;
+  height: max(0.25rem, 1rem);
+  width: 100%;
+}
+.DivProgressBar .e14k2ouv2 {
+  height: calc(0.75rem);
+  width: calc(0.75rem);
+  transform: translateX(-50%) translateY(0.25rem);
+}
+
+.DivProgressBarScrubHead {
+  position: absolute;
+  z-index: 1;
+  transform: translateX(-50%);
+  bottom: 0px;
+  opacity: 0;
+  background-color: var(--ui-image-overlay-white);
+  border-radius: 50%;
+  box-shadow: 0 0 1px 1px var(--ui-image-overlay-black-a15);
+  cursor: grab;
+  transition-duration: 150ms;
+  transition-timing-function: ease-in-out;
+  transition-property: transform, opacity;
+}
+//
+.DivProgressBarContainer {
+  display: flex;
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 100%;
+  clip-path: inset(0px round 0px 0px 1rem 1rem);
+  border-radius: 99px;
+  height: 0.25rem;
+}
+
+.DivProgressBar .e14k2ouv3,
+.DivProgressBar .e14k2ouv4 {
+  height: 0.25rem;
+}
+.DivProgressBarBounds {
+  position: absolute;
+  width: 100%;
+  height: 0.25rem;
+  align-self: end;
+  background-color: var(--ui-image-overlay-white-a40);
+  transition: height 150ms ease-in-out;
+  border-radius: 99px;
+}
+.DivProgressBarBounds {
+  height: 0.5rem;
+}
+.DivProgressBarElapsed {
+  height: 100%;
+  position: relative;
+  z-index: 1;
+  bottom: 0px;
+  left: 0px;
+  transform-origin: left center;
+  background-color: var(--ui-shape-primary);
+  transition: height 150ms ease-in-out;
+  border-radius: 99px;
+}
+
+.DivProgressBarElapsed::after {
+  position: absolute;
+  content: '';
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  right: -8px;
+  top: -4px;
+  opacity: 0;
+  visibility: hidden;
+  background-color: rgb(255, 255, 255);
+  transition: all 0.1s ease;
+  pointer-events: none; /* vẫn OK nếu bạn không cần hover vào chấm */
+  overflow: visible;
+}
+
+/* Hover vào phần tử cha thì hiện ::after */
+.DivProgressBarContainer:hover {
+  height: 0.5rem;
+}
+.DivProgressBarContainer:hover .DivProgressBarElapsed::after {
+  opacity: 1;
+  visibility: visible;
+}
+//*DivVideoProgressContainer: END
+.DivFlexCenter {
+  display: flex;
+  height: 40px;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.DivAudioControlContainer {
+  display: flex;
+  flex-direction: row-reverse;
+  position: relative;
+}
+.DivMuteIconContainer {
+  padding: 8px;
+  opacity: 1;
+  width: 40px;
+  height: 40px;
+  transition: opacity 0.3s;
+  filter: drop-shadow(rgba(12, 12, 12, 0.2) 2px 2px 5px);
+}
+
+//*DivMediaCardTop: BEGIN
+.DivMediaCardTop {
+  transition: opacity 0.3s;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+}
+.DivMediaControlsTop {
+  padding: 4px;
+  display: flex;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  transition: opacity 0.3s;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+}
+
+.DivFlexCenter {
+  display: flex;
+  height: 40px;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.css-1dux0b3 {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 0.25rem;
+  width: max-content;
+}
+//*DivMediaCardTop: END

@@ -1,0 +1,91 @@
+//* DivCommentItemWrapper
+.DivCommentItemWrapper {
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 12px;
+}
+
+//+DivCommentContentWrapper: BEGIN
+.DivCommentContentWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  flex: 1 1 auto;
+  overflow-wrap: break-word;
+  word-break: break-word;
+}
+
+.DivCommentHeaderWrapper {
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.DivCommentSubContentSplitWrapper {
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.DivCommentSubContentWrapper {
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+@media screen and (max-width: 768px) {
+  .DivCommentSubContentWrapper {
+    gap: 1rem;
+  }
+}
+
+.DivLikeContainer {
+  display: flex;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  cursor: pointer;
+}
+//+DivCommentContentWrapper: END
+//* DivReplyContainer
+.DivReplyContainer {
+  display: flex;
+  flex-direction: column;
+  margin-inline-start: 52px;
+  gap: 16px;
+}
+.DivViewMoreRepliesWrapper {
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 12px;
+}
+.DivViewMoreRepliesAvatarSpacer {
+  display: flex;
+  width: 32px;
+  height: 1px;
+  background: var(--ui-text-3);
+}
+.DivViewRepliesContainer {
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+}

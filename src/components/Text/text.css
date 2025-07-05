@@ -1,0 +1,24 @@
+.TUXText--tiktok-sans {
+  font-family: var(--tux-web-font-body);
+}
+
+.TUXText--weight-normal {
+  font-weight: 400;
+}
+
+.TUXText--weight-medium {
+  font-weight: 500;
+}
+
+.TUXText--weight-bold {
+  font-weight: 700;
+}
+
+.TUXText {
+  font-style: normal;
+  font-weight: inherit;
+}
+
+/* color: var(--ui-text-3);
+    font-size: 14px;
+    text-wrap: nowrap; */

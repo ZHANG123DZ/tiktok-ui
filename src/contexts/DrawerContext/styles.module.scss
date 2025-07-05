@@ -1,0 +1,40 @@
+.AsideOneColumnSidebar {
+  position: relative;
+  transition-duration: 300ms;
+  transition-property: width, max-width;
+  height: 100%;
+}
+.DivDrawerMask {
+  top: 0px;
+  inset-inline-start: calc(24.5rem);
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
+  z-index: 99;
+}
+.DivDrawerContainer {
+  width: 20rem !important;
+  height: 100vh !important;
+  position: fixed !important;
+  inset-inline-start: 4.5rem !important;
+  background-color: var(--ui-page-flat-1) !important;
+  z-index: 99 !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-left: 1px solid rgba(255, 255, 255, 0.12) !important;
+  overscroll-behavior: contain !important;
+}
+.DivDrawerCloseButtonContainer {
+  position: absolute;
+  top: 1.5rem;
+  inset-inline-end: 1rem;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+.StyledTUXMoreCloseButton {
+  min-width: 0px;
+  height: 1.75rem;
+  padding: 0px;
+}

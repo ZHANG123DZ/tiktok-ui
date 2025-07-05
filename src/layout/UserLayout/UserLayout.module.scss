@@ -1,0 +1,18 @@
+.DivMainContainer {
+    flex: 1;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+.DivBodyContainer {
+    margin-top: 0px;
+    display: flex;
+    width: 100vw;
+    max-width: 100%;
+    -webkit-box-pack: justify;
+    justify-content: space-between;
+    align-self: center;
+    flex: 1 1 auto;
+    background-color: var(--ui-page-flat-1);
+}

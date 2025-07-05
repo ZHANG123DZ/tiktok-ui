@@ -1,0 +1,157 @@
+.DivModalContainer {
+  z-index: -300;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  scroll-behavior: unset;
+}
+
+.DivModalMask {
+  position: fixed;
+  background-color: rgba(0, 0, 0, 0.68);
+  inset: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalActive {
+  z-index: 3000;
+}
+
+.DivCenterWrapper {
+  width: 483px;
+  height: 642px;
+  background-color: rgb(18, 18, 18);
+  border-radius: 8px;
+}
+
+.DivContentContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 4px;
+}
+
+.DivCloseWrapper {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  background-color: rgba(255, 255, 255, 0.04);
+  z-index: 700;
+  transform: scale(1.7);
+  color: white;
+}
+
+.DivModalContent {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  width: 483px;
+  padding: 0px 0px 64px;
+}
+
+.DivPageWrapper {
+  background-color: rgb(18, 18, 18);
+  overflow-y: scroll;
+  flex: 1 1 0%;
+}
+
+.DivLoginContainer {
+  width: 363px;
+  margin: 64px auto auto;
+  padding: unset;
+}
+
+.H2Title {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 31px;
+  margin: 0px auto 16px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.DivAgreement {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(37, 37, 37);
+  padding: 16px 30px;
+}
+
+/* DivLoginOptionContainer */
+.DivLoginOptionContainer {
+  /* overflow-y: scroll; */
+  padding: 10px 5px 2px 13px;
+  height: 368px;
+}
+
+.DivBoxContainer {
+  font-weight: 600;
+  font-size: 15px;
+  border-radius: 8px;
+  padding: 0px 12px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  height: 44px;
+  position: relative;
+  cursor: pointer;
+  margin-bottom: 12px;
+  word-break: keep-all;
+  white-space: nowrap;
+  background-color: rgba(255, 255, 255, 0.08);
+  animation: auto ease 0s 1 normal none running none;
+  border-width: 1px;
+  border-style: solid;
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0);
+}
+.DivBoxContainer:hover {
+  outline: 1px solid #fff;
+}
+.DivIconContainer {
+  left: 12px;
+  font-size: 20px;
+  position: absolute;
+  display: flex;
+}
+
+.DivTextContainer {
+  width: calc(100% - 64px);
+  text-align: center;
+}
+
+/*  */
+.DivInputContainer-StyledBaseInput {
+  position: relative;
+  flex: 1 1 0%;
+  width: 0px;
+  margin-bottom: 0px;
+}
+.DivInputContainer-StyledBaseInput > input {
+  height: 47px;
+  border-radius: 4px 0px 0px 4px;
+  border: 0px;
+  background-color: #00000000;
+  width: 100%;
+  outline: 0px;
+  color: #fff;
+  font-size: 16px;
+  padding: 20px;
+}
+
+.DivHomeContainer > form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

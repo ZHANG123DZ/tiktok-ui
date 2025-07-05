@@ -1,0 +1,78 @@
+.DivDescription {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  font-size: 15px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  -webkit-box-pack: justify;
+  margin-bottom: 10px;
+}
+.DivContainer {
+  margin-bottom: 9px;
+}
+
+.DivPasswordInputContainer {
+  transition: 0.3s;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+}
+
+.DivAreaLabelContainer {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  position: relative;
+  padding: 12px;
+  height: 44px;
+}
+.SpanLabelContainer {
+  font-size: 16px;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.9);
+  margin-inline-end: 12px;
+}
+
+.DivAreaSelectionContainer {
+  position: relative;
+  cursor: pointer;
+}
+.DivAreaLabelContainer::after {
+  content: '';
+  width: 1px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.12);
+  right: 0px;
+  left: unset;
+  position: absolute;
+}
+
+.DivIconContainer {
+  position: absolute;
+  right: 12px;
+  top: 16px;
+}
+.DivIconContainer:hover {
+  cursor: pointer;
+}
+.H2Title {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  font-size: 15px;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.DivTextContainer {
+  font-family: 'Montserrat';
+  font-size: 12px;
+  line-height: 15px;
+  margin: 4px 0px;
+  color: rgba(255, 255, 255, 0.5);
+  display: flex;
+}

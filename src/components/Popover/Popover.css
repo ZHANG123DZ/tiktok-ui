@@ -1,0 +1,18 @@
+.TUXPopover-popover--open {
+    opacity: 1;
+}
+
+.TUXPopover-popover--dark {
+    border-color: rgb(105, 105, 105);
+}
+.TUXPopover-popover {
+    border-radius: 12px;
+    background-color: var(--ui-sheet-flat-3);
+    color: var(--ui-sheet-flat-3);
+    border: 1px solid rgb(235, 235, 235);
+    box-shadow: 0 5px 26px rgba(0, 0, 0, 0.1);
+}
+.TUXPopover-content {
+    font-size: 16px;
+    color: var(--ui-text-1);
+}

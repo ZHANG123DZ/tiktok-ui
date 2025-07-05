@@ -1,0 +1,21 @@
+.StyledTUXText-StyledTimeDisplayText {
+  line-height: 2.4rem;
+  letter-spacing: 0px;
+  position: absolute;
+  bottom: 2.5rem;
+  left: 0px;
+  right: 0px;
+  text-align: center;
+  text-shadow: 0 0 1px var(--ui-image-overlay-black-a15);
+  text-wrap: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 300ms;
+  font-size: 2rem !important;
+  color: rgb(246, 246, 246) !important;
+}
+.StyledTUXText {
+  line-height: 1.21875rem;
+  letter-spacing: 0.06px;
+  font-size: 0.9375rem !important;
+}

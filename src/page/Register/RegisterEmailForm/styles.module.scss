@@ -1,0 +1,78 @@
+.DivTitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22px;
+  margin-bottom: 4px;
+}
+
+.DivDescription {
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 600;
+  font-size: 15px;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  margin-bottom: 5px;
+}
+.DivContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.DivCheckboxWrapper {
+  position: relative;
+}
+.InputCheckbox {
+  opacity: 0;
+  width: 24px;
+  height: 24px;
+}
+.InputCheckbox:checked.LabelCheck {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  opacity: 1;
+  width: 24px;
+  height: 24px;
+  background-color: rgb(255, 59, 92);
+}
+.DivLabel {
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.LabelCheck {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 24px;
+  height: 24px;
+  color: rgba(255, 255, 255, 0.459);
+}
+.DivTextContainer {
+  display: flex;
+  font-size: 12px;
+  gap: 5px;
+}
+.PDescriptionTitleContainer {
+  font-weight: 600;
+  font-size: 13px;
+}
+.PRegister {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 12px;
+  line-height: 15px;
+  margin-top: 5px;
+  display: flex;
+}
+.ALink {
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 600;
+  font-size: 12px;
+}
+.SpanLink {
+  color: rgb(255, 59, 92);
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}

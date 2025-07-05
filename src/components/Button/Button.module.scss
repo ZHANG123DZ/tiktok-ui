@@ -1,0 +1,277 @@
+/* ResponsiveButton: BEGIN */
+@media screen and (min-width: 768px) {
+  .StyledTUXResponsiveButton > :first-of-type > :global(.TUXButton-label) {
+    margin: unset !important;
+  }
+}
+@media screen and (max-width: 767px) {
+  .StyledTUXResponsiveButton {
+    min-width: 0px !important;
+    width: 40px !important;
+    padding-left: 0px !important;
+    padding-right: 0px !important;
+  }
+  .StyledTUXResponsiveButton > :first-child > :global(.TUXButton-label) {
+    display: none !important;
+  }
+}
+@media screen and (min-width: 768px) {
+  .StyledTUXResponsiveButton {
+    width: fit-content;
+    min-width: 0px !important;
+  }
+}
+@media screen and (min-width: 768px) {
+  .StyledTUXResponsiveButton
+    > :first-of-type
+    > :global(.TUXButton-iconContainer) {
+    display: none !important;
+  }
+}
+/* ResponsiveButton: END */
+
+/* ONlyButton: BEGIN */
+.StyledTUXIconOnlyButton {
+  min-width: 0px !important;
+  width: 40px !important;
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+/* ONlyButton: END */
+
+/* RedDot: BEGIN */
+
+.DivIconWithRedDotContainer {
+  width: 2rem;
+  height: 2rem;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  display: flex;
+  position: relative;
+}
+
+.DivRedDotContainer {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+}
+
+.SupBadge {
+  right: -4px;
+  background: rgb(255, 59, 92);
+  min-width: 1rem;
+  height: 1rem;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  border-radius: 0.5rem;
+  position: absolute;
+  top: -20%;
+}
+
+/* RedDot: END */
+
+// close
+.StyledTUXMoreCloseButton:global(.TUXButton):global(.TUXButton) {
+  min-width: 0px;
+  height: 1.75rem;
+  padding: 0px;
+}
+
+//Button-StyledAvatarFollowButton
+
+.Button-StyledAvatarFollowButton {
+  box-sizing: border-box;
+  appearance: none;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  border-style: solid;
+  border-width: 1px;
+  font-family: var(--tux-fontFamilyParagraph);
+  font-weight: var(--tux-fontWeightSemibold);
+  text-decoration: none;
+  cursor: pointer;
+  background-clip: padding-box;
+  font-size: var(--tux-fontSizeP4);
+  padding-inline: 11px;
+  color: var(--tux-colorConstTextInverse);
+  background-color: var(--tux-colorPrimary);
+  border-color: var(--tux-colorPrimary);
+  width: 24px;
+  height: 24px;
+  min-width: unset;
+  padding: 0px;
+  border-radius: 24px;
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translate(-50%, 50%);
+}
+
+@media screen and (max-width: 768px) {
+  .Button-StyledAvatarFollowButton {
+    width: 16px;
+    height: 16px;
+    transition: 200ms ease-in-out;
+  }
+}
+
+.ButtonContent {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  opacity: 1;
+  overflow: hidden;
+  gap: 4px;
+}
+
+//ButtonActionItem:
+.ButtonActionItem {
+  border: none;
+  background: none;
+  outline: none;
+  padding: 0px;
+  position: relative;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  cursor: pointer;
+  flex-direction: column;
+}
+
+.SpanIconWrapper {
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  font-size: 0px;
+  border-radius: 50%;
+  transition: 200ms ease-in-out;
+  cursor: pointer;
+  width: 48px;
+  height: 48px;
+  background-color: rgba(255, 255, 255, 0.12);
+  margin-top: 8px;
+  margin-bottom: 6px;
+}
+@media screen and (max-width: 768px) {
+  .SpanIconWrapper {
+    width: 32px;
+    height: 32px;
+    padding: 6px;
+  }
+}
+
+.StrongText {
+  font-family: 'Montserrat', Arial, Tahoma, PingFangSC, sans-serif;
+  font-size: 12px;
+  line-height: 16px;
+  color: rgba(255, 255, 255, 0.75);
+  text-align: center;
+}
+
+//StyledMentionSuggestionButton
+.StyledMentionSuggestionButton:global(.TUXButton) {
+  margin: 0.25rem 0px;
+  min-width: unset;
+  width: 2rem;
+  height: 2rem;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.StyledMentionSuggestionButton:global(.TUXButton) svg {
+  // width: 100%;
+  // height: 100%;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+}
+
+//StyledEmojiButton
+.StyledEmojiButton:global(.TUXButton) {
+  margin: 0.25rem 0px;
+  min-width: unset;
+  width: 2rem;
+  height: 2rem;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  background-color: transparent;
+}
+
+.StyledEmojiButton:global(.TUXButton) svg {
+  // width: 100%;
+  // height: 100%;
+  min-width: 1.5rem;
+  min-height: 1.5rem;
+}
+
+.Button-StyledButton:disabled {
+  border: none;
+  color: rgba(255, 255, 255, 0.34);
+  background-color: rgba(255, 255, 255, 0.08);
+  pointer-events: none;
+}
+.Button-StyledButton {
+  border-radius: 4px;
+  border: none;
+  color: rgb(255, 255, 255);
+  background-color: rgb(255, 59, 92);
+  min-width: 120px;
+  min-height: 46px;
+  font-size: 16px;
+  line-height: 22px;
+  font-weight: 700;
+  font-family: 'Montserrat', PingFangSC, sans-serif;
+  display: flex;
+  position: relative;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 6px 8px;
+  user-select: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 21px;
+}
+
+//Category
+.ButtonCategoryItemContainer:not(:last-child) {
+  margin-right: 12px;
+}
+
+.ButtonCategoryItemContainer {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 0px 12px;
+  height: 42px;
+  border-radius: 8px;
+  font-size: 17px;
+  cursor: pointer;
+  gap: 6px;
+  border: none;
+  background-color: rgb(241, 241, 241);
+  color: rgb(22, 24, 35);
+}
+.SpanCategoryName {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+}

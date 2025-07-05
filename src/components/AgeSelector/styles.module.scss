@@ -1,0 +1,76 @@
+.DivAgeSelector {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+
+.DivSelector {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  position: relative;
+  cursor: pointer;
+}
+
+.DivSelectLabel {
+  width: 115px;
+  height: 44px;
+  padding: 0px 12px;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.34);
+  font-size: 16px;
+}
+.StyledArrowTriangleDownLargeFill {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  color: rgba(255, 255, 255, 0.9);
+  transform: rotateZ(180deg);
+  transition: 0.3s;
+}
+.DivOptionsWrapper {
+  left: 0px;
+  right: 0px;
+  width: 120px;
+  max-height: 320px;
+  overflow: auto;
+  position: absolute;
+  background: rgb(18, 18, 18);
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 2px 12px;
+  top: 50px;
+  z-index: 12;
+  display: block;
+  transition: display 0.3s;
+}
+.DivOptionsWrapper::-webkit-scrollbar {
+  background: rgb(18, 18, 18);
+  width: 9px;
+  height: 20px;
+}
+.DivOptionsWrapper::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+}
+.DivOption {
+  height: 34px;
+  overflow: auto;
+  font-size: 16px;
+  padding: 0px 12px;
+  cursor: pointer;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.9);
+  background: unset;
+}
+
+.DivDescription {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  line-height: 20px;
+  margin-bottom: 16px;
+}

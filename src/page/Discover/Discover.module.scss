@@ -1,0 +1,226 @@
+.DivShareLayoutBase-StyledShareLayoutV2-ExploreLayout {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: calc(1px + 100vh);
+  margin: 0px auto;
+  box-sizing: content-box;
+  padding: 96px 48px 32px;
+}
+
+@media screen and (max-width: 703px) {
+  .DivShareLayoutBase-StyledShareLayoutV2-ExploreLayout {
+    max-width: 520px;
+    min-width: 520px;
+  }
+}
+
+.DivShareLayoutContentV2 {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+//DivCategoryListWrapper
+
+.DivCategoryListWrapper {
+  position: fixed;
+  z-index: 1;
+  top: 0px;
+  height: 84px;
+  background-color: var(--ui-page-flat-1);
+  transition: top 0.4s;
+  min-width: unset !important;
+}
+
+@media screen and (max-width: 1700px) {
+  .DivCategoryListWrapper {
+    height: 84px;
+  }
+}
+
+@media screen and (max-width: 1071px) {
+  .DivCategoryListWrapper {
+  }
+}
+
+@media screen and (max-width: 703px) {
+  .DivCategoryListWrapper {
+    max-width: 520px;
+    min-width: 520px;
+  }
+}
+
+@media screen and (max-width: 688px) {
+  .DivCategoryListWrapper {
+  }
+}
+
+//DivThreeColumnContainer
+.DivThreeColumnContainer {
+  width: 100%;
+}
+
+.DivVideoFeedV2 {
+  display: grid;
+  gap: 24px 16px;
+  grid-template-columns: repeat(auto-fill, minmax(304px, 1fr));
+}
+
+@media screen and (max-width: 1919px) {
+  .DivVideoFeedV2 {
+    grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .DivVideoFeedV2 {
+    grid-template-columns: repeat(auto-fill, minmax(209px, 1fr));
+  }
+}
+//DivContainer-StyledDivContainerV2
+.DivContainer-StyledDivContainerV2 {
+  position: relative;
+  width: 100%;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+//DivVideoExploreCardDesc
+.DivCardBottomInfo {
+  font-family: 'Montserrat';
+  font-weight: 400;
+  padding-top: 4px;
+  padding-bottom: 8px;
+}
+
+.DivPlayLine {
+  color: rgba(255, 255, 255, 0.75);
+  font-family: 'IBM Plex Sans', 'Montserrat', Arial, Tahoma, PingFangSC,
+    sans-serif;
+  font-size: 16px;
+  line-height: 21px;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.ivUserInfo {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  overflow: hidden;
+}
+.SpanAvatarContainer {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  font-feature-settings: 'tnum';
+  position: relative;
+  overflow: hidden;
+  color: rgb(255, 255, 255);
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 32px;
+  border-radius: 50%;
+  background-color: rgba(136, 136, 136, 0.5);
+}
+.ImgAvatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.PUniqueId {
+  margin-right: 4px;
+  margin-left: 4px;
+  direction: ltr;
+  max-width: 150px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.DivExploreCardText {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.DivCategoryListContainer {
+  height: 42px;
+  padding: 28px 0px 16px;
+  position: relative;
+  box-sizing: content-box;
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: center;
+  align-items: center;
+  overflow: hidden;
+}
+.DivCategoryList {
+  display: flex;
+  overflow-x: auto;
+  height: 100%;
+  white-space: nowrap;
+  scroll-behavior: smooth;
+  mask-image: linear-gradient(to right, black 0%, black 85%, transparent 100%);
+  width: calc(-336px + 100vw);
+  min-width: unset !important;
+}
+@media screen and (max-width: 1071px) {
+  .DivCategoryList {
+    width: calc(-168px + 100vw);
+  }
+}
+@media screen and (max-width: 703px) {
+  .DivCategoryList {
+    max-width: 520px;
+    min-width: 520px;
+  }
+}
+
+.ButtonCategoryItemContainer:not(:last-child) {
+  margin-right: 12px;
+}
+
+.ButtonCategoryItemContainer {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 0px 12px;
+  height: 42px;
+  background-color: rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  font-size: 17px;
+  color: rgba(255, 255, 255, 0.75);
+  cursor: pointer;
+  gap: 6px;
+  border: none;
+}
+.SpanCategoryName {
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 500;
+}
+.ButtonCategoryItemContainer:hover {
+  color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 0.1);
+}
+:global(.tab-active) .ButtonCategoryItemContainer {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 0px 12px;
+  height: 42px;
+  border-radius: 8px;
+  font-size: 17px;
+  cursor: pointer;
+  gap: 6px;
+  border: none;
+  background-color: rgb(241, 241, 241);
+  color: rgb(22, 24, 35);
+}

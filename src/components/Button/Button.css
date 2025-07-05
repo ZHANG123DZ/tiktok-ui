@@ -1,0 +1,140 @@
+@media screen and (max-width: 1025px) {
+  #loginBtn {
+    display: none;
+  }
+}
+
+/* TUXButton: common BEGIN*/
+.TUXButton {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  border: none;
+  font-family: var(--tux-web-font-body);
+  font-weight: 500;
+  letter-spacing: 0.15px;
+  cursor: pointer;
+}
+/* TUXButton: common END*/
+
+/* Button color: BEGIN */
+.TUXButton--primary {
+  background-color: var(--ui-shape-primary);
+  color: var(--ui-shape-text-1-on-primary);
+}
+.TUXButton--secondary {
+  background-color: var(--ui-shape-neutral-4);
+  color: var(--ui-text-1);
+}
+/* Button color: END */
+
+/* ButtonCapsule: BEGIN */
+.TUXButton--capsule {
+  border-radius: 999px !important;
+}
+/* ButtonCapsule: END */
+
+/* size */
+.TUXButton--medium {
+  height: 40px;
+  min-width: 108px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border-radius: 6px;
+  font-size: 16px;
+  line-height: 21px;
+}
+
+.TUXButton--small {
+  height: 32px;
+  min-width: 96px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border-radius: 5px;
+  font-size: 15px;
+  line-height: 19px;
+}
+
+/* ButtonContent: BEGIN */
+.TUXButton-content {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.TUXButton--medium .TUXButton-iconContainer,
+.TUXButton--large .TUXButton-iconContainer {
+  font-size: 19px;
+}
+.TUXButton--small .TUXButton-iconContainer {
+  font-size: 17px;
+}
+.TUXButton-iconContainer {
+  display: flex;
+  flex-shrink: 0;
+}
+
+.TUXButton-label {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  position: relative;
+}
+/* ButtonContent: END */
+
+/* About more styled for Button */
+
+/*  */
+.TUXSegmentedControl[data-size='xs'][data-shape='rectangle']
+  .TUXSegmentedControl-item {
+  border-radius: 4px;
+}
+.TUXSegmentedControl[data-size='xs'] .TUXSegmentedControl-item {
+  min-width: 48px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.TUXSegmentedControl[data-compact='true'] .TUXSegmentedControl-item {
+  flex: unset;
+}
+.TUXSegmentedControl-item[data-active='true'] {
+  background-color: var(--ui-sheet-flat-3);
+  background-image: linear-gradient(
+    to right,
+    var(--ui-image-overlay-white-a20),
+    var(--ui-image-overlay-white-a20)
+  );
+  background-blend-mode: normal;
+  box-shadow: 0px 2px 8px 0px rgba(0, 0, 0, 0.06);
+}
+.TUXSegmentedControl-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  font-family: var(--tux-web-font-body);
+}
+
+.TUXUnstyledButton {
+  all: unset;
+  box-sizing: border-box;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.TUXButton--secondary.TUXButton--borderless {
+  color: rgba(255, 255, 255, 0.75);
+}
+.TUXButton--secondary.TUXButton--borderless {
+  background-color: transparent;
+  color: var(--ui-text-1);
+}
