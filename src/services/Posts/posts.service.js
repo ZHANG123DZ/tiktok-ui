@@ -1,5 +1,5 @@
 const getPosts = async () => {
-  const posts = fetch('http://localhost:3030/api/v1/posts')
+  const posts = fetch('http://localhost:3000/api/v1/posts')
     .then((res) => res.json())
     .then((data) => data)
     .catch((error) => console.log(error));
@@ -8,7 +8,7 @@ const getPosts = async () => {
 };
 
 const getPostById = async (id) => {
-  const post = fetch(`http://localhost:3030/api/v1/posts/${id}`)
+  const post = fetch(`http://localhost:3000/api/v1/posts/${id}`)
     .then((res) => res.json())
     .then((data) => data)
     .catch((error) => console.log(error));
@@ -17,7 +17,7 @@ const getPostById = async (id) => {
 
 const createPost = async (data) => {
   data.author = 'Thắng';
-  const post = fetch('http://localhost:3030/api/v1/posts', {
+  const post = fetch('http://localhost:3000/api/v1/posts', {
     headers: {
       'Content-type': 'application/json',
     },
@@ -31,7 +31,7 @@ const createPost = async (data) => {
 };
 
 const updatePost = async (id, data) => {
-  const post = fetch(`http://localhost:3030/api/v1/posts/${id}`, {
+  const post = fetch(`http://localhost:3000/api/v1/posts/${id}`, {
     headers: {
       'Content-type': 'application/json',
     },
@@ -45,7 +45,7 @@ const updatePost = async (id, data) => {
 };
 
 const deletePost = async (id) => {
-  fetch(`http://localhost:3030/api/v1/posts/${id}`, {
+  fetch(`http://localhost:3000/api/v1/posts/${id}`, {
     headers: {
       'Content-type': 'application/json',
     },

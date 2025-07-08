@@ -6,6 +6,7 @@ import { ArticleProvider } from '../../contexts/ArticleContext';
 import CommentTab from '../../components/CommentTab';
 import { DrawerProvider } from '../../contexts/DrawerContext';
 
+import socketClient from '../../utils/socketClient';
 function Home() {
   //Comments
   const [activeComments, setActiveComments] = useState(false);
@@ -33,6 +34,13 @@ function Home() {
 
     getData();
   }, [shufflePosts]);
+
+  useEffect(() => {
+    const channel = socketClient.subscribe('k12');
+    return () => {
+      channel.unsubscribe();
+    };
+  }, []);
 
   return (
     <main className={styles.DivMainContainer}>

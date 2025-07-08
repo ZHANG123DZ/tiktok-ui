@@ -23,6 +23,7 @@
     "interact": "^0.0.3",
     "lodash-es": "^4.17.21",
     "module-alias": "^2.2.3",
+    "pusher-js": "^8.4.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-helmet": "^6.1.0",
