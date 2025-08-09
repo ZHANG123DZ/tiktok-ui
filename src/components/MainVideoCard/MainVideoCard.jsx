@@ -70,7 +70,7 @@ const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
 
   const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(getInitialMuted);
-  const [volume, setVolume] = useState(getInitialVolume);
+  const [volume, setVolume] = useState(0);
   const [lastVolume, setLastVolume] = useState(getInitialVolume);
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -473,168 +473,185 @@ const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
             </div>
           </div>
         </div>
-        <div className={clsx(styles.DivMediaCardBottom, 'e1qm78nh0')}>
-          <div className={clsx(styles.DivCaptionContainer, 'e1qm78nh5')}></div>
-          <div className={clsx(styles.DivMainInfoContainer, 'e1qm78nh1')}>
-            <div className={clsx(styles.DivAnchorTagContainer, 'e1qm78nh2')}>
-              <div className={clsx(styles.DivAnchorTagWrapper, 'e1sksq2r0')}>
-                <div className={clsx(styles.DivAnchorTag, 'e1sksq2r5')}>
-                  <a
-                    rel="opener"
-                    target="_self"
-                    className={clsx(
-                      styles.StyledLink,
-                      'e65hkrg0',
-                      'link-a11y-focus'
-                    )}
-                    href={`/place/${videoData.location}?lang=en`}
-                  >
-                    <svg
-                      fontSize="14px"
-                      viewBox="0 0 48 48"
-                      fill="currentColor"
-                      xmlns="http://www.w3.org/2000/svg"
-                      width="1em"
-                      height="1em"
-                    >
-                      <path
-                        d="M0 5a5 5 0 0 1 5-5h38a5 5 0 0 1 5 5v38a5 5 0 0 1-5 5H5a5 5 0 0 1-5-5V5Z"
-                        fill="#00C39B"
-                      ></path>
-                      <path
-                        fillRule="evenodd"
-                        clipRule="evenodd"
-                        d="M24 40.5c.88 0 14-11.43 14-19.1 0-7.68-6.27-13.9-14-13.9s-14 6.22-14 13.9c0 7.67 13.13 19.1 14 19.1Zm0-14.76c2.9 0 5.25-2.34 5.25-5.21A5.23 5.23 0 0 0 24 15.32a5.23 5.23 0 0 0-5.25 5.2A5.23 5.23 0 0 0 24 25.75Z"
-                        fill="#fff"
-                      ></path>
-                    </svg>
-                    <p className={clsx(styles.PAnchorTagName, 'e1sksq2r4')}>
-                      {videoData.location}
-                    </p>
-                  </a>
-                </div>
-              </div>
-            </div>
+        {!isDragging && (
+          <div className={clsx(styles.DivMediaCardBottom, 'e1qm78nh0')}>
             <div
-              className={clsx(
-                styles.DivInlineMusicAndIconContainer,
-                'e1qm78nh6'
-              )}
-            >
-              <div
-                style={{
-                  display: 'flex',
-                  flexDirection: 'column',
-                  flexGrow: '1',
-                }}
-              >
-                <div
-                  className={clsx(styles.DivAuthorContentWrapper, 'e1qm78nh3')}
-                >
-                  <div className={clsx(styles.DivAuthorContainer, 'e1g2yhv84')}>
+              className={clsx(styles.DivCaptionContainer, 'e1qm78nh5')}
+            ></div>
+            <div className={clsx(styles.DivMainInfoContainer, 'e1qm78nh1')}>
+              <div className={clsx(styles.DivAnchorTagContainer, 'e1qm78nh2')}>
+                <div className={clsx(styles.DivAnchorTagWrapper, 'e1sksq2r0')}>
+                  <div className={clsx(styles.DivAnchorTag, 'e1sksq2r5')}>
                     <a
+                      rel="opener"
+                      target="_self"
                       className={clsx(
-                        styles.StyledAuthorAnchor,
-                        'e1g2yhv81',
+                        styles.StyledLink,
+                        'e65hkrg0',
                         'link-a11y-focus'
                       )}
-                      href={`/@${videoData.user.username}?lang=en`}
+                      href={`/place/${videoData.location}?lang=en`}
                     >
-                      <div
-                        data-e2e="video-author-uniqueid"
-                        className={clsx(styles.H3AuthorTitle, 'e1g2yhv80')}
+                      <svg
+                        fontSize="14px"
+                        viewBox="0 0 48 48"
+                        fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="1em"
+                        height="1em"
                       >
-                        {videoData.user.username}
-                      </div>
+                        <path
+                          d="M0 5a5 5 0 0 1 5-5h38a5 5 0 0 1 5 5v38a5 5 0 0 1-5 5H5a5 5 0 0 1-5-5V5Z"
+                          fill="#00C39B"
+                        ></path>
+                        <path
+                          fillRule="evenodd"
+                          clipRule="evenodd"
+                          d="M24 40.5c.88 0 14-11.43 14-19.1 0-7.68-6.27-13.9-14-13.9s-14 6.22-14 13.9c0 7.67 13.13 19.1 14 19.1Zm0-14.76c2.9 0 5.25-2.34 5.25-5.21A5.23 5.23 0 0 0 24 15.32a5.23 5.23 0 0 0-5.25 5.2A5.23 5.23 0 0 0 24 25.75Z"
+                          fill="#fff"
+                        ></path>
+                      </svg>
+                      <p className={clsx(styles.PAnchorTagName, 'e1sksq2r4')}>
+                        {videoData.location}
+                      </p>
                     </a>
                   </div>
                 </div>
+              </div>
+              <div
+                className={clsx(
+                  styles.DivInlineMusicAndIconContainer,
+                  'e1qm78nh6'
+                )}
+              >
                 <div
-                  data-tux-color-scheme="dark"
-                  className={clsx(styles.DivDescriptionWrapper, 'exnv47g0')}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    flexGrow: '1',
+                  }}
                 >
                   <div
                     className={clsx(
-                      styles.DivMultilineTextContainer,
-                      'e1ozkfi0'
+                      styles.DivAuthorContentWrapper,
+                      'e1qm78nh3'
                     )}
                   >
-                    <div className={clsx(styles.DivMultilineText, 'e1ozkfi1')}>
-                      <div
-                        data-e2e="video-desc"
+                    <div
+                      className={clsx(styles.DivAuthorContainer, 'e1g2yhv84')}
+                    >
+                      <a
                         className={clsx(
-                          styles.DivDescriptionContentContainer,
-                          'ejg0rhn1'
+                          styles.StyledAuthorAnchor,
+                          'e1g2yhv81',
+                          'link-a11y-focus'
                         )}
+                        href={`/@${videoData.user.username}?lang=en`}
                       >
-                        {videoData.caption.map((item, index) => {
-                          if (item.type === 'hashtag') {
-                            return (
-                              <a
-                                key={index}
-                                data-e2e="search-common-link"
-                                target="_self"
-                                rel="opener"
-                                className={clsx(
-                                  styles.StyledCommonLink,
-                                  'ejg0rhn6',
-                                  'link-a11y-focus'
-                                )}
-                                href={`/tag/${item.text.replace(
-                                  '#',
-                                  ''
-                                )}?lang=en`}
-                              >
-                                <strong
-                                  color="rgba(143, 190, 233, 1)"
-                                  className={clsx(
-                                    styles.StrongText,
-                                    'ejg0rhn2'
-                                  )}
-                                >
-                                  {item.text}{' '}
-                                </strong>
-                              </a>
-                            );
-                          }
-                          return (
-                            <span key={index} data-e2e="new-desc-span">
-                              {item.text}{' '}
-                            </span>
-                          );
-                        })}
-                      </div>
+                        <div
+                          data-e2e="video-author-uniqueid"
+                          className={clsx(styles.H3AuthorTitle, 'e1g2yhv80')}
+                        >
+                          {videoData.user.username}
+                        </div>
+                      </a>
                     </div>
-                    <button
-                      type="button"
-                      height="18"
+                  </div>
+                  <div
+                    data-tux-color-scheme="dark"
+                    className={clsx(styles.DivDescriptionWrapper, 'exnv47g0')}
+                  >
+                    <div
                       className={clsx(
-                        styles['ButtonExpand-StyledButtonBottom'],
-                        'e1ozkfi3'
+                        styles.DivMultilineTextContainer,
+                        'e1ozkfi0'
                       )}
                     >
-                      more
-                    </button>
+                      <div
+                        className={clsx(styles.DivMultilineText, 'e1ozkfi1')}
+                      >
+                        <div
+                          data-e2e="video-desc"
+                          className={clsx(
+                            styles.DivDescriptionContentContainer,
+                            'ejg0rhn1'
+                          )}
+                        >
+                          {videoData.caption.map((item, index) => {
+                            if (item.type === 'hashtag') {
+                              return (
+                                <a
+                                  key={index}
+                                  data-e2e="search-common-link"
+                                  target="_self"
+                                  rel="opener"
+                                  className={clsx(
+                                    styles.StyledCommonLink,
+                                    'ejg0rhn6',
+                                    'link-a11y-focus'
+                                  )}
+                                  href={`/tag/${item.text.replace(
+                                    '#',
+                                    ''
+                                  )}?lang=en`}
+                                >
+                                  <strong
+                                    color="rgba(143, 190, 233, 1)"
+                                    className={clsx(
+                                      styles.StrongText,
+                                      'ejg0rhn2'
+                                    )}
+                                  >
+                                    {item.text}{' '}
+                                  </strong>
+                                </a>
+                              );
+                            }
+                            return (
+                              <span key={index} data-e2e="new-desc-span">
+                                {item.text}{' '}
+                              </span>
+                            );
+                          })}
+                        </div>
+                      </div>
+                      <button
+                        type="button"
+                        height="18"
+                        className={clsx(
+                          styles['ButtonExpand-StyledButtonBottom'],
+                          'e1ozkfi3'
+                        )}
+                      >
+                        more
+                      </button>
+                    </div>
                   </div>
                 </div>
+                <div
+                  className={clsx(styles.DivPlayerControlsRight, 'e16pyws85')}
+                ></div>
               </div>
-              <div
-                className={clsx(styles.DivPlayerControlsRight, 'e16pyws85')}
-              ></div>
             </div>
           </div>
-        </div>
+        )}
       </div>
       <div className={clsx(styles.DivVideoProgressContainer, 'e14k2ouv0')}>
-        <Text
-          as="p"
-          weight={'bold'}
-          display
-          className="StyledTUXText-StyledTimeDisplayText"
-          style={{ color: 'inherit', fontSize: '32px' }}
-        >
-          {formatTime(currentTime)} / {formatTime(duration)}
-        </Text>
+        {isDragging && (
+          <Text
+            as="p"
+            weight={'bold'}
+            display
+            className="StyledTUXText-StyledTimeDisplayText"
+            style={{
+              color: 'inherit',
+              fontSize: '32px',
+              opacity: isDragging ? 1 : 0,
+            }}
+          >
+            {formatTime(currentTime)} / {formatTime(duration)}
+          </Text>
+        )}
         <div className={clsx(styles.DivProgressBar, 'e14k2ouv5')}>
           <div
             className={clsx(styles.DivProgressBarScrubHead, styles.e14k2ouv2)}
