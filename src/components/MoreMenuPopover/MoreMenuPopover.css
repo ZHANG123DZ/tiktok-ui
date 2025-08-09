@@ -1,0 +1,103 @@
+.TUXMenu {
+  padding: 4px;
+}
+.TUXMenuItem:hover {
+  background-color: var(--ui-shape-neutral-4);
+}
+.TUXPopover-content {
+  font-size: 16px;
+  color: var(--ui-text-1);
+}
+.more-menu-popover > .TUXMenuItem {
+  min-width: 14rem;
+  width: unset;
+}
+.TUXMenuItem {
+  width: 220px;
+  height: 50px;
+  padding-left: 14px;
+  padding-right: 14px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+.TUXMenuItem-leadingIcon {
+  display: flex;
+  font-size: 20px;
+  position: relative;
+  top: -1px;
+  margin-right: 8px;
+}
+.TUXPopover-popover--dark {
+  border-color: rgb(105, 105, 105);
+}
+.TUXPopover-popover--open {
+  opacity: 1;
+}
+.TUXPopover-popover {
+  border-radius: 12px;
+  background-color: var(--ui-sheet-flat-3);
+  color: var(--ui-sheet-flat-3);
+  border: 1px solid rgb(235, 235, 235);
+  box-shadow: 0 5px 26px rgba(0, 0, 0, 0.1);
+}
+.TUXSwitch[data-size='medium'] .TUXSwitch-inputContainer {
+  width: 48px;
+  height: 28px;
+}
+.TUXSwitch-inputContainer {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.TUXSwitch-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  position: absolute;
+  outline: none;
+  display: flex;
+  height: 100%;
+  width: 100%;
+  margin: 0;
+  align-items: center;
+  border-radius: 999px;
+  background-color: var(--ui-shape-neutral-3);
+  cursor: pointer;
+}
+.TUXSwitch[data-size='medium'] .TUXSwitch-handle {
+  width: 22px;
+  height: 22px;
+  transform: translateX(3px);
+}
+.TUXSwitch-handle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 999px;
+  background-color: #fff;
+  box-shadow: 0px 0.8px 3px rgba(0, 0, 0, 0.25);
+  pointer-events: none;
+  transition: transform 0.2s;
+}
+.DivAutoScrollSwitchWrapper {
+  padding-inline-start: 1.25rem;
+}
+.TUXSwitch-input:checked {
+  background-color: var(--ui-shape-secondary);
+}
+.DivAutoScrollItemBody {
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.TUXSwitch:not([data-disabled='true']) .TUXSwitch-input:checked:hover {
+  background-color: rgba(16, 162, 197, 1);
+}
+.TUXSwitch[data-size='medium'] .TUXSwitch-input:checked ~ .TUXSwitch-handle {
+  transform: translateX(23px);
+}

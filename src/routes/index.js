@@ -1,4 +1,4 @@
-import config from '../config';
+import config from '../configs';
 import Home from '../page/Home/index.jsx';
 import Discover from '../page/Discover/index.jsx';
 import NotFound from '../page/NotFound/index.jsx';
@@ -10,6 +10,9 @@ import UserRouter from '../components/UserRouter';
 import Following from '../page/Following';
 import Friends from '../page/Friends';
 import Search from '../page/Search';
+import ActionBar from '../components/ActionBar/ActionBar';
+import MainVideoCard from '../components/MainVideoCard/MainVideoCard';
+import MoreMenuPopover from '../components/MoreMenuPopover/MoreMenuPopover';
 
 const routes = [
   {
@@ -60,6 +63,14 @@ const routes = [
   {
     path: config.routes.search,
     component: Search,
+  },
+  {
+    path: '/action',
+    component: ActionBar,
+  },
+  {
+    path: '/video',
+    component: MainVideoCard,
   },
   {
     path: '/*',

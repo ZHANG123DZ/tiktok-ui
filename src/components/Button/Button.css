@@ -138,3 +138,15 @@
   background-color: transparent;
   color: var(--ui-text-1);
 }
+
+.TUXButton--borderless:hover:not(.TUXButton--disabled) {
+  background-color: transparent;
+  color: rgba(234, 40, 78, 1);
+}
+.TUXButton--secondary:hover:not(.TUXButton--disabled) {
+  background-color: var(--ui-shape-neutral-3);
+}
+.TUXButton--secondary.TUXButton--borderless {
+  background-color: transparent;
+  color: var(--ui-text-1);
+}

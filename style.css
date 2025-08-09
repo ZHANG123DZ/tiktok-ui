@@ -33,11 +33,14 @@ html *::-webkit-scrollbar-track {
 
 :root {
   --ui-shape-primary: rgba(254, 44, 85, 1);
+  --ui-shape-secondary: rgba(32, 213, 236, 1);
   --ui-text-primary-display: rgba(255, 59, 92, 1);
   --ui-shape-text-1-on-primary: rgba(255, 255, 255, 1);
+  --ui-shape-neutral-3: rgba(255, 255, 255, 0.19);
   --ui-shape-neutral-4: rgba(255, 255, 255, 0.13);
   --ui-page-flat-1: rgba(0, 0, 0, 1);
   --ui-sheet-flat-2: rgba(45, 45, 45, 1);
+  --ui-sheet-flat-3: rgba(58, 58, 58, 1);
   --ui-text-1: rgba(255, 255, 255, 1);
   --ui-text-placeholder: rgba(255, 255, 255, 0.4);
   --ui-background: rgba(0, 0, 0, 1);
@@ -45,8 +48,25 @@ html *::-webkit-scrollbar-track {
   --ui-sheet-flat-1: rgba(30, 30, 30, 1);
   --ui-text-3: rgba(255, 255, 255, 0.6);
   --ui-image-overlay-white-a40: rgba(255, 255, 255, 0.4);
+  --ui-image-overlay-white: rgba(255, 255, 255, 1);
+  --ui-image-overlay-black-a15: rgba(0, 0, 0, 0.15);
   --tux-colorPrimary: rgba(255, 59, 92, 1);
   --tux-colorConstTextInverse: rgba(255, 255, 255, 1);
+
+  --tux-web-font-display: 'TikTokDisplayFont', system-ui, -apple-system,
+    Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, 'Roboto',
+    'Noto Sans', sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
+  --tux-web-font-body: 'TikTokFont', system-ui, -apple-system, Segoe UI, Roboto,
+    Ubuntu, Cantarell, Noto Sans, sans-serif, 'Roboto', 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-family: 'TikTokFont', system-ui, -apple-system, Segoe UI, Roboto, Ubuntu,
+    Cantarell, Noto Sans, sans-serif, 'Roboto', 'Noto Sans', sans-serif,
+    'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+  font-family: var(--tux-web-font-body);
+  line-height: 1.3;
+  color: rgba(0, 0, 0, 1);
+  color: var(--ui-text-1);
 }
 
 * {

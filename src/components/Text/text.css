@@ -19,6 +19,18 @@
   font-weight: inherit;
 }
 
+.TUXText--tiktok-display {
+  font-family: var(--tux-web-font-display);
+}
+
+.TUXText--truncate {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.TUXMenuItem-label {
+  flex: 1;
+}
 /* color: var(--ui-text-3);
     font-size: 14px;
     text-wrap: nowrap; */

@@ -6,7 +6,7 @@ import {
   faUser,
   faUserMinus,
 } from '@fortawesome/free-solid-svg-icons';
-import config from '../config';
+import config from '../configs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const navigation = {

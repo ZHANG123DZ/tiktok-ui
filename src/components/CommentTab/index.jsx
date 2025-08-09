@@ -26,7 +26,8 @@ function CommentTab({ post_id }) {
       return;
     }
     try {
-      const comments = await getCommentsByPostId(post_id);
+      // const comments = await getCommentsByPostId(post_id);
+      const comments = [];
       setComments(comments);
     } catch (error) {
       console.log(error);

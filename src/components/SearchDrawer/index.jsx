@@ -1,8 +1,22 @@
 import clsx from 'clsx';
 
 import styles from './styles.module.scss';
+import { useState } from 'react';
 
 function SearchDrawer() {
+  const searchContent = 'israel và iran mới nhất';
+  const [search, setSearch] = useState(searchContent);
+  const searchResult = [
+    'israel và iran mới nhất',
+    'israel và iran mới nhất 2025',
+    'israel và iran mới nhất trực tiếp',
+    'israel and iran',
+    'israel và iran mới nhất live',
+    'israel và iran mới nhất thầy hữu giang',
+    'israel và iran mới nhất tin nóng',
+    'israel và iran mới nhất việt nam',
+  ];
+
   return (
     <div className={styles.DivSearchContainer}>
       <div className={styles.DivSearchDriverHeader}>
@@ -20,9 +34,7 @@ function SearchDrawer() {
           className={clsx('search-input', styles.FormElement)}
           action="/search"
         >
-          <h1 style={{ display: 'none', alignItems: 'center' }}>
-            israel và iran mới nhất
-          </h1>
+          <h1 style={{ display: 'none', alignItems: 'center' }}>{search}</h1>
           <input
             placeholder="Search"
             name="q"
@@ -35,7 +47,7 @@ function SearchDrawer() {
             aria-autocomplete="list"
             data-e2e="search-user-input"
             className={styles.InputElement}
-            value="israel và iran mới nhất"
+            value={search}
           />
           <div data-e2e="reset-search-form" className={styles.DivIconWrapper}>
             <svg
@@ -64,16 +76,7 @@ function SearchDrawer() {
           className={styles.UlContainer}
         >
           {/* Mỗi <li> bên dưới nên render từ mảng data searchResult */}
-          {[
-            'israel và iran mới nhất',
-            'israel và iran mới nhất 2025',
-            'israel và iran mới nhất trực tiếp',
-            'israel and iran',
-            'israel và iran mới nhất live',
-            'israel và iran mới nhất thầy hữu giang',
-            'israel và iran mới nhất tin nóng',
-            'israel và iran mới nhất việt nam',
-          ].map((text, idx) => (
+          {searchResult.map((text, idx) => (
             <li
               key={idx}
               id={`sug-list-item-${idx}`}

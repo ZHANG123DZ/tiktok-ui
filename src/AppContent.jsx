@@ -1,7 +1,7 @@
 import AppRoutes from './components/AppRoutes';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { routeTitleMap } from './config/routeTitleMap';
+import { routeTitleMap } from './configs/routeTitleMap';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 

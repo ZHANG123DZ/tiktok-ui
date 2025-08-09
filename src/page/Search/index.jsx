@@ -1,6 +1,6 @@
-import SearchUser from '../../components/SearchUser';
 import { Tab, TabList, TabPanels, Tabs } from '../../components/Tabs/Tabs';
 import styles from './Search.module.scss';
+import UserList from '../../components/UserList/UserList';
 
 function Search() {
   return (
@@ -133,11 +133,7 @@ function Search() {
                 </div>
               </div>
             </div>
-            <>
-              <SearchUser />
-              <SearchUser />
-              <SearchUser />
-            </>
+            <UserList />
           </TabPanels>
         </Tabs>
       </div>
