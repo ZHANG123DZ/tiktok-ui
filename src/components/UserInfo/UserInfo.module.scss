@@ -11,6 +11,10 @@
 .DivUserInfoContainer {
   display: flex;
 }
+.DivUserInfoContainer:hover {
+  background-color: #1c1c1c;
+  border: 6px;
+}
 .css-uha12h-DivContainer {
   position: relative;
   display: flex;
@@ -71,4 +75,71 @@
   font-size: 14px;
   line-height: 18px;
   margin-top: 1px;
+}
+.DivFollowButtonContainer {
+  position: absolute;
+  top: 8px;
+  z-index: 1;
+  margin-top: 16px;
+  right: 0px;
+}
+.DivFollowButtonWrapperV2 {
+}
+.Button-StyledFollowButtonV2 {
+  border: none;
+  color: rgb(255, 255, 255);
+  background-color: rgb(255, 59, 92);
+  min-width: 106px;
+  min-height: 28px;
+  display: flex;
+  position: relative;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 6px 8px;
+  user-select: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-family: TikTokFont;
+  font-weight: 600;
+  font-size: 16px;
+  flex: 1 1 0%;
+  line-height: 36px;
+  border-radius: 8px;
+}
+.PDesc {
+  margin-top: 4px;
+}
+.PUserSubTitle {
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 18px;
+  display: inline;
+}
+.Button-StyledUnFollowButtonV2 {
+  border-width: 1px;
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0);
+  min-width: 106px;
+  min-height: 28px;
+  display: flex;
+  position: relative;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 6px 8px;
+  user-select: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-family: TikTokFont;
+  font-weight: 600;
+  font-size: 16px;
+  flex: 1 1 0%;
+  line-height: 36px;
+  border-radius: 8px;
+  background-color: rgba(255, 255, 255, 0.12);
+  border-style: none;
 }

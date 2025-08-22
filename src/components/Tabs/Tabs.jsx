@@ -62,8 +62,8 @@ export function TabList({ children, className }) {
   );
 }
 
-export function TabPanels({ children, className }) {
+export function TabPanels({ children }) {
   const { currentIndex } = useTabs();
   const panels = Children.toArray(children);
-  return <div className={clsx('mt-4', className)}>{panels[currentIndex]}</div>;
+  return <>{panels[currentIndex]}</>;
 }

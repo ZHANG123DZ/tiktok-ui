@@ -12,7 +12,28 @@ import defaultAvatar from '../../assets/imgs/user.png';
 import styles from './styles.module.scss';
 import Button from '../../components/Button';
 import ProtectedButton from '../../components/ProtectedButton';
-function Profile({ data }) {
+import ShareModal from '../../components/ShareModal';
+import { useSelector } from 'react-redux';
+function Profile({ username }) {
+  const mockUser = {
+    id: 4,
+    name: `Hello ${username}`,
+    username,
+    avatar:
+      'https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/avatar-anh-meo-cute-22.jpg',
+    followers: 563,
+    followings: 2343,
+    likes: 21131313,
+  };
+
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const isSelf = currentUser?.username === username;
+
+  const [activeShare, setActiveShare] = useState(false);
+
+  //Gọi API load user, post của user
+  //Tạm thời giờ giả lập thế thôi
+
   return (
     <div className={styles.UserContainer}>
       <div className={styles[`DivShareLayoutBase-StyledShareLayoutV2`]}>
@@ -78,12 +99,23 @@ function Profile({ data }) {
                 </ProtectedButton>
                 <Button label="Nhắn tin" isDefault size="medium" secondary />
                 <Button
-                  icon={<FontAwesomeIcon icon={faShare} />}
+                  icon={
+                    <FontAwesomeIcon
+                      icon={faShare}
+                      onClick={() => setActiveShare(true)}
+                    />
+                  }
                   isDefault
                   iconOnlyButton
                   size="medium"
                   secondary
                 />
+                {activeShare && (
+                  <ShareModal
+                    isOpen={activeShare}
+                    onClose={() => setActiveShare(false)}
+                  />
+                )}
                 <Button
                   icon={<FontAwesomeIcon icon={faEllipsis} />}
                   isDefault
@@ -100,15 +132,15 @@ function Profile({ data }) {
               >
                 <h3 className={styles.H3CountInfos}>
                   <div className={styles.DivNumber}>
-                    <strong title="Following">{data?.total_following}</strong>
+                    <strong title="Following">{data?.followings}</strong>
                     <span className={styles.SpanUnit}>Đã follow</span>
                   </div>
                   <div className={styles.DivNumber}>
-                    <strong title="Followers">{data?.total_follower}</strong>
+                    <strong title="Followers">{data?.followers}</strong>
                     <span className={styles.SpanUnit}>Follower</span>
                   </div>
                   <div className={styles.DivNumber}>
-                    <strong title="Likes">{data?.total_likes}</strong>
+                    <strong title="Likes">{data?.likes}</strong>
                     <span className={styles.SpanUnit}>Lượt thích</span>
                   </div>
                 </h3>

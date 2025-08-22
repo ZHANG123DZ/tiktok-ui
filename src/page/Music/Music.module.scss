@@ -1,0 +1,266 @@
+.DivShareLayoutBase-StyledShareLayoutV2 {
+  display: flex;
+  padding: 32px 24px 36px;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: calc(1px + 100vh);
+  margin: 0px auto;
+  box-sizing: content-box;
+  max-width: calc(85em + 4rem);
+  padding-block: 1.5rem;
+  padding-inline: 2rem;
+}
+@media screen and (max-width: 1024px) {
+  .DivShareLayoutBase-StyledShareLayoutV2 {
+    padding-block: 1.25rem;
+    padding-inline: 1.25rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .DivShareLayoutBase-StyledShareLayoutV2 {
+    padding-block: 0.75rem;
+    padding-inline: 0.75rem;
+  }
+}
+.DivShareLayoutContentV2 {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+//Phần Music
+.DivShareLayoutHeader-StyledDivShareLayoutHeaderV2 {
+  position: relative;
+  flex: 0 0 auto;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  max-width: 624px;
+  padding-right: 92px;
+}
+.DivShareInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.DivMusicCardWrapper {
+  display: inline-flex;
+  width: 120px;
+  height: 120px;
+}
+.DivPlayer {
+  display: none;
+  height: 0px;
+  opacity: 0;
+}
+.DivControlWrapper {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  cursor: pointer;
+  left: 50%;
+  top: 50%;
+  margin-left: -16px;
+  margin-top: -16px;
+  z-index: 3;
+}
+.DivMusicCardContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 2px;
+  background-color: rgba(22, 24, 35, 0.1);
+  cursor: pointer;
+}
+.DivDefaultImgContainer {
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 120px;
+  height: 120px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.04);
+}
+.DivShareTitleContainer {
+  flex: 1 1 0%;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  margin-left: 20px;
+}
+@media screen and (max-width: 767px) {
+  .DivShareTitleContainer {
+    margin: 0px;
+  }
+}
+
+.H1ShareTitle {
+  font-family: TikTokDisplayFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+}
+.H2ShareSubTitleThin {
+  color: rgba(255, 255, 255, 0.75);
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: normal;
+}
+.DivButtonsContainer {
+  position: absolute;
+  top: 11px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  gap: 18px;
+  right: 1px;
+}
+.DivShareActions {
+  position: relative;
+  cursor: pointer;
+}
+.DivMoreActions {
+  position: relative;
+  cursor: pointer;
+}
+.DivDefaultImgContainer * {
+  fill: rgba(255, 255, 255, 0.34);
+}
+.DivThreeColumnContainer {
+  width: 100%;
+}
+
+.DivVideoFeedV2 {
+  display: grid;
+  width: 100%;
+  gap: 24px 16px;
+  grid-template-columns: repeat(6, minmax(0px, 1fr)) !important;
+}
+
+@media screen and (max-width: 1280px) {
+  .DivVideoFeedV2 {
+    grid-template-columns: repeat(4, minmax(0px, 1fr)) !important;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .DivVideoFeedV2 {
+    grid-template-columns: repeat(3, minmax(0px, 1fr)) !important;
+  }
+}
+@media screen and (max-width: 596px) {
+  .DivVideoFeedV2 {
+    gap: 0.75rem;
+    grid-template-columns: repeat(2, minmax(0px, 1fr)) !important;
+  }
+}
+.DivProgressMark {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+.DivProgressBarWrapper {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  z-index: 2;
+}
+.DivProgressBarContainer {
+  display: inline-flex;
+  flex-direction: column;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  position: relative;
+  overflow: hidden;
+  color: rgb(255, 255, 255);
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 32px;
+  border-radius: 50%;
+}
+.SvgContainer {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+  transform-origin: center center;
+}
+.DivControlWrapper {
+  position: absolute;
+  width: 32px;
+  height: 32px;
+  text-align: center;
+  line-height: 32px;
+  cursor: pointer;
+  left: 50%;
+  top: 50%;
+  margin-left: -16px;
+  margin-top: -16px;
+  z-index: 3;
+}
+.H2ShareSubTitle {
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  text-overflow: ellipsis;
+  height: 25px;
+  overflow: hidden;
+  max-width: 450px;
+  white-space: nowrap;
+  display: flex;
+  align-items: flex-end;
+}
+.DivIconContainer {
+  position: absolute;
+  right: 12px;
+  top: 16px;
+}
+.DivIconContainer:hover {
+  cursor: pointer;
+}
+.PText {
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  width: 337px;
+  color: rgba(255, 255, 255, 0.5);
+}
+.DivActionItem {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 13px 0px;
+  border-bottom: 1px solid rgba(22, 24, 35, 0.12);
+}

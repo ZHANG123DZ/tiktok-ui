@@ -1,0 +1,142 @@
+.DivShareLayoutBase-StyledShareLayoutV2 {
+  display: flex;
+  padding: 32px 24px 36px;
+  flex-direction: column;
+  flex: 1 1 auto;
+  min-height: calc(1px + 100vh);
+  margin: 0px auto;
+  box-sizing: content-box;
+  max-width: calc(85em + 4rem);
+  padding-block: 1.5rem;
+  padding-inline: 2rem;
+}
+@media screen and (max-width: 1024px) {
+  .DivShareLayoutBase-StyledShareLayoutV2 {
+    padding-block: 1.25rem;
+    padding-inline: 1.25rem;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .DivShareLayoutBase-StyledShareLayoutV2 {
+    padding-block: 0.75rem;
+    padding-inline: 0.75rem;
+  }
+}
+.DivShareLayoutContentV2 {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+}
+//Phần Tag
+.DivShareLayoutHeader-StyledDivShareLayoutHeaderV2 {
+  position: relative;
+  flex: 0 0 auto;
+  margin-bottom: 20px;
+  box-sizing: border-box;
+  max-width: 624px;
+  padding-right: 92px;
+}
+.DivShareInfo {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+.DivDefaultImgContainer {
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  box-sizing: border-box;
+  width: 120px;
+  height: 120px;
+  border-radius: 4px;
+  background-color: rgba(255, 255, 255, 0.04);
+}
+.DivShareTitleContainer {
+  flex: 1 1 0%;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  margin-left: 20px;
+}
+@media screen and (max-width: 767px) {
+  .DivShareTitleContainer {
+    margin: 0px;
+  }
+}
+
+.H1ShareTitle {
+  font-family: TikTokDisplayFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 38px;
+  margin-bottom: 4px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-align: left;
+  -webkit-line-clamp: 2;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  word-break: break-word;
+}
+.H2ShareSubTitleThin {
+  color: rgba(255, 255, 255, 0.75);
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: normal;
+}
+.DivButtonsContainer {
+  position: absolute;
+  top: 11px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  gap: 18px;
+  right: 1px;
+}
+.DivShareActions {
+  position: relative;
+  cursor: pointer;
+}
+.DivMoreActions {
+  position: relative;
+  cursor: pointer;
+}
+.DivDefaultImgContainer * {
+  fill: rgba(255, 255, 255, 0.34);
+}
+.DivThreeColumnContainer {
+  width: 100%;
+}
+
+.DivVideoFeedV2 {
+    display: grid;
+    width: 100%;
+    gap: 24px 16px;
+    grid-template-columns: repeat(6, minmax(0px, 1fr)) !important;
+}
+
+@media screen and (max-width: 1280px) {
+    .DivVideoFeedV2 {
+        grid-template-columns: repeat(4, minmax(0px, 1fr)) !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .DivVideoFeedV2 {
+        grid-template-columns: repeat(3, minmax(0px, 1fr)) !important;
+    }
+}
+@media screen and (max-width: 596px) {
+    .DivVideoFeedV2 {
+        gap: 0.75rem;
+        grid-template-columns: repeat(2, minmax(0px, 1fr)) !important;
+    }
+}

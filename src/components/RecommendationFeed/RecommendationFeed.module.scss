@@ -1,0 +1,23 @@
+.DivThreeColumnContainer {
+  width: 100%;
+}
+.DivBlockContainer {
+  grid-column: 1 / -1;
+  width: calc(100% - 12px);
+  clear: both;
+}
+.DivTitleContainer {
+  height: 30px;
+  padding-bottom: 8px;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+}
+.H2Title {
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 21px;
+  margin: 0px;
+}

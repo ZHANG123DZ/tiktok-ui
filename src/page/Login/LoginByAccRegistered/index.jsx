@@ -9,7 +9,6 @@ import Input from '../../../components/Input';
 import { login } from '../../../services/auth/auth.service';
 import { getCurrentUser } from '../../../features/auth/authAsync';
 import { useModal } from '../../../contexts/ModalContext';
-import { setComponent } from '../../../features/auth/authSlice';
 import { toast } from 'react-toastify';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';

@@ -56,28 +56,6 @@
   }
 }
 
-//DivThreeColumnContainer
-.DivThreeColumnContainer {
-  width: 100%;
-}
-
-.DivVideoFeedV2 {
-  display: grid;
-  gap: 24px 16px;
-  grid-template-columns: repeat(auto-fill, minmax(304px, 1fr));
-}
-
-@media screen and (max-width: 1919px) {
-  .DivVideoFeedV2 {
-    grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .DivVideoFeedV2 {
-    grid-template-columns: repeat(auto-fill, minmax(209px, 1fr));
-  }
-}
 //DivContainer-StyledDivContainerV2
 .DivContainer-StyledDivContainerV2 {
   position: relative;

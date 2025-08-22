@@ -3,13 +3,44 @@ import styles from './ActionBar.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faBookmark,
-  faComment,
+  faCheck,
+  faCommentDots,
   faHeart,
   faPlus,
   faShare,
 } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import formatNumberShort from '../../utils/formatNumberShort';
+import { useRef, useState } from 'react';
+import { useArticle } from '../../contexts/ArticleContext';
 
-export default function ActionBar() {
+export default function ActionBar({ data }) {
+  const [liked, setLiked] = useState(data.isLiked);
+  const [likes, setLikes] = useState(data.likes);
+  const [bookMarked, setBookMarked] = useState(data.isBookMarked);
+  const [bookMarks, setBookMarks] = useState(data.bookMarks);
+  const [follow, setFollow] = useState(data.isFollow);
+  const [tickShown, setTickShown] = useState(false);
+  const [comments, setComments] = useState(data.comments);
+  const [share, setShare] = useState(data.share);
+  const shareRef = useRef(null);
+  const { clickCommentsButton, clickShareButton } = useArticle();
+
+  const toggleFollow = async () => {
+    setFollow((prev) => !prev);
+    setTickShown(!follow);
+  };
+
+  const toggleLike = () => {
+    setLiked((prev) => !prev);
+    setLikes((prev) => (liked ? prev - 1 : prev + 1));
+  };
+
+  const toggleBookMark = () => {
+    setBookMarked((prev) => !prev);
+    setBookMarks((prev) => (bookMarked ? prev - 1 : prev + 1));
+  };
+
   return (
     <section
       className={clsx(styles.SectionActionBarContainer, styles.ees02z00)}
@@ -17,14 +48,14 @@ export default function ActionBar() {
       <div
         className={clsx(styles.DivAvatarActionItemContainer, styles.eth6dzb0)}
       >
-        <a
+        <Link
           data-e2e="video-author-avatar"
           className={clsx(
             styles.AvatarLink,
             styles.e1g2yhv83,
             'link-a11y-focus'
           )}
-          href="/@pleasejustkama"
+          to={`/@${data.author.username}`}
         >
           <div
             size="48"
@@ -38,77 +69,94 @@ export default function ActionBar() {
                 className={clsx(
                   styles.SpanAvatarContainer,
                   styles.e1e9er4e0,
-                  styles['css-1ilbfm8-SpanAvatarContainer-StyledAvatar']
+                  styles['SpanAvatarContainer-StyledAvatar']
                 )}
                 style={{ width: '48px', height: '48px' }}
               >
                 <img
                   loading="lazy"
-                  alt="pleasejustkama"
-                  src="https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/85123a4f1138b56e65e302541fad4e8d~tplv-tiktokx-cropcenter:100:100.jpeg?dr=14579&refresh_token=02c4fcca&x-expires=1754733600&x-signature=cwXzXr8rKLmCX7ubSt66ENjj2oM%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=my2"
+                  alt={data.author.username}
+                  src={data.author.avatar}
                   className={clsx(styles.ImgAvatar, styles.e1e9er4e1)}
                 />
               </span>
             </div>
           </div>
-        </a>
+        </Link>
 
-        <button
-          className={clsx(
-            styles.eth6dzb1,
-            styles['Button-StyledAvatarFollowButton'],
-            styles.e1v8cfre0
-          )}
-          shape="capsule"
-          data-e2e="feed-follow"
-        >
-          <div className={clsx(styles.ButtonContent, styles.e1v8cfre2)}>
-            <FontAwesomeIcon icon={faPlus} />
-          </div>
-        </button>
+        {(!follow || tickShown) && (
+          <button
+            className={clsx(
+              styles.eth6dzb1,
+              styles['Button-StyledAvatarFollowButton'],
+              styles.e1v8cfre0,
+              tickShown && styles.checkFollow
+            )}
+            shape="capsule"
+            data-e2e="feed-follow"
+          >
+            <div className={clsx(styles.ButtonContent, styles.e1v8cfre2)}>
+              <FontAwesomeIcon
+                icon={follow ? faCheck : faPlus}
+                onClick={toggleFollow}
+                style={{ color: follow ? 'rgb(255, 59, 92)' : 'white' }}
+              />
+            </div>
+          </button>
+        )}
       </div>
 
       {/* Like Button */}
       <button
         type="button"
-        aria-label="Like video&#10;137.5K likes"
+        aria-label={`Like video&#10;${likes} likes`}
         aria-pressed="false"
         className={clsx(styles.ButtonActionItem, styles.e1hk3hf90)}
       >
         <span
           data-e2e="like-icon"
           className={clsx(styles.SpanIconWrapper, styles.e1hk3hf91)}
-          style={{ color: 'rgba(255, 255, 255, 0.9)' }}
+          style={{
+            color: liked ? '#FE2C55' : 'rgba(255, 255, 255, 0.9)',
+          }}
+          onClick={toggleLike}
         >
           {/* Heart SVG omitted for brevity */}
-          <FontAwesomeIcon icon={faHeart} />
+          <FontAwesomeIcon
+            icon={faHeart}
+            style={{ width: '24px', height: '24px' }}
+          />
         </span>
         <strong
           data-e2e="like-count"
           className={clsx(styles.StrongText, styles.e1hk3hf92)}
         >
-          137.5K
+          {formatNumberShort(likes)}
         </strong>
       </button>
 
       {/* Comment Button */}
       <button
         type="button"
-        aria-label="Read or add comments&#10;1271 comments"
+        aria-label={`Read or add comments&#10;${comments} comments`}
         className={clsx(styles.ButtonActionItem, styles.e1hk3hf90)}
       >
         <span
           data-e2e="comment-icon"
           className={clsx(styles.SpanIconWrapper, styles.e1hk3hf91)}
           style={{ color: 'rgba(255, 255, 255, 0.9)' }}
+          onClick={() => clickCommentsButton()}
         >
-          <FontAwesomeIcon icon={faComment} />
+          <FontAwesomeIcon
+            icon={faCommentDots}
+            style={{ width: '24px', height: '24px' }}
+          />
         </span>
         <strong
           data-e2e="comment-count"
           className={clsx(styles.StrongText, styles.e1hk3hf92)}
         >
-          1271
+          {formatNumberShort(comments)}
         </strong>
       </button>
 
@@ -116,21 +164,27 @@ export default function ActionBar() {
       <div aria-expanded="false" aria-haspopup="dialog">
         <button
           type="button"
-          aria-label="Add to Favorites. 19K added to Favorites"
+          aria-label={`Add to Favorites. ${bookMarks} added to Favorites`}
           className={clsx(styles.ButtonActionItem, styles.e1hk3hf90)}
         >
           <span
             data-e2e="favorite-icon"
             className={clsx(styles.SpanIconWrapper, styles.e1hk3hf91)}
-            style={{ color: 'rgba(255, 255, 255, 0.9)' }}
+            style={{
+              color: bookMarked ? '#FFC300' : 'rgba(255, 255, 255, 0.9)',
+            }}
+            onClick={toggleBookMark}
           >
-            <FontAwesomeIcon icon={faBookmark} />
+            <FontAwesomeIcon
+              icon={faBookmark}
+              style={{ width: '24px', height: '24px' }}
+            />
           </span>
           <strong
             data-e2e="favorite-count"
             className={clsx(styles.StrongText, styles.e1hk3hf92)}
           >
-            19K
+            {formatNumberShort(bookMarks)}
           </strong>
         </button>
       </div>
@@ -138,42 +192,48 @@ export default function ActionBar() {
       {/* Share Button */}
       <button
         type="button"
-        aria-label="Share video&#10;4371 shares"
+        aria-label={`Share video&#10;${share} shares`}
         aria-expanded="false"
         className={clsx(styles.ButtonActionItem, styles.e1hk3hf90)}
       >
         <span
+          ref={shareRef}
           data-e2e="share-icon"
           className={clsx(styles.SpanIconWrapper, styles.e1hk3hf91)}
           style={{ color: 'rgba(255, 255, 255, 0.9)' }}
+          onClick={() => clickShareButton()}
         >
-          <FontAwesomeIcon icon={faShare} />
+          <FontAwesomeIcon
+            icon={faShare}
+            style={{ width: '24px', height: '24px' }}
+          />
         </span>
         <strong
           data-e2e="share-count"
           className={clsx(styles.StrongText, styles.e1hk3hf92)}
         >
-          4371
+          {formatNumberShort(share)}
         </strong>
       </button>
 
       {/* Music Link */}
-      <a
-        target="_self"
-        rel="opener"
-        data-e2e="video-music"
-        aria-label="Watch more videos with music оригинальный звук - Yussupova Camilla"
-        className="link-a11y-focus"
-        href="/music/оригинальный-звук-7516973298736286469"
-      >
-        <div
-          className={clsx(styles.MusicCoverDisc, styles.e1nplrh00)}
-          style={{
-            backgroundImage:
-              'url("https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/85123a4f1138b56e65e302541fad4e8d~tplv-tiktokx-cropcenter:100:100.jpeg?dr=14579&refresh_token=02c4fcca&x-expires=1754733600&x-signature=cwXzXr8rKLmCX7ubSt66ENjj2oM%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=my2")',
-          }}
-        ></div>
-      </a>
+      {data.music && (
+        <Link
+          target="_self"
+          rel="opener"
+          data-e2e="video-music"
+          aria-label={`Watch more videos with music nhạc nền - ${data.music.name}`}
+          className="link-a11y-focus"
+          to={`/music/nhạc-nền-${data.music.slug}`}
+        >
+          <div
+            className={clsx(styles.MusicCoverDisc, styles.e1nplrh00)}
+            style={{
+              backgroundImage: `url(${data.music.poster})`,
+            }}
+          ></div>
+        </Link>
+      )}
     </section>
   );
 }

@@ -38,3 +38,25 @@
   height: 1.75rem;
   padding: 0px;
 }
+.DivCommentSidebarTransitionWrapper {
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  overflow: hidden;
+  z-index: 8;
+  height: 100%;
+  transition-duration: 300ms;
+  transition-timing-function: linear;
+}
+.DivCommentSidebarTransitionWrapper.comment-sidebar-transition-enter-done {
+  overflow: visible;
+  flex-basis: 24rem;
+  width: 24rem;
+}
+.DivCommentSidebarTransitionWrapper.comment-sidebar-transition-enter-done {
+  flex-basis: 21rem;
+  width: 21rem;
+}
+.DivCommentSidebarTransitionWrapper.comment-sidebar-transition-enter-done {
+  flex-basis: 18rem;
+  width: 18rem;
+}

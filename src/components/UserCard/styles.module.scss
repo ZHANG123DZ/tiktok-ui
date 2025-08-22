@@ -115,13 +115,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
-.DivVerifiedBadgeContainer {
-  margin-left: 4px;
-  display: flex;
-  -webkit-box-align: center;
-  align-items: center;
-  flex-shrink: 0;
-}
+
 .DivButtonContainer {
   margin-top: 8px;
 }
@@ -130,6 +124,30 @@
   border: none;
   color: rgb(255, 255, 255);
   background-color: rgb(255, 59, 92);
+  min-width: 164px;
+  min-height: 36px;
+  font-size: 18px;
+  line-height: 25px;
+  font-weight: 600;
+  font-family: TikTokDisplayFont, PingFangSC, sans-serif;
+  display: flex;
+  position: relative;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 6px 8px;
+  user-select: none;
+  cursor: pointer;
+  box-sizing: border-box;
+}
+.unFollowButton {
+  border-width: 1px;
+  border-style: solid;
+  border-radius: 4px;
+  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0);
+  background-color: rgba(255, 255, 255, 0.08);
   min-width: 164px;
   min-height: 36px;
   font-size: 18px;

@@ -455,13 +455,7 @@
 }
 
 //Follow Button
-@media screen and (max-width: 768px) {
-  .Button-StyledAvatarFollowButton {
-    width: 16px;
-    height: 16px;
-    transition: 200ms ease-in-out;
-  }
-}
+
 .Button-StyledAvatarFollowButton {
   box-sizing: border-box;
   appearance: none;
@@ -492,6 +486,20 @@
   left: 50%;
   transform: translate(-50%, 50%);
 }
+
+@media screen and (max-width: 768px) {
+  .Button-StyledAvatarFollowButton {
+    width: 16px;
+    height: 16px;
+    transition: 200ms ease-in-out;
+  }
+}
+.checkFollow {
+  color: var(--tux-colorTextPrimary);
+  background-color: var(--tux-colorBGSecondary);
+  border-color: var(--tux-colorLineSecondary);
+}
+
 .ButtonContent {
   box-sizing: border-box;
   width: 100%;
@@ -503,4 +511,7 @@
   opacity: 1;
   overflow: hidden;
   gap: 4px;
+}
+.SpanIconWrapper:hover {
+  background-color: #171717;
 }

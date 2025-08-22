@@ -1,8 +1,10 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import Article from '../../components/Article';
 import { useInView } from 'react-intersection-observer';
 import styles from './styles.module.scss';
+import MainVideoCard from '../../components/MainVideoCard/MainVideoCard';
+import ActionBar from '../../components/ActionBar/ActionBar';
+import ShareModal from '../../components/ShareModal';
 const ArticleContext = createContext();
 
 export const ArticleProvider = ({
@@ -16,20 +18,36 @@ export const ArticleProvider = ({
     if (inView) setPost(data);
   }, [data, inView, setPost]);
 
-  const [activeShare, setShare] = useState(false);
+  const [activeShare, setActiveShare] = useState(false);
 
   const clickCommentsButton = () => {
-    setActiveComments(!activeComments);
+    setActiveComments((prev) => {
+      if (prev) {
+        setPost(null);
+      } else {
+        setPost(data);
+      }
+      return !prev;
+    });
   };
 
   const clickShareButton = () => {
-    setShare(!activeShare);
+    setActiveShare(!activeShare);
+  };
+  const autoScroll = () => {
+    if (entry?.target?.nextElementSibling) {
+      entry.target.nextElementSibling.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    }
   };
 
   return (
     <>
       <ArticleContext.Provider
         value={{
+          data,
           clickCommentsButton,
           clickShareButton,
           activeComments,
@@ -37,8 +55,17 @@ export const ArticleProvider = ({
         }}
       >
         <article className={styles.ArticleItemContainer} ref={ref}>
-          <Article data={data} />
+          <div className={styles.DivContentFlexLayout}>
+            <MainVideoCard data={data} onEnded={autoScroll} />
+            <ActionBar data={data} />
+          </div>
         </article>
+        {activeShare && (
+          <ShareModal
+            isOpen={activeShare}
+            onClose={() => setActiveShare(false)}
+          />
+        )}
       </ArticleContext.Provider>
     </>
   );

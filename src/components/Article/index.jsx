@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 
 import {
-  faComment,
+  faCommentDots,
   faHeart,
   faPlus,
   faShare,
@@ -118,16 +118,18 @@ function Article({ data }) {
           onClick={() => clickCommentsButton()}
         >
           <span className={styles.SpanIconWrapper}>
-            <FontAwesomeIcon icon={faComment} />
+            <FontAwesomeIcon icon={faCommentDots} />
           </span>
           <strong className={styles.StrongText}>Bình luận</strong>
         </button>
+        {/* Book mark Button */}
         <button className={styles.ButtonActionItem}>
           <span className={styles.SpanIconWrapper}>
             <FontAwesomeIcon icon={faTag} />
           </span>
           <strong className={styles.StrongText}>Nhãn dán</strong>
         </button>
+        {/* Share Button */}
         <button className={styles.ButtonActionItem}>
           <span className={styles.SpanIconWrapper}>
             <FontAwesomeIcon icon={faShare} />

@@ -1,0 +1,96 @@
+.DivItemContainer {
+  margin-right: 7.5px;
+  width: 160px;
+  height: 239px;
+  margin-bottom: 8px;
+  cursor: pointer;
+}
+.DivCoverContainer {
+  width: 100%;
+  height: 239px;
+  position: relative;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+.ImgCover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.08);
+}
+.DivPlayCount {
+  position: absolute;
+  height: 40px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background: linear-gradient(
+    rgba(22, 24, 35, 0) 2.92%,
+    rgba(22, 24, 35, 0.3) 98.99%
+  );
+  color: rgb(255, 255, 255);
+  font-size: 13px;
+  line-height: 17px;
+  padding: 12px 8px 8px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.StyledPlay {
+  margin-right: 4px;
+}
+.DivBasicPlayerWrapper {
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-items: center;
+  align-items: center;
+}
+.DivBasicPlayerWrapper .tiktok-web-player {
+  width: 100%;
+  height: 100%;
+}
+.DivBasicPlayerWrapper .tiktok-web-player video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.DivPlayingMaskContainer {
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(15px);
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0px;
+}
+.DivPlayingMaskWrapper {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+.DivContainer {
+  width: 29px;
+  height: 22px;
+  overflow: hidden;
+  margin: 0px auto;
+  outline: none;
+}
+.SpanText {
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 17px;
+  color: rgb(255, 255, 255);
+  word-break: break-word;
+  text-align: center;
+}

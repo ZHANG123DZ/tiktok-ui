@@ -9,8 +9,8 @@ import authService from '../../services/auth/auth.service';
 
 function MoreDrawer() {
   const logOutHandle = () => {
-    const data = authService.logout();
-    console.log(data);
+    // const data = authService.logout();
+    // console.log(data);
   };
 
   return (
@@ -68,8 +68,7 @@ function MoreDrawer() {
         <li className={styles.LiMoreButtonContainer}>
           <Button
             className={styles.StyledTUXMoreOptionButton}
-            label="Công cụ dành cho nhà sáng tạo"
-            icon={<FontAwesomeIcon icon={faChevronRight} />}
+            expand="Công cụ dành cho nhà sáng tạo"
             isDefault
             size="small"
             secondary
@@ -79,8 +78,7 @@ function MoreDrawer() {
         <li className={styles.LiMoreButtonContainer}>
           <Button
             className={styles.StyledTUXMoreOptionButton}
-            label="Tiếng Việt"
-            icon={<FontAwesomeIcon icon={faChevronRight} />}
+            expand="Tiếng Việt"
             isDefault
             size="small"
             secondary
@@ -90,8 +88,7 @@ function MoreDrawer() {
         <li className={styles.LiMoreButtonContainer}>
           <Button
             className={styles.StyledTUXMoreOptionButton}
-            label="Chế độ tối"
-            icon={<FontAwesomeIcon icon={faChevronRight} />}
+            expand="Chế độ tối"
             isDefault
             size="small"
             secondary

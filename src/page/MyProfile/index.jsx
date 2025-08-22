@@ -14,8 +14,10 @@ import { ModalProvider } from '../../contexts/ModalContext';
 import EditProfile from '../../components/EditProfile';
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+import ShareModal from '../../components/ShareModal';
 
 function MyProfile({ data }) {
+  const [activeShare, setActiveShare] = useState(false);
   const [isActive, setActive] = useState(false);
 
   return (
@@ -114,6 +116,12 @@ function MyProfile({ data }) {
                   size="medium"
                   secondary
                 />
+                {activeShare && (
+                  <ShareModal
+                    isOpen={activeShare}
+                    onClose={() => setActiveShare(false)}
+                  />
+                )}
               </div>
               <div
                 className={clsx(

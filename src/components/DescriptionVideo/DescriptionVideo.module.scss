@@ -1,0 +1,259 @@
+.DivDescriptionContentWrapper {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+  margin-left: 20px;
+  margin-right: 20px;
+  padding: 16px;
+}
+//DivInfoContainer
+.DivInfoContainer {
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: center;
+  align-items: center;
+  padding: 0px;
+  margin-bottom: 15px;
+  position: relative;
+  flex: 0 0 82px;
+}
+.css-1q3wyxm {
+  flex: 0 0 40px;
+  margin-right: 12px;
+}
+.DivContainer {
+  position: relative;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+.SpanAvatarContainer-StyledAvatar {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  font-feature-settings: 'tnum';
+  position: relative;
+  overflow: hidden;
+  color: rgb(255, 255, 255);
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 32px;
+  border-radius: 50%;
+  border-color: rgba(255, 255, 255, 0.12);
+  border-width: 0.5px;
+  cursor: unset;
+  background-color: rgba(136, 136, 136, 0.5);
+}
+.ImgAvatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.StyledLink {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  flex: 1 1 auto;
+  margin-right: 12px;
+}
+.SpanUniqueId {
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 24px;
+}
+.SpanOtherInfos {
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.SpanEllipsis {
+  display: inline;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.SpanEllipsis:hover {
+  text-decoration: underline;
+}
+//Follow Button
+.DivBtnWrapper {
+  justify-self: flex-end;
+}
+.Button {
+  box-sizing: border-box;
+  appearance: none;
+  min-width: 96px;
+  display: inline-flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  position: relative;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 2px;
+  font-family: var(--tux-fontFamilyParagraph);
+  font-weight: var(--tux-fontWeightSemibold);
+  text-decoration: none;
+  cursor: pointer;
+  background-clip: padding-box;
+  font-size: var(--tux-fontSizeP3);
+  height: 36px;
+  padding-inline: 15px;
+  color: var(--tux-colorConstTextInverse);
+  background-color: var(--tux-colorPrimary);
+  border-color: var(--tux-colorPrimary);
+}
+.ButtonContent {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  opacity: 1;
+  overflow: hidden;
+  gap: 6px;
+}
+.ButtonLabel {
+  box-sizing: border-box;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+.DivMainContent {
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+}
+.DivWrapper {
+  display: flex;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+  padding-bottom: unset;
+}
+.DivText {
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+.DivText::before {
+  content: '';
+  height: calc(100% - 21px);
+  float: right;
+  width: 0px;
+  margin-top: 0px;
+}
+.DivBtnWrapper {
+  float: right;
+  clear: both;
+  cursor: pointer;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  line-height: 21px;
+  position: relative;
+  bottom: 1px;
+}
+.DivText * {
+  fill: rgba(255, 255, 255, 0.9);
+}
+.ButtonExpand {
+  color: rgba(255, 255, 255, 0.9);
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 21px;
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+}
+.DivDescriptionContentContainer {
+  font-size: 16px;
+  line-height: 21px;
+  word-break: break-word;
+}
+.DivText span {
+  display: inline;
+}
+.StyledCommonLink {
+  display: inline-block;
+}
+.StrongText {
+  font-weight: 600;
+  color: rgb(143, 190, 233);
+}
+
+.H4Link {
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  line-height: 21px;
+  font-weight: 400;
+  font-size: 14px;
+  margin-top: 8px;
+  flex: 0 0 auto;
+  margin-left: 1px;
+}
+.DivMusicText {
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+}
+.DivMusicText:hover {
+  text-decoration: underline;
+}
+.MusicNoteIcon {
+  flex-shrink: 0;
+  width: 14px;
+  height: 14px;
+  margin-right: 8px;
+}
+.DivAnchorTagWrapper {
+  display: flex;
+  gap: 2px 6px;
+  flex-wrap: wrap;
+  margin-left: -2px;
+}
+.StyledLink:hover,
+.StyledLink:active,
+.StyledLink:link {
+  text-decoration: none;
+}
+.ButtonExpand-StyledButtonBottom {
+  color: rgba(255, 255, 255, 0.9);
+  font-family: 'IBM Plex Sans', TikTokFont, Arial, Tahoma, PingFangSC,
+    sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 21px;
+  border: none;
+  outline: none;
+  background: none;
+  cursor: pointer;
+  left: -4px;
+  position: absolute;
+  bottom: 16px;
+}
+.DivOverflowContainer {
+  overflow-y: auto;
+  max-height: 42vh;
+  scrollbar-width: none;
+}
+.StrongText:hover {
+  text-decoration: underline;
+}

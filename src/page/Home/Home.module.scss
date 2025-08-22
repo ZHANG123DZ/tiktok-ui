@@ -1,42 +1,66 @@
 .DivMainContainer {
-    position: relative;
-    margin: 0px auto;
-    width: 100%;
-    min-width: 420px;
-    flex-shrink: 1;
-    display: flex;
-    -webkit-box-pack: center;
-    justify-content: center;
-    -webkit-box-align: stretch;
-    align-items: stretch;
+  position: relative;
+  margin: 0px auto;
+  width: 100%;
+  min-width: 420px;
+  flex-shrink: 1;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: stretch;
+  align-items: stretch;
 }
 
 //DivColumnListContainer: BEGIN
 
 .DivColumnListContainer {
-    display: flex;
-    flex-direction: column;
-    gap: 100px;
-    width: 100%;
-    background-color: var(--ui-page-flat-1);
-    position: relative;
-    max-height: calc(0px + 100vh);
-    scroll-snap-type: y mandatory;
-    overflow-y: scroll;
-    scrollbar-width: none;
-    scroll-behavior: smooth;
-    padding-inline-end: calc(var(--feed-nav-button-width) + 1rem);
-    --feed-nav-button-width: 3rem;
+  display: flex;
+  flex-direction: column;
+  gap: 100px;
+  width: 100%;
+  background-color: var(--ui-page-flat-1);
+  position: relative;
+  max-height: calc(0px + 100vh);
+  scroll-snap-type: y mandatory;
+  overflow-y: scroll;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  padding-inline-end: calc(var(--feed-nav-button-width) + 1rem);
+  --feed-nav-button-width: 3rem;
 }
 
 @media screen and (max-width: 768px) {
-    .DivColumnListContainer {
-        --feed-nav-button-width: 0;
-    }
+  .DivColumnListContainer {
+    --feed-nav-button-width: 0;
+  }
 }
 
 //ArticleItemContainer
 .DivArticle {
-    display: flex;
-    height: 100%;
+  display: flex;
+  height: 100%;
+}
+.ArticleItemContainer {
+  min-height: calc(
+    100vh - 0px - var(--one-column-top-content-height, 0px) -
+      var(--one-column-item-bottom-content-height, 0px)
+  );
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  padding-block: 1rem;
+  margin: 0px auto;
+  transition-property: margin, height, width, padding;
+  transition-duration: 300ms;
+  transition-timing-function: linear;
+  overflow: hidden clip;
+  scroll-snap-stop: always;
+  scroll-snap-align: start center;
+  padding-inline: 1rem;
 }

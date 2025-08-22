@@ -31,6 +31,9 @@
 .TUXMenuItem-label {
   flex: 1;
 }
+.TUXText--align-center {
+  text-align: center;
+}
 /* color: var(--ui-text-3);
     font-size: 14px;
     text-wrap: nowrap; */

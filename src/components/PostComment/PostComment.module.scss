@@ -1,0 +1,77 @@
+.DivCommentTop {
+  font-family: TikTokFont;
+  font-weight: 600;
+  width: 100%;
+  height: 64px;
+  display: flex;
+  padding: 20px 0px;
+  -webkit-box-align: center;
+  align-items: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+  line-height: 20px;
+  position: relative;
+  font-size: 16px;
+}
+
+.SpanHint {
+  color: rgba(255, 255, 255, 0.6);
+}
+.SpanWordContainer {
+  cursor: pointer;
+  display: flex;
+  overflow: hidden;
+  flex: 1 1 0%;
+}
+.SpanWord {
+  color: rgb(143, 190, 233);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.StyledMagnifyingGlass {
+  width: 10px;
+  height: 10px;
+  flex-shrink: 0;
+  color: rgb(143, 190, 233);
+}
+.DivActionContainer {
+  margin-left: 8px;
+  width: 24px;
+  flex: 0 0 24px;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.DivMoreContainer {
+  position: relative;
+}
+.StyledMoreIcon {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  display: block;
+}
+.DivBottomCommentContainer {
+  flex: 0 0 auto;
+  background-color: rgb(18, 18, 18);
+  margin: 0px 30px;
+  padding: 21px 0px;
+}
+.DivCommentInputContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+.DivLayoutContainer {
+  flex: 1 1 auto;
+}
+.DivBorder {
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  margin-left: -32px;
+  margin-right: -32px;
+  margin-bottom: 22px;
+}

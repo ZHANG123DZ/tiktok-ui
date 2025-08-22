@@ -1,0 +1,41 @@
+.DivVideoFeedV2 {
+  display: grid;
+  gap: 24px 16px;
+  grid-template-columns: repeat(6, minmax(0px, 1fr)) !important;
+}
+
+@media screen and (max-width: 1919px) {
+  .DivVideoFeedV2 {
+    grid-template-columns: repeat(auto-fill, minmax(256px, 1fr));
+  }
+}
+
+@media screen and (max-width: 1280px) {
+  .DivVideoFeedV2 {
+    grid-template-columns: repeat(4, minmax(0px, 1fr)) !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .DivVideoFeedV2 {
+    grid-template-columns: repeat(auto-fill, minmax(209px, 1fr));
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .DivVideoFeedV2 {
+    grid-template-columns: repeat(3, minmax(0px, 1fr)) !important;
+  }
+}
+
+@media screen and (max-width: 596px) {
+  .DivVideoFeedV2 {
+    gap: 0.75rem;
+    grid-template-columns: repeat(2, minmax(0px, 1fr)) !important;
+  }
+}
+
+//DivThreeColumnContainer
+.DivThreeColumnContainer {
+  width: 100%;
+}

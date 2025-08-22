@@ -5,14 +5,12 @@ import NotFound from '../page/NotFound/index.jsx';
 import Login from '../page/Login';
 import Register from '../page/Register';
 import Upload from '../page/Upload';
-import ProfileWrapper from '../components/ProfileWrapper';
 import UserRouter from '../components/UserRouter';
 import Following from '../page/Following';
 import Friends from '../page/Friends';
 import Search from '../page/Search';
-import ActionBar from '../components/ActionBar/ActionBar';
-import MainVideoCard from '../components/MainVideoCard/MainVideoCard';
-import MoreMenuPopover from '../components/MoreMenuPopover/MoreMenuPopover';
+import Tag from '../page/Tag';
+import Music from '../page/Music';
 
 const routes = [
   {
@@ -65,15 +63,15 @@ const routes = [
     component: Search,
   },
   {
-    path: '/action',
-    component: ActionBar,
+    path: config.routes.tag,
+    component: Tag,
   },
   {
-    path: '/video',
-    component: MainVideoCard,
+    path: config.routes.music,
+    component: Music,
   },
   {
-    path: '/*',
+    path: '*',
     component: UserRouter,
   },
   {

@@ -1,55 +1,18 @@
-import { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styles from './MainVideoCard.module.scss';
 import clsx from 'clsx';
 import Button from '../Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faEllipsis,
+  faMusic,
   faVolumeHigh,
   faVolumeXmark,
 } from '@fortawesome/free-solid-svg-icons';
 
-import video from '/public/Download (13).mp4';
 import Text from '../Text';
-
-const mockVideoData = {
-  id: '7532762172477197598',
-  src: video,
-  poster:
-    'https://p16-sign-sg.tiktokcdn.com/tos-alisg-p-0037/osWBDxgQfAQrlZlxBDRoKmBmJEBUFEe5GSZQOh~tplv-tiktokx-origin.image?dr=14575&x-expires=1754816400&x-signature=KMYUzF0IyfSmnrwWZa1GxlGU%2FF0%3D&t=4d5b0474&ps=13740610&shp=81f88b70&shcp=43f4a2f9&idc=my2',
-  user: {
-    username: 'tinnongmoingay08',
-  },
-  caption: [
-    { type: 'hashtag', text: '#theanh28news' },
-    { type: 'text', text: ' ' },
-    { type: 'hashtag', text: '#tinhot' },
-    { type: 'text', text: ' ' },
-    { type: 'hashtag', text: '#tiktoknew' },
-    { type: 'text', text: ' ' },
-    { type: 'hashtag', text: '#theanh28' },
-    { type: 'text', text: ' ' },
-    { type: 'hashtag', text: '#tinmoimoingay' },
-    { type: 'text', text: ' ' },
-    { type: 'hashtag', text: '#vtvcab' },
-    { type: 'text', text: ' ' },
-    { type: 'hashtag', text: '#tinmoi' },
-    { type: 'text', text: ' ' },
-  ],
-  location: 'Hanoi',
-};
-
-const fetchVideoData = (videoId) => {
-  return new Promise((resolve, reject) => {
-    setTimeout(() => {
-      if (videoId === mockVideoData.id) {
-        resolve(mockVideoData);
-      } else {
-        reject(new Error('Video not found'));
-      }
-    }, 1500);
-  });
-};
+import MorePopover from '../MorePopover/MorePopover';
+import menuItemVideo from '../../configs/menuItemVideo.jsx';
 
 const getInitialVolume = () => {
   const storedVolume = localStorage.getItem('videoVolume');
@@ -61,9 +24,10 @@ const getInitialMuted = () => {
   return storedVolume !== null ? parseFloat(storedVolume) === 0 : false;
 };
 
-const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
-  const [videoData, setVideoData] = useState(null);
-  const [loading, setLoading] = useState(true);
+const MainVideoCard = ({ data, onEnded = () => {} }) => {
+  const [videoData, setVideoData] = useState(data);
+  const [seeMore, setSeeMore] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const videoRef = useRef(null);
   const progressBarRef = useRef(null);
@@ -83,18 +47,40 @@ const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
   const volumeSliderRef = useRef(null);
   const [progressBarWidth, setProgressBarWidth] = useState(0);
 
+  //Đoạn này set View khi cuộn
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
-    setLoading(true);
-    fetchVideoData(videoId)
-      .then((data) => {
-        setVideoData(data);
-        setLoading(false);
-      })
-      .catch((err) => {
-        setError(err.message);
-        setLoading(false);
-      });
-  }, [videoId]);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setIsVisible(entry.isIntersecting);
+      },
+      { threshold: 0.7 }
+    );
+
+    if (videoRef.current) {
+      observer.observe(videoRef.current);
+    }
+
+    return () => {
+      if (videoRef.current) observer.unobserve(videoRef.current);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!videoRef.current) return;
+
+    if (isVisible) {
+      videoRef.current.play();
+    } else {
+      videoRef.current.pause();
+    }
+  }, [isVisible]);
+
+  //Đoạn này để set cho Popover Menu
+  const moreButtonRef = useRef(null);
+  const popoverMenuRef = useRef(null);
+  const [showPopover, setShowPopover] = useState(false);
 
   useEffect(() => {
     const progressBar = progressBarRef.current;
@@ -150,6 +136,7 @@ const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
     };
   }, [volume, isMuted, videoData]);
 
+  //Hàm click vào thanh tiến trình
   const handleProgressClick = (e) => {
     const progressBar = progressBarRef.current;
     const video = videoRef.current;
@@ -164,6 +151,7 @@ const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
     setProgress(newProgressPercent);
   };
 
+  //Hàm kéo nút tua video
   const handleDrag = (clientX) => {
     const progressBar = progressBarRef.current;
     const video = videoRef.current;
@@ -196,10 +184,13 @@ const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
     }
   };
 
-  const onMouseUp = () => {
+  const onMouseUp = (e) => {
     setIsDragging(false);
-    if (wasPlaying) {
-      videoRef.current.play();
+
+    if (videoRef.current && videoRef.current.contains(e.target)) {
+      if (wasPlaying) {
+        videoRef.current.play();
+      }
     }
   };
 
@@ -212,6 +203,7 @@ const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
     };
   }, [isDragging, wasPlaying]);
 
+  //Sự kiện kéo nút volume
   const handleVolumeDrag = (clientX) => {
     const slider = volumeSliderRef.current;
     if (!slider) return;
@@ -240,6 +232,7 @@ const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
     setIsVolumeDragging(false);
   };
 
+  //Gắn sự kiện cho nút volume
   useEffect(() => {
     window.addEventListener('mousemove', onVolumeMouseMove);
     window.addEventListener('mouseup', onVolumeMouseUp);
@@ -249,6 +242,24 @@ const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
       window.removeEventListener('mouseup', onVolumeMouseUp);
     };
   }, [isVolumeDragging]);
+
+  //Set sự kiện cho việc click vào bên ngoài popover
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (
+        popoverMenuRef.current &&
+        !popoverMenuRef.current.contains(event.target) &&
+        !moreButtonRef.current.contains(event.target)
+      ) {
+        setShowPopover(false);
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [showPopover]);
 
   const toggleMute = () => {
     const video = videoRef.current;
@@ -278,6 +289,7 @@ const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
     }
   };
 
+  //Hàm thay đổi volume
   const changeVolume = (e) => {
     const value = parseFloat(e.target.value);
     setVolume(value);
@@ -359,11 +371,11 @@ const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
             >
               <picture>
                 <img
-                  alt={videoData.caption.map((c) => c.text).join('')}
+                  alt={videoData?.tags.map((c) => c).join('')}
                   fetchPriority="auto"
                   decoding="async"
-                  src={videoData.poster}
-                  srcSet={videoData.poster}
+                  src={videoData?.thumbnail}
+                  srcSet={videoData?.thumbnail}
                   style={{
                     position: 'absolute',
                     inset: '0px',
@@ -395,13 +407,13 @@ const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
                 ref={videoRef}
                 className=""
                 onClick={togglePlay}
+                onEnded={onEnded}
                 muted={isMuted}
                 autoPlay
-                loop
                 playsInline
                 data-index="-1"
                 data-xgplayerid={`11c5990f-28d4-4fbd-a70c-86a8a8308f3f`}
-                poster={videoData.poster}
+                poster={videoData?.thumbnail}
                 preload="auto"
                 style={{
                   width: '100%',
@@ -413,7 +425,7 @@ const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
               >
                 <source
                   className=""
-                  src={videoData.src}
+                  src={videoData.video}
                   type="video/mp4"
                   data-index="1"
                 />
@@ -462,13 +474,28 @@ const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
               </div>
             </div>
             <div className={clsx(styles.DivFlexCenter, 'e1yeguby3')}>
-              <div className={styles['css-1dux0b3']}>
+              <div className={'css-1dux0b3'}>
                 <Button
+                  ref={moreButtonRef}
+                  className="css-3ryazn"
                   capsule
                   size="medium"
                   secondary
                   icon={<FontAwesomeIcon icon={faEllipsis} />}
+                  onClick={() => {
+                    if (moreButtonRef.current) {
+                      setShowPopover(!showPopover);
+                    }
+                  }}
                 />
+                {showPopover && (
+                  <MorePopover
+                    isMenu
+                    ref={popoverMenuRef}
+                    triggerElement={moreButtonRef}
+                    list={menuItemVideo}
+                  />
+                )}
               </div>
             </div>
           </div>
@@ -479,159 +506,176 @@ const MainVideoCard = ({ videoId = '7532762172477197598' }) => {
               className={clsx(styles.DivCaptionContainer, 'e1qm78nh5')}
             ></div>
             <div className={clsx(styles.DivMainInfoContainer, 'e1qm78nh1')}>
-              <div className={clsx(styles.DivAnchorTagContainer, 'e1qm78nh2')}>
-                <div className={clsx(styles.DivAnchorTagWrapper, 'e1sksq2r0')}>
-                  <div className={clsx(styles.DivAnchorTag, 'e1sksq2r5')}>
-                    <a
-                      rel="opener"
-                      target="_self"
-                      className={clsx(
-                        styles.StyledLink,
-                        'e65hkrg0',
-                        'link-a11y-focus'
-                      )}
-                      href={`/place/${videoData.location}?lang=en`}
-                    >
-                      <svg
-                        fontSize="14px"
-                        viewBox="0 0 48 48"
-                        fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg"
-                        width="1em"
-                        height="1em"
+              {videoData?.location && (
+                <div
+                  className={clsx(styles.DivAnchorTagContainer, 'e1qm78nh2')}
+                >
+                  <div
+                    className={clsx(styles.DivAnchorTagWrapper, 'e1sksq2r0')}
+                  >
+                    <div className={clsx(styles.DivAnchorTag, 'e1sksq2r5')}>
+                      <a
+                        rel="opener"
+                        target="_self"
+                        className={clsx(
+                          styles.StyledLink,
+                          'e65hkrg0',
+                          'link-a11y-focus'
+                        )}
+                        href={`/place/${videoData?.location}?lang=en`}
                       >
-                        <path
-                          d="M0 5a5 5 0 0 1 5-5h38a5 5 0 0 1 5 5v38a5 5 0 0 1-5 5H5a5 5 0 0 1-5-5V5Z"
-                          fill="#00C39B"
-                        ></path>
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M24 40.5c.88 0 14-11.43 14-19.1 0-7.68-6.27-13.9-14-13.9s-14 6.22-14 13.9c0 7.67 13.13 19.1 14 19.1Zm0-14.76c2.9 0 5.25-2.34 5.25-5.21A5.23 5.23 0 0 0 24 15.32a5.23 5.23 0 0 0-5.25 5.2A5.23 5.23 0 0 0 24 25.75Z"
-                          fill="#fff"
-                        ></path>
-                      </svg>
-                      <p className={clsx(styles.PAnchorTagName, 'e1sksq2r4')}>
-                        {videoData.location}
-                      </p>
-                    </a>
+                        <svg
+                          fontSize="14px"
+                          viewBox="0 0 48 48"
+                          fill="currentColor"
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="1em"
+                          height="1em"
+                        >
+                          <path
+                            d="M0 5a5 5 0 0 1 5-5h38a5 5 0 0 1 5 5v38a5 5 0 0 1-5 5H5a5 5 0 0 1-5-5V5Z"
+                            fill="#00C39B"
+                          ></path>
+                          <path
+                            fillRule="evenodd"
+                            clipRule="evenodd"
+                            d="M24 40.5c.88 0 14-11.43 14-19.1 0-7.68-6.27-13.9-14-13.9s-14 6.22-14 13.9c0 7.67 13.13 19.1 14 19.1Zm0-14.76c2.9 0 5.25-2.34 5.25-5.21A5.23 5.23 0 0 0 24 15.32a5.23 5.23 0 0 0-5.25 5.2A5.23 5.23 0 0 0 24 25.75Z"
+                            fill="#fff"
+                          ></path>
+                        </svg>
+                        <p className={clsx(styles.PAnchorTagName, 'e1sksq2r4')}>
+                          {videoData?.location}
+                        </p>
+                      </a>
+                    </div>
                   </div>
+                </div>
+              )}
+              <div
+                className={clsx(styles.DivAuthorContentWrapper, 'e1qm78nh3')}
+              >
+                <div className={clsx(styles.DivAuthorContainer, 'e1g2yhv84')}>
+                  <a
+                    className={clsx(
+                      styles.StyledAuthorAnchor,
+                      'e1g2yhv81',
+                      'link-a11y-focus'
+                    )}
+                    href={`/@${videoData.music.slug}?lang=en`}
+                  >
+                    <div
+                      data-e2e="video-author-uniqueid"
+                      className={clsx(styles.H3AuthorTitle, 'e1g2yhv80')}
+                    >
+                      {videoData.author.username}
+                    </div>
+                  </a>
                 </div>
               </div>
               <div
-                className={clsx(
-                  styles.DivInlineMusicAndIconContainer,
-                  'e1qm78nh6'
-                )}
+                data-tux-color-scheme="dark"
+                className={clsx(styles.DivDescriptionWrapper, 'exnv47g0')}
               >
                 <div
-                  style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    flexGrow: '1',
-                  }}
+                  className={clsx(styles.DivMultilineTextContainer, 'e1ozkfi0')}
+                  style={{ overflowY: seeMore ? 'none' : 'unset' }}
                 >
                   <div
-                    className={clsx(
-                      styles.DivAuthorContentWrapper,
-                      'e1qm78nh3'
-                    )}
+                    className={clsx(styles.DivMultilineText, 'e1ozkfi1')}
+                    style={{
+                      maxHeight: seeMore ? 'unset' : '18px',
+                      overflowY: 'hidden',
+                    }}
                   >
                     <div
-                      className={clsx(styles.DivAuthorContainer, 'e1g2yhv84')}
+                      data-e2e="video-desc"
+                      className={clsx(
+                        styles.DivDescriptionContentContainer,
+                        'ejg0rhn1'
+                      )}
+                    >
+                      {videoData.tags.map((tag, index) => (
+                        <React.Fragment key={tag.name}>
+                          <a
+                            data-e2e="search-common-link"
+                            target="_self"
+                            rel="opener"
+                            className={clsx(
+                              styles.StyledCommonLink,
+                              'ejg0rhn6',
+                              'link-a11y-focus'
+                            )}
+                            href={`/tag/${tag.slug}?lang=en`}
+                          >
+                            <strong
+                              className={clsx(styles.StrongText, 'ejg0rhn2')}
+                            >
+                              {`#${tag.name}`}
+                            </strong>
+                          </a>
+
+                          {index < videoData.tags.length - 1 && (
+                            <span data-e2e="new-desc-span"> </span>
+                          )}
+                        </React.Fragment>
+                      ))}
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    height="18"
+                    className={clsx(
+                      styles['ButtonExpand-StyledButtonBottom'],
+                      'e1ozkfi3'
+                    )}
+                    onClick={() => setSeeMore(!seeMore)}
+                  >
+                    {seeMore ? 'less' : 'more'}
+                  </button>
+                </div>
+              </div>
+              {data.music && (
+                <div
+                  className={clsx(
+                    styles.DivInlineMusicAndIconContainer,
+                    'e1qm78nh6'
+                  )}
+                >
+                  <div
+                    className={clsx(styles.DivMusicInfoContainer, 'e1qm78nh4')}
+                  >
+                    <div
+                      data-e2e="video-music"
+                      className={clsx(styles.H4Link, 'epjbyn0')}
                     >
                       <a
+                        target="_self"
+                        rel="opener"
+                        aria-label={`Watch more videos with music nhạc nền - ${data.music.name}`}
                         className={clsx(
-                          styles.StyledAuthorAnchor,
-                          'e1g2yhv81',
+                          styles.StyledLink,
+                          'media-card-music-info',
+                          'epjbyn1',
                           'link-a11y-focus'
                         )}
-                        href={`/@${videoData.user.username}?lang=en`}
+                        href={`/music/nhạc-nền-${data.music.slug}`}
                       >
-                        <div
-                          data-e2e="video-author-uniqueid"
-                          className={clsx(styles.H3AuthorTitle, 'e1g2yhv80')}
-                        >
-                          {videoData.user.username}
+                        <FontAwesomeIcon
+                          icon={faMusic}
+                          className={styles.MusicNoteIcon}
+                        />
+                        <div className={clsx(styles.DivMusicText, 'epjbyn3')}>
+                          {`nhạc nền - ${data.music.name}`}
                         </div>
                       </a>
                     </div>
                   </div>
                   <div
-                    data-tux-color-scheme="dark"
-                    className={clsx(styles.DivDescriptionWrapper, 'exnv47g0')}
-                  >
-                    <div
-                      className={clsx(
-                        styles.DivMultilineTextContainer,
-                        'e1ozkfi0'
-                      )}
-                    >
-                      <div
-                        className={clsx(styles.DivMultilineText, 'e1ozkfi1')}
-                      >
-                        <div
-                          data-e2e="video-desc"
-                          className={clsx(
-                            styles.DivDescriptionContentContainer,
-                            'ejg0rhn1'
-                          )}
-                        >
-                          {videoData.caption.map((item, index) => {
-                            if (item.type === 'hashtag') {
-                              return (
-                                <a
-                                  key={index}
-                                  data-e2e="search-common-link"
-                                  target="_self"
-                                  rel="opener"
-                                  className={clsx(
-                                    styles.StyledCommonLink,
-                                    'ejg0rhn6',
-                                    'link-a11y-focus'
-                                  )}
-                                  href={`/tag/${item.text.replace(
-                                    '#',
-                                    ''
-                                  )}?lang=en`}
-                                >
-                                  <strong
-                                    color="rgba(143, 190, 233, 1)"
-                                    className={clsx(
-                                      styles.StrongText,
-                                      'ejg0rhn2'
-                                    )}
-                                  >
-                                    {item.text}{' '}
-                                  </strong>
-                                </a>
-                              );
-                            }
-                            return (
-                              <span key={index} data-e2e="new-desc-span">
-                                {item.text}{' '}
-                              </span>
-                            );
-                          })}
-                        </div>
-                      </div>
-                      <button
-                        type="button"
-                        height="18"
-                        className={clsx(
-                          styles['ButtonExpand-StyledButtonBottom'],
-                          'e1ozkfi3'
-                        )}
-                      >
-                        more
-                      </button>
-                    </div>
-                  </div>
+                    className={clsx(styles.DivPlayerControlsRight, 'e16pyws85')}
+                  ></div>
                 </div>
-                <div
-                  className={clsx(styles.DivPlayerControlsRight, 'e16pyws85')}
-                ></div>
-              </div>
+              )}
             </div>
           </div>
         )}

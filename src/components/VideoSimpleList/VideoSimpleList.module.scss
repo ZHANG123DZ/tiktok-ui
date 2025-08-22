@@ -1,0 +1,23 @@
+.DivListContainer {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: rgb(18, 18, 18);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+.DivVideoListContainer {
+  width: 100%;
+  overflow: hidden auto;
+  position: relative;
+  padding-inline-start: 23.5px;
+  flex-wrap: wrap;
+  display: flex;
+}
+.DivVideoListContainer:first-of-type {
+  padding-top: 20px;
+}

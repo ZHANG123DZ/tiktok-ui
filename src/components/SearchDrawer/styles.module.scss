@@ -82,6 +82,7 @@
   -webkit-box-align: center;
   align-items: center;
 }
+
 .H4ItemText {
   font-family: 'Montserrat';
   font-weight: 600;
@@ -112,3 +113,117 @@
 //DivSearchFormContainer: END
 
 //DivSearchContainer: END
+.DivIconWrapper {
+  font-size: 0px;
+}
+.DivSearchIconContainer {
+  height: 20px;
+  flex: 0 0 20px;
+  border-radius: 50%;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+  font-size: 15px;
+  margin-right: 8px;
+}
+.DivActionContainer {
+  opacity: 0;
+  margin-left: 8px;
+  width: 24px;
+  flex: 0 0 24px;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 22px;
+}
+.DivSugItemContent {
+  flex: 0 1 auto;
+  min-width: 0px;
+  width: 100%;
+}
+.DivSugItemWrapper {
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.H4ItemTitle {
+  font-size: 16px;
+  line-height: 21px;
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.LiItemContainer:hover .DivActionContainer {
+  opacity: 1;
+}
+.StyledXMarkDark {
+  margin-left: auto;
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.StyledClockFillDark {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+.H4ItemText {
+  font-family: TikTokFont;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-right: 12px;
+  padding-left: 8px;
+}
+.DivFooter {
+  width: 100%;
+  padding: 12px 0px;
+  cursor: pointer;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  text-align: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.DivFooterText {
+  font-family: TikTokFont;
+  font-weight: 600;
+  margin-left: 2px;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 15px;
+  line-height: 18px;
+}
+.StyledChevronDownDark {
+  margin-left: 2px;
+  width: 12px;
+  height: 12px;
+}
+.LiItemContainer:hover {
+  background-color: rgb(255, 255, 255, 0.04);
+}
+.DivMark {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  flex-shrink: 0;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.DivMarkDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.34);
+}

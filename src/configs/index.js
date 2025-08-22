@@ -12,8 +12,11 @@ const config = {
     live: '/live',
     login: '/login',
     register: '/register',
-    search: '/search',
-    profile: '/@:username',
+    search: '/search/:search',
+    tag: '/tag/:name',
+    music: '/music/:name',
+    videoDetail: '/:username/video/:slug',
+    profile: '/:username',
     notFound: '*',
   },
 };

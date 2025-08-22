@@ -1,6 +1,7 @@
 import DiscoverCard from '../../components/VideoCard';
 import { Tab, TabList, TabPanels, Tabs } from '../../components/Tabs/Tabs';
 import styles from './Discover.module.scss';
+import VideoList from '../../components/VideoList';
 
 function Discover() {
   return (
@@ -33,28 +34,9 @@ function Discover() {
           </div>
 
           <TabPanels>
-            <div className={styles.DivThreeColumnContainer}>
-              <div className={styles.DivVideoFeedV2}>
-                <DiscoverCard />
-                <DiscoverCard />
-                <DiscoverCard />
-                <DiscoverCard />
-                <DiscoverCard />
-                <DiscoverCard />
-                <DiscoverCard />
-                <DiscoverCard />
-              </div>
-            </div>
-            <div className={styles.DivThreeColumnContainer}>
-              <div className={styles.DivVideoFeedV2}>
-                <DiscoverCard />
-              </div>
-            </div>
-            <div className={styles.DivThreeColumnContainer}>
-              <div className={styles.DivVideoFeedV2}>
-                <DiscoverCard />
-              </div>
-            </div>
+            <VideoList variant="discover" />
+            <VideoList variant="discover" />
+            <VideoList variant="discover" />
           </TabPanels>
         </Tabs>
         {/* DivCategoryListWrapper */}

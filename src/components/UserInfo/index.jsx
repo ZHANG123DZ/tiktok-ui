@@ -1,6 +1,18 @@
+import { useState } from 'react';
 import styles from './UserInfo.module.scss';
+import clsx from 'clsx';
+import formatNumberShort from '../../utils/formatNumberShort';
+import VerifyBadge from '../VerifyBadge';
 
-function UserInfo({ user }) {
+function UserInfo({ user, showFollowButton = false }) {
+  const [follow, setFollow] = useState(user?.isFollow);
+  const [followers, setFollowers] = useState(user?.followers);
+
+  const toggleFollow = async () => {
+    setFollow((prev) => !prev);
+    setFollowers((prev) => (follow ? prev - 1 : prev + 1));
+  };
+
   return (
     <div
       data-e2e="search-user-container"
@@ -46,7 +58,9 @@ function UserInfo({ user }) {
           >
             <p data-e2e="search-user-unique-id" className={styles['PTitle']}>
               {user.username}
+              {user?.isVerifiedBadge && <VerifyBadge />}
             </p>
+
             <div className={styles['DivSubTitleWrapper']}>
               <p
                 data-e2e="search-user-nickname"
@@ -56,10 +70,33 @@ function UserInfo({ user }) {
               </p>{' '}
               ·{' '}
               <strong data-e2e="search-follow-count">
-                {user.followers} <span>Followers</span>
+                {formatNumberShort(followers)} <span>Followers</span>
               </strong>
             </div>
+            <p data-e2e="search-user-desc" className={styles.PDesc}>
+              <strong>{user?.description} </strong>
+            </p>
           </a>
+          {showFollowButton && (
+            <div className={styles.DivFollowButtonContainer}>
+              <div className={styles.DivFollowButtonWrapperV2}>
+                <button
+                  type="button"
+                  data-e2e="follow-button"
+                  aria-label="Follow Aom"
+                  className={
+                    follow
+                      ? styles['Button-StyledUnFollowButtonV2']
+                      : styles['Button-StyledFollowButtonV2']
+                  }
+                  style={{ height: '35px' }}
+                  onClick={toggleFollow}
+                >
+                  {follow ? 'Following' : 'Follow'}
+                </button>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

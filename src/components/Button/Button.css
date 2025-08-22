@@ -86,6 +86,10 @@
   overflow: hidden;
   position: relative;
 }
+.TUXButton--medium .TUXButton-content > * + *,
+.TUXButton--large .TUXButton-content > * + * {
+  margin-left: 5.5px;
+}
 /* ButtonContent: END */
 
 /* About more styled for Button */
@@ -130,7 +134,11 @@
   border-radius: 4px;
   cursor: pointer;
 }
-
+.TUXButton--borderless {
+  padding-left: 0;
+  padding-right: 0;
+  min-width: 0;
+}
 .TUXButton--secondary.TUXButton--borderless {
   color: rgba(255, 255, 255, 0.75);
 }
@@ -140,13 +148,27 @@
 }
 
 .TUXButton--borderless:hover:not(.TUXButton--disabled) {
-  background-color: transparent;
   color: rgba(234, 40, 78, 1);
 }
-.TUXButton--secondary:hover:not(.TUXButton--disabled) {
-  background-color: var(--ui-shape-neutral-3);
+
+@media screen and (max-width: 768px) {
+  .css-3ryazn.TUXButton {
+    width: 2rem;
+    height: 2rem;
+  }
 }
-.TUXButton--secondary.TUXButton--borderless {
+.css-3ryazn.TUXButton {
+  min-width: unset;
+  aspect-ratio: 1 / 1;
+  padding: 0px;
   background-color: transparent;
-  color: var(--ui-text-1);
+  transition-property: height, width;
+  transition-duration: 300ms;
+  transition-timing-function: linear;
+  width: 3rem;
+  height: 3rem;
+}
+.TUXAlertBadgeDot-reference {
+  display: inline-block;
+  position: relative;
 }

@@ -1,71 +1,55 @@
-import ArrowFloatingIcon from '../components/Icon/ArrowFloatingIcon';
+// calculatePopoverPosition.js (Corrected)
+// This function should only calculate the position, not manipulate the DOM directly.
 
 /**
- * @param {HTMLElement} triggerElement - Phần tử DOM kích hoạt popover.
- * @param {HTMLElement} popoverElement - Phần tử DOM của popover.
- * @param {number} offset - Khoảng cách (px) giữa nút và popover.
- * @param {boolean} hasArrow - Có hiển thị mũi tên chỉ định hướng không.
- * @returns {{top: string, left: string, arrowDirection: string}} - Vị trí của popover và hướng của mũi tên.
+ * @param {HTMLElement} triggerElement - The DOM element that triggers the popover.
+ * @param {HTMLElement} popoverElement - The DOM element of the popover.
+ * @param {number} offset - The spacing (in pixels) between the trigger and the popover.
+ * @returns {{top: number, left: number, arrowDirection: string}} - The calculated position and arrow direction.
  */
-function calculatePopoverPosition(
-  triggerElement,
-  popoverElement,
-  offset = 8,
-  hasArrow = true
-) {
+function calculatePopoverPosition(triggerElement, popoverElement, offset = 8) {
+  if (!triggerElement || !popoverElement) {
+    return { top: 0, left: 0, arrowLeft: 10, arrowDirection: 'up' };
+  }
+
   const triggerRect = triggerElement.getBoundingClientRect();
   const popoverRect = popoverElement.getBoundingClientRect();
   const viewportWidth = window.innerWidth;
   const viewportHeight = window.innerHeight;
 
   let top = triggerRect.bottom + offset;
-  let left = triggerRect.right - popoverRect.width;
-  let arrowDirection = 'up'; // Mặc định mũi tên hướng lên
+  let left = triggerRect.left;
+  let arrowDirection = 'up';
 
-  // 1. Kiểm tra tràn màn hình bên trái
-  if (left < 0) {
-    left = triggerRect.left;
-  }
-
-  // 2. Kiểm tra tràn màn hình bên phải
+  // Nếu popover bị tràn phải → dịch sang trái 10px so với viewport
   if (left + popoverRect.width > viewportWidth) {
     left = viewportWidth - popoverRect.width;
   }
+  // Nếu popover bị tràn trái → đặt sát trái
+  if (left < 10) {
+    left = 10;
+  }
 
-  // 3. Kiểm tra tràn màn hình ở dưới
+  // Nếu tràn xuống dưới → hiển thị phía trên
   if (
     top + popoverRect.height > viewportHeight &&
     triggerRect.top > popoverRect.height + offset
   ) {
     top = triggerRect.top - popoverRect.height - offset;
-    arrowDirection = 'down'; // Chuyển mũi tên hướng xuống
+    arrowDirection = 'down';
   }
 
-  // Căn chỉnh popover và thêm mũi tên chỉ hướng (nếu có)
-  popoverElement.style.top = `${top}px`;
-  popoverElement.style.left = `${left}px`;
+  // Tính arrowLeft dựa trên vị trí dự kiến của popover
+  const triggerCenterX = triggerRect.left + triggerRect.width / 2;
+  let arrowLeft = triggerCenterX - left - 5;
 
-  if (hasArrow) {
-    // Logic thêm mũi tên SVG vào popover
-    const arrowSvg = document.createElement(<ArrowFloatingIcon />);
-    // ... thêm path SVG cho mũi tên ...
-    arrowSvg.style.position = 'absolute';
-    if (arrowDirection === 'up') {
-      // Định vị mũi tên phía trên popover, căn với nút
-      arrowSvg.style.top = `-${offset}px`;
-      arrowSvg.style.left = `${
-        triggerRect.left + triggerRect.width / 2 - left - 8
-      }px`; // Căn giữa với nút
-      arrowSvg.style.transform = 'rotate(180deg)';
-    } else {
-      // Định vị mũi tên phía dưới popover
-      arrowSvg.style.bottom = `-${offset}px`;
-      arrowSvg.style.left = `${
-        triggerRect.left + triggerRect.width / 2 - left - 8
-      }px`;
-    }
-    popoverElement.appendChild(arrowSvg);
+  // Giới hạn arrow trong popover (để không tràn)
+  if (arrowLeft < 10) arrowLeft = 10;
+  if (arrowLeft > popoverRect.width - 10) {
+    arrowLeft = popoverRect.width - 30;
   }
+
+  return { top, left, arrowLeft, arrowDirection };
 }
 
 export default calculatePopoverPosition;

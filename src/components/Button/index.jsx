@@ -1,11 +1,12 @@
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { faChevronRight, faSpinner } from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import './Button.css';
 import styles from './Button.module.scss';
 import { useCallback } from 'react';
+import Text from '../Text';
 
 function Button({
   children,
@@ -16,6 +17,7 @@ function Button({
   className = '',
   id = '',
   isDefault = false,
+  expand = '',
   capsule = false,
   primary = false,
   secondary = false,
@@ -90,6 +92,25 @@ function Button({
                 <div className={styles.DivIconWithRedDotContainer}>{icon}</div>
               </div>
             )}
+            {expand && (
+              <>
+                <div className="TUXButton-iconContainer">
+                  <Text
+                    className="StyledTUXText"
+                    style={{ color: 'inherit', fontSize: '15px' }}
+                  >
+                    {expand}
+                  </Text>
+                </div>
+                <div className="TUXButton-iconContainer">
+                  <FontAwesomeIcon
+                    icon={faChevronRight}
+                    fontSize={'16px'}
+                    color="var(--ui-shape-neutral-2)"
+                  />
+                </div>
+              </>
+            )}
             {label && <div className="TUXButton-label">{label}</div>}
             {children && <div>{children}</div>}
           </div>
@@ -117,8 +138,10 @@ Button.propTypes = {
   segmentControl: PropTypes.bool,
   mentionSuggest: PropTypes.bool,
   emoji: PropTypes.bool,
+  listIcon: PropTypes.array,
   styledButton: PropTypes.bool,
   unstyledButton: PropTypes.bool,
+  expand: PropTypes.string,
   onlyButton: PropTypes.bool,
   closeButton: PropTypes.bool,
   disabled: PropTypes.bool,

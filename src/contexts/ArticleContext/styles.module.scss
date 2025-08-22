@@ -40,3 +40,16 @@
     padding-inline: 1rem;
   }
 }
+
+.DivContentFlexLayout {
+  height: max-content;
+  display: flex;
+  flex-direction: row;
+  -webkit-box-flex: 1;
+  flex-grow: 1;
+  -webkit-box-align: end;
+  align-items: end;
+  -webkit-box-pack: center;
+  justify-content: center;
+  gap: 1rem;
+}

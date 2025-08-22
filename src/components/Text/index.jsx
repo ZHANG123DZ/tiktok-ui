@@ -11,6 +11,7 @@ const Text = ({
   display = false,
   truncate = false,
   label = false,
+  alignCenter = false,
   ...props
 }) => {
   return (
@@ -23,7 +24,8 @@ const Text = ({
         className && !styles[className] && className, // Class global nếu không có trong SCSS
         display && 'TUXText--tiktok-display',
         truncate && 'TUXText--truncate',
-        label && 'TUXMenuItem-label'
+        label && 'TUXMenuItem-label',
+        alignCenter && 'TUXMenuItem-align-center'
       )}
       {...props}
     >
@@ -40,6 +42,7 @@ Text.propTypes = {
   display: PropTypes.bool,
   truncate: PropTypes.bool,
   label: PropTypes.bool,
+  alignCenter: PropTypes.bool,
 };
 
 Text.defaultProps = {

@@ -275,3 +275,21 @@
   line-height: 24px;
   font-weight: 500;
 }
+.StyledTUXMoreOptionButton:global(.TUXButton):global(.TUXButton) {
+  min-width: 0px;
+  height: 2.5rem;
+  padding: 0px;
+}
+.StyledTUXMoreOptionButton:not(:hover) {
+  background-color: unset;
+}
+.StyledTUXMoreOptionButton > div {
+  gap: 1rem;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  margin-inline: 0.5rem;
+}
+.TUXAlertBadgeDot-reference {
+  display: inline-block;
+  position: relative;
+}

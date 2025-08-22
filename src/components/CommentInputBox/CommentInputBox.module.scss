@@ -1,0 +1,90 @@
+.DivCommentInputContainer {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end;
+  gap: 0.5rem;
+}
+.DivLayoutContainer {
+  flex: 1 1 auto;
+}
+
+.DivInputAreaContainer {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: end;
+  align-items: end;
+  background-color: rgba(255, 255, 255, 0.12);
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  padding: 0px 9px;
+  cursor: text;
+}
+.DivInputEditorContainer {
+  flex: 1 1 auto;
+  height: auto;
+  margin: 10px 0px;
+  margin-inline-end: 8px;
+  align-self: center;
+}
+.DivInputAreaContainer {
+  color: rgba(255, 255, 255, 0.9);
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  min-height: 17px;
+  max-height: 68px;
+  word-break: break-all;
+  overflow-y: auto;
+  font-size: 14px;
+  line-height: 17px;
+}
+.DivMentionButton {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  padding: 5px;
+  margin: 3px;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 8px;
+}
+.DivMentionButton svg {
+  width: 100%;
+  height: 100%;
+}
+.DivEmojiButton {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  padding: 5px;
+  margin: 3px;
+  cursor: pointer;
+  background-color: transparent;
+  border-radius: 8px;
+}
+.DivEmojiButton svg {
+  width: 100%;
+  height: 100%;
+}
+.DivPostButton {
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 600;
+  cursor: default;
+  flex: 0 0 48px;
+  font-size: 14px;
+  line-height: 39px;
+  text-align: right;
+  color: var(--ui-text-placeholder);
+  margin-right: 4px;
+}
+.DivInputAreaContainer .public-DraftEditorPlaceholder-root {
+  color: rgba(255, 255, 255, 0.75);
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  position: absolute;
+  pointer-events: none;
+  font-size: 14px;
+  line-height: 17px;
+}
+.DivInputAreaContainer .public-DraftEditor-content {
+  caret-color: rgb(255, 59, 92);
+}
