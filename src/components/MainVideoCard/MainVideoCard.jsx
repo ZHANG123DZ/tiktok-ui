@@ -13,6 +13,7 @@ import {
 import Text from '../Text';
 import MorePopover from '../MorePopover/MorePopover';
 import menuItemVideo from '../../configs/menuItemVideo.jsx';
+import { Link } from 'react-router-dom';
 
 const getInitialVolume = () => {
   const storedVolume = localStorage.getItem('videoVolume');
@@ -425,7 +426,7 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
               >
                 <source
                   className=""
-                  src={videoData.video}
+                  src={videoData.content}
                   type="video/mp4"
                   data-index="1"
                 />
@@ -514,7 +515,7 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
                     className={clsx(styles.DivAnchorTagWrapper, 'e1sksq2r0')}
                   >
                     <div className={clsx(styles.DivAnchorTag, 'e1sksq2r5')}>
-                      <a
+                      <Link
                         rel="opener"
                         target="_self"
                         className={clsx(
@@ -522,7 +523,7 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
                           'e65hkrg0',
                           'link-a11y-focus'
                         )}
-                        href={`/place/${videoData?.location}?lang=en`}
+                        to={`/place/${videoData?.location}?lang=en`}
                       >
                         <svg
                           fontSize="14px"
@@ -546,7 +547,7 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
                         <p className={clsx(styles.PAnchorTagName, 'e1sksq2r4')}>
                           {videoData?.location}
                         </p>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                 </div>
@@ -555,13 +556,13 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
                 className={clsx(styles.DivAuthorContentWrapper, 'e1qm78nh3')}
               >
                 <div className={clsx(styles.DivAuthorContainer, 'e1g2yhv84')}>
-                  <a
+                  <Link
                     className={clsx(
                       styles.StyledAuthorAnchor,
                       'e1g2yhv81',
                       'link-a11y-focus'
                     )}
-                    href={`/@${videoData.music.slug}?lang=en`}
+                    to={`/@${videoData.author.username}?lang=en`}
                   >
                     <div
                       data-e2e="video-author-uniqueid"
@@ -569,13 +570,10 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
                     >
                       {videoData.author.username}
                     </div>
-                  </a>
+                  </Link>
                 </div>
               </div>
-              <div
-                data-tux-color-scheme="dark"
-                className={clsx(styles.DivDescriptionWrapper, 'exnv47g0')}
-              >
+              <div className={clsx(styles.DivDescriptionWrapper, 'exnv47g0')}>
                 <div
                   className={clsx(styles.DivMultilineTextContainer, 'e1ozkfi0')}
                   style={{ overflowY: seeMore ? 'none' : 'unset' }}
@@ -594,9 +592,17 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
                         'ejg0rhn1'
                       )}
                     >
+                      <span
+                        data-e2e="new-desc-span"
+                        style={{
+                          fontWeight: '400',
+                        }}
+                      >
+                        {videoData?.title}{' '}
+                      </span>
                       {videoData.tags.map((tag, index) => (
-                        <React.Fragment key={tag.name}>
-                          <a
+                        <React.Fragment key={tag}>
+                          <Link
                             data-e2e="search-common-link"
                             target="_self"
                             rel="opener"
@@ -605,14 +611,14 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
                               'ejg0rhn6',
                               'link-a11y-focus'
                             )}
-                            href={`/tag/${tag.slug}?lang=en`}
+                            to={`/tag/${tag}?lang=en`}
                           >
                             <strong
                               className={clsx(styles.StrongText, 'ejg0rhn2')}
                             >
-                              {`#${tag.name}`}
+                              {`#${tag}`}
                             </strong>
-                          </a>
+                          </Link>
 
                           {index < videoData.tags.length - 1 && (
                             <span data-e2e="new-desc-span"> </span>
@@ -649,26 +655,29 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
                       data-e2e="video-music"
                       className={clsx(styles.H4Link, 'epjbyn0')}
                     >
-                      <a
+                      <Link
                         target="_self"
                         rel="opener"
-                        aria-label={`Watch more videos with music nhạc nền - ${data.music.name}`}
+                        aria-label={`Watch more videos with music nhạc nền - ${data.music.title}`}
                         className={clsx(
                           styles.StyledLink,
                           'media-card-music-info',
                           'epjbyn1',
                           'link-a11y-focus'
                         )}
-                        href={`/music/nhạc-nền-${data.music.slug}`}
+                        to={`/music/${
+                          data.music.author?.name.replaceAll(' ', '-') + '-' ||
+                          ''
+                        }${data.music.id}`}
                       >
                         <FontAwesomeIcon
                           icon={faMusic}
                           className={styles.MusicNoteIcon}
                         />
                         <div className={clsx(styles.DivMusicText, 'epjbyn3')}>
-                          {`nhạc nền - ${data.music.name}`}
+                          {`${data.music.author?.name || data.music.id}`}
                         </div>
-                      </a>
+                      </Link>
                     </div>
                   </div>
                   <div

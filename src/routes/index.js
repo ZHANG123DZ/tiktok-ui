@@ -11,6 +11,8 @@ import Friends from '../page/Friends';
 import Search from '../page/Search';
 import Tag from '../page/Tag';
 import Music from '../page/Music';
+import DirectMessages from '../page/DirectMessages';
+import LogoutConfirm from '../components/LogoutConfirm';
 
 const routes = [
   {
@@ -34,11 +36,6 @@ const routes = [
   {
     path: config.routes.upload,
     component: Upload,
-    protected: true,
-  },
-  {
-    path: config.routes.message,
-    component: Home,
     protected: true,
   },
   {
@@ -67,9 +64,15 @@ const routes = [
     component: Tag,
   },
   {
+    path: config.routes.message,
+    component: DirectMessages,
+    protected: true,
+  },
+  {
     path: config.routes.music,
     component: Music,
   },
+  { path: 'logout', component: LogoutConfirm },
   {
     path: '*',
     component: UserRouter,

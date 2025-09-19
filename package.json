@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@draft-js-plugins/editor": "^4.1.4",
+    "@draft-js-plugins/image": "^4.1.4",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@floating-ui/react": "^0.27.8",
@@ -28,6 +30,7 @@
     "@vitejs/plugin-react-swc": "^4.0.0",
     "axios": "^1.8.4",
     "clsx": "^2.1.1",
+    "draft-js": "^0.11.7",
     "fuse.js": "^7.1.0",
     "interact": "^0.0.3",
     "lodash-es": "^4.17.21",

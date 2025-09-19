@@ -3,16 +3,23 @@ import styles from './UserInfo.module.scss';
 import clsx from 'clsx';
 import formatNumberShort from '../../utils/formatNumberShort';
 import VerifyBadge from '../VerifyBadge';
+import { Link } from 'react-router-dom';
 
-function UserInfo({ user, showFollowButton = false }) {
+function UserInfo({
+  user,
+  showFollowers = false,
+  showBio = false,
+  showFollowButton = false,
+}) {
   const [follow, setFollow] = useState(user?.isFollow);
-  const [followers, setFollowers] = useState(user?.followers);
+  const [followers, setFollowers] = useState(user?.followerCount);
 
   const toggleFollow = async () => {
     setFollow((prev) => !prev);
     setFollowers((prev) => (follow ? prev - 1 : prev + 1));
   };
 
+  if (!user?.name) return null;
   return (
     <div
       data-e2e="search-user-container"
@@ -24,12 +31,12 @@ function UserInfo({ user, showFollowButton = false }) {
     >
       <div className={styles['DivItemContainer']}>
         <div className={styles['DivUserInfoContainer']}>
-          <a
+          <Link
             tabIndex={-1}
             data-e2e="search-user-avatar"
             aria-label={`${user.name}’s profile`}
             className={`${styles['StyledAvatarUserLink']} link-a11y-focus`}
-            href={`/@${user.username}`}
+            to={`/@${user.username}`}
           >
             <div
               className={styles['DivContainer']}
@@ -48,12 +55,12 @@ function UserInfo({ user, showFollowButton = false }) {
                 />
               </span>
             </div>
-          </a>
-          <a
+          </Link>
+          <Link
             data-e2e="search-user-info-container"
             tabIndex={-1}
             className={`${styles['StyledDivInfoWrapper']} link-a11y-focus`}
-            href={`/@${user.username}`}
+            to={`/@${user.username}`}
             style={{ textDecoration: 'none' }}
           >
             <p data-e2e="search-user-unique-id" className={styles['PTitle']}>
@@ -68,15 +75,18 @@ function UserInfo({ user, showFollowButton = false }) {
               >
                 {user.name}
               </p>{' '}
-              ·{' '}
-              <strong data-e2e="search-follow-count">
-                {formatNumberShort(followers)} <span>Followers</span>
-              </strong>
+              {showFollowers && (
+                <strong data-e2e="search-follow-count">
+                  {'.'} {formatNumberShort(followers)} <span>Followers</span>
+                </strong>
+              )}
             </div>
-            <p data-e2e="search-user-desc" className={styles.PDesc}>
-              <strong>{user?.description} </strong>
-            </p>
-          </a>
+            {showBio && (
+              <p data-e2e="search-user-desc" className={styles.PDesc}>
+                <strong>{user?.bio} </strong>
+              </p>
+            )}
+          </Link>
           {showFollowButton && (
             <div className={styles.DivFollowButtonContainer}>
               <div className={styles.DivFollowButtonWrapperV2}>

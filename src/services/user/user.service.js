@@ -2,7 +2,12 @@ import httpRequest from '../../utils/httpRequest';
 
 export const getUser = async (userName) => {
   const res = await httpRequest.get(`/users/${userName}`);
-  return res;
+  return res.data;
 };
 
-export default { getUser };
+export const getUserPosts = async (userName) => {
+  const res = await httpRequest.get(`/users/${userName}/posts`);
+  return res.data;
+};
+
+export default { getUser, getUserPosts };

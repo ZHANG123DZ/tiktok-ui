@@ -32,15 +32,14 @@ function RegisterFinal() {
   } = methods;
 
   const onSubmit = async (data) => {
-    // payload.username = data.username;
-    dispatch(setRegister(payload));
-    console.log('Dayd là payload: ', payload);
+    const newPayload = { ...payload, username: data.username };
+    dispatch(setRegister(newPayload));
     try {
-      // const res = await authService.register(payload);
-      // if (res.success === true) {
-      //   toast.success('Đăng ký thành công', { closeButton: true });
-      //   closeModal();
-      // }
+      const res = await authService.register(payload);
+      if (res.success === true) {
+        toast.success('Đăng ký thành công', { closeButton: true });
+        closeModal();
+      }
     } catch (error) {
       toast.error('Đăng ký thất bại', { closeButton: true });
       console.log(error);
@@ -70,7 +69,11 @@ function RegisterFinal() {
         >
           Bỏ qua
         </button>
-        <Button styledButton type="submit" disabled={!isFilled || isSubmitting}>
+        <Button
+          styledButton
+          type="submit"
+          disabled={!isFilled || isSubmitting || isLoading}
+        >
           Tiếp
         </Button>
       </Form>
@@ -79,16 +82,3 @@ function RegisterFinal() {
 }
 //Tên người dùng này không khả dụng. Hãy thử tên người dùng được gợi ý hoặc nhập tên người dùng mới.
 export default RegisterFinal;
-{
-  /* <div class="css-10djjbw-DivSuggestListWrapper e1ulspo0">
-  <div class="css-myif39-DivLabel e1ulspo1">Được đề xuất</div>
-  <ul class="css-3s5rn0-UlList e1ulspo2">
-    <li class="css-1v3wwlv-LiListItem e1ulspo3">rdtf30</li>
-    <li class="css-1v3wwlv-LiListItem e1ulspo3">rdtf56</li>
-    <li class="css-1v3wwlv-LiListItem e1ulspo3">rdtf98</li>
-    <li class="css-1v3wwlv-LiListItem e1ulspo3">rdtf104</li>
-    <li class="css-1v3wwlv-LiListItem e1ulspo3">rdtf223</li>
-    <li class="css-1v3wwlv-LiListItem e1ulspo3">rdtf260</li>
-  </ul>
-</div>; */
-}

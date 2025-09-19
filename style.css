@@ -249,6 +249,182 @@ html *::-webkit-scrollbar-track {
   --ToastDefault: rgba(84, 84, 84, 0.92);
   --ToastNegative: rgba(255, 76, 58, 0.92);
 }
+[data-tux-color-scheme='light'] {
+  --brand-ai-1: rgba(132, 112, 255, 1);
+  --brand-oscar-gold: rgba(186, 158, 94, 1);
+  --brand-tako-1: rgba(0, 181, 238, 1);
+  --brand-tako-2: rgba(0, 0, 0, 1);
+  --brand-tiktok-plus-1: rgba(178, 132, 43, 1);
+  --brand-tiktok-background: rgba(255, 255, 255, 1);
+  --brand-tiktok-background-element: rgba(0, 0, 0, 1);
+  --brand-tiktok-black: rgba(0, 0, 0, 1);
+  --brand-tiktok-razzmatazz: rgba(254, 44, 85, 1);
+  --brand-tiktok-splash: rgba(37, 244, 238, 1);
+  --brand-tiktok-spotlight: rgba(0, 0, 0, 1);
+  --brand-tiktok-subject-in-spotlight: rgba(255, 255, 255, 1);
+  --brand-tiktok-white: rgba(255, 255, 255, 1);
+  --brand-tiktokphotos-1: rgba(100, 250, 205, 1);
+  --brand-tiktokphotos-2: rgba(0, 170, 150, 1);
+  --brand-tokopedia-1: rgba(0, 170, 91, 1);
+  --creation-adjust-background: rgba(255, 178, 215, 1);
+  --creation-adjust-hsl-blue: rgba(50, 152, 246, 1);
+  --creation-adjust-hsl-cyan: rgba(53, 225, 225, 1);
+  --creation-adjust-hsl-fuchsia: rgba(201, 46, 255, 1);
+  --creation-adjust-hsl-green: rgba(120, 194, 94, 1);
+  --creation-adjust-hsl-indigo: rgba(88, 86, 214, 1);
+  --creation-adjust-hsl-orange: rgba(255, 147, 61, 1);
+  --creation-adjust-hsl-red: rgba(255, 82, 82, 1);
+  --creation-adjust-hsl-yellow: rgba(242, 205, 70, 1);
+  --creation-adjust-label: rgba(142, 31, 84, 1);
+  --creation-filter-background: rgba(255, 191, 191, 1);
+  --creation-filter-label: rgba(139, 35, 41, 1);
+  --creation-flash-light-cold: rgba(211, 234, 255, 1);
+  --creation-flash-light-warm: rgba(255, 242, 205, 1);
+  --creation-glance-watermark: rgba(255, 248, 90, 1);
+  --creation-pill-overlay: rgba(230, 230, 230, 0.28);
+  --ec-black-text-1: rgba(0, 0, 0, 1);
+  --ec-black-text-2: rgba(0, 0, 0, 0.65);
+  --ec-black-text-3: rgba(0, 0, 0, 0.48);
+  --ec-cyan-banner: rgba(240, 251, 251, 1);
+  --ec-cyan-border: rgba(0, 140, 141, 0.14);
+  --ec-cyan-main: rgba(0, 184, 185, 1);
+  --ec-cyan-tag: rgba(0, 184, 185, 0.12);
+  --ec-cyan-text: rgba(8, 146, 146, 1);
+  --ec-cyan-text-on-tag: rgba(8, 146, 146, 1);
+  --ec-primary-banner: rgba(255, 242, 245, 1);
+  --ec-primary-border: rgba(225, 5, 67, 0.1);
+  --ec-primary-tag: rgba(254, 44, 85, 0.12);
+  --ec-primary-text-on-tag: rgba(225, 5, 67, 1);
+  --ec-white-text-1: rgba(246, 246, 246, 1);
+  --ec-white-text-2: rgba(255, 255, 255, 0.88);
+  --ec-white-text-3: rgba(255, 255, 255, 0.6);
+  --feed-anchor-bg: rgba(37, 37, 37, 0.34);
+  --feed-top-tab-text-shadow-a30: rgba(0, 0, 0, 0.3);
+  --feed-top-tab-text-shadow-a40: rgba(0, 0, 0, 0.4);
+  --feed-top-tab-text-shadow-a50: rgba(0, 0, 0, 0.5);
+  --feed-top-tab-text-shadow-a66: rgba(0, 0, 0, 0.66);
+  --feed-top-tab-text-shadow-a83: rgba(0, 0, 0, 0.83);
+  --localservice-poi: rgba(19, 189, 144, 1);
+  --localservice-poi-background: rgba(19, 189, 144, 0.12);
+  --misc-online-shape: rgba(29, 215, 101, 1);
+  --misc-online-text: rgba(0, 165, 69, 1);
+  --misc-rating-star-selected-fill: rgba(250, 206, 21, 1);
+  --misc-verified-badge-1: rgba(32, 213, 236, 1);
+  --misc-verified-badge-2: rgba(255, 255, 255, 1);
+  --profile-icon-background-dark-gray: rgba(124, 124, 124, 0.9);
+  --social-chat-gradient-blue-1: rgba(0, 184, 211, 1);
+  --social-chat-gradient-blue-2: rgba(0, 173, 210, 1);
+  --social-chat-gradient-blue-3: rgba(23, 135, 217, 1);
+  --social-snail-1: rgba(124, 92, 253, 1);
+  --social-story-gradient-green-1: rgba(11, 171, 249, 1);
+  --social-story-gradient-green-2: rgba(32, 214, 235, 1);
+  --social-story-gradient-green-3: rgba(10, 243, 185, 1);
+  --social-story-gradient-purple-1: rgba(95, 124, 255, 1);
+  --social-story-gradient-purple-2: rgba(115, 102, 254, 1);
+  --social-story-gradient-purple-3: rgba(131, 90, 247, 1);
+  --social-story-shape-purple: rgba(124, 92, 253, 0.66);
+  --social-text-streak: rgba(255, 102, 19, 1);
+  --ui-image-overlay-black: rgba(0, 0, 0, 1);
+  --ui-image-overlay-black-a15: rgba(0, 0, 0, 0.15);
+  --ui-image-overlay-black-a25: rgba(0, 0, 0, 0.25);
+  --ui-image-overlay-black-a50: rgba(0, 0, 0, 0.5);
+  --ui-image-overlay-black-a80: rgba(0, 0, 0, 0.8);
+  --ui-image-overlay-dark-gray-a30: rgba(51, 51, 51, 0.3);
+  --ui-image-overlay-dark-gray-a60: rgba(51, 51, 51, 0.6);
+  --ui-image-overlay-dark-gray-a85: rgba(51, 51, 51, 0.85);
+  --ui-image-overlay-white: rgba(255, 255, 255, 1);
+  --ui-image-overlay-white-a20: rgba(255, 255, 255, 0.2);
+  --ui-image-overlay-white-a40: rgba(255, 255, 255, 0.4);
+  --ui-image-overlay-white-a75: rgba(255, 255, 255, 0.75);
+  --ui-page-flat-1: rgba(255, 255, 255, 1);
+  --ui-page-flat-2: rgba(248, 248, 248, 1);
+  --ui-page-flat-3: rgba(255, 255, 255, 1);
+  --ui-page-grouped-1: rgba(245, 245, 245, 1);
+  --ui-page-grouped-2: rgba(255, 255, 255, 1);
+  --ui-page-grouped-3: rgba(248, 248, 248, 1);
+  --ui-shape-danger: rgba(255, 76, 58, 1);
+  --ui-shape-danger-2: rgba(255, 76, 58, 0.32);
+  --ui-shape-danger-3: rgba(255, 76, 58, 0.21);
+  --ui-shape-danger-4: rgba(255, 76, 58, 0.09);
+  --ui-shape-info: rgba(0, 117, 220, 1);
+  --ui-shape-info-2: rgba(0, 117, 220, 0.3);
+  --ui-shape-info-3: rgba(0, 117, 220, 0.19);
+  --ui-shape-info-4: rgba(0, 117, 220, 0.1);
+  --ui-shape-neutral: rgba(0, 0, 0, 1);
+  --ui-shape-neutral-2: rgba(0, 0, 0, 0.17);
+  --ui-shape-neutral-3: rgba(0, 0, 0, 0.12);
+  --ui-shape-neutral-4: rgba(0, 0, 0, 0.05);
+  --ui-shape-primary: rgba(254, 44, 85, 1);
+  --ui-shape-primary-2: rgba(254, 44, 85, 0.31);
+  --ui-shape-primary-3: rgba(254, 44, 85, 0.18);
+  --ui-shape-primary-4: rgba(254, 44, 85, 0.07);
+  --ui-shape-secondary: rgba(32, 213, 236, 1);
+  --ui-shape-secondary-2: rgba(32, 213, 236, 0.5);
+  --ui-shape-secondary-3: rgba(32, 213, 236, 0.32);
+  --ui-shape-secondary-4: rgba(32, 213, 236, 0.13);
+  --ui-shape-secondary-5: rgba(32, 213, 236, 0.05);
+  --ui-shape-secondary-muted: rgba(0, 162, 201, 1);
+  --ui-shape-secondary-muted-2: rgba(0, 162, 201, 0.33);
+  --ui-shape-secondary-muted-3: rgba(0, 162, 201, 0.24);
+  --ui-shape-secondary-muted-4: rgba(0, 162, 201, 0.12);
+  --ui-shape-success: rgba(11, 224, 155, 1);
+  --ui-shape-success-2: rgba(11, 224, 155, 0.48);
+  --ui-shape-success-3: rgba(11, 224, 155, 0.28);
+  --ui-shape-success-4: rgba(11, 224, 155, 0.12);
+  --ui-shape-text-1-on-danger: rgba(255, 255, 255, 1);
+  --ui-shape-text-1-on-info: rgba(231, 244, 255, 1);
+  --ui-shape-text-1-on-neutral: rgba(255, 255, 255, 1);
+  --ui-shape-text-1-on-primary: rgba(255, 255, 255, 1);
+  --ui-shape-text-1-on-secondary: rgba(0, 52, 60, 1);
+  --ui-shape-text-1-on-secondary-muted: rgba(255, 255, 255, 1);
+  --ui-shape-text-1-on-success: rgba(0, 54, 40, 1);
+  --ui-shape-text-1-on-warning: rgba(45, 18, 0, 1);
+  --ui-shape-text-2-on-danger: rgba(255, 203, 190, 1);
+  --ui-shape-text-2-on-info: rgba(142, 202, 255, 1);
+  --ui-shape-text-2-on-neutral: rgba(255, 255, 255, 0.6);
+  --ui-shape-text-2-on-primary: rgba(255, 217, 218, 1);
+  --ui-shape-text-2-on-secondary: rgba(0, 102, 116, 1);
+  --ui-shape-text-2-on-secondary-muted: rgba(177, 240, 255, 1);
+  --ui-shape-text-2-on-success: rgba(0, 133, 104, 1);
+  --ui-shape-text-2-on-warning: rgba(144, 74, 0, 1);
+  --ui-shape-text-on-secondary-2-or-3: rgba(1, 67, 75, 1);
+  --ui-shape-text-on-secondary-4-or-5: rgba(2, 109, 122, 1);
+  --ui-shape-text-on-secondary-muted-2-or-3: rgba(10, 65, 81, 1);
+  --ui-shape-text-on-secondary-muted-4-or-5: rgba(23, 106, 131, 1);
+  --ui-shape-warning: rgba(255, 149, 0, 1);
+  --ui-shape-warning-2: rgba(255, 149, 0, 0.48);
+  --ui-shape-warning-3: rgba(255, 149, 0, 0.28);
+  --ui-shape-warning-4: rgba(255, 149, 0, 0.12);
+  --ui-sheet-backdrop-1: rgba(0, 0, 0, 0.5);
+  --ui-sheet-backdrop-2: rgba(0, 0, 0, 0.2);
+  --ui-sheet-flat-1: rgba(255, 255, 255, 1);
+  --ui-sheet-flat-2: rgba(248, 248, 248, 1);
+  --ui-sheet-flat-3: rgba(255, 255, 255, 1);
+  --ui-sheet-grouped-1: rgba(245, 245, 245, 1);
+  --ui-sheet-grouped-2: rgba(255, 255, 255, 1);
+  --ui-sheet-grouped-3: rgba(248, 248, 248, 1);
+  --ui-text-1: rgba(0, 0, 0, 1);
+  --ui-text-1-display: rgba(32, 32, 32, 1);
+  --ui-text-2: rgba(0, 0, 0, 0.65);
+  --ui-text-3: rgba(0, 0, 0, 0.48);
+  --ui-text-danger: rgba(218, 49, 35, 1);
+  --ui-text-danger-display: rgba(255, 76, 58, 1);
+  --ui-text-info: rgba(43, 93, 185, 1);
+  --ui-text-info-display: rgba(0, 117, 219, 1);
+  --ui-text-placeholder: rgba(0, 0, 0, 0.34);
+  --ui-text-primary: rgba(225, 5, 67, 1);
+  --ui-text-primary-display: rgba(254, 44, 85, 1);
+  --ui-text-secondary: rgba(0, 158, 178, 1);
+  --ui-text-secondary-display: rgba(0, 186, 208, 1);
+  --ui-text-success: rgba(0, 133, 104, 1);
+  --ui-text-success-display: rgba(0, 195, 155, 1);
+  --ui-text-warning: rgba(179, 96, 0, 1);
+  --ui-text-warning-display: rgba(255, 149, 0, 1);
+  --ui-search-button: rgba(242, 242, 242, 1);
+}
+[data-tux-color-scheme='light'] {
+  --tux-v2-pressed-state-strong-opacity: 0.2;
+}
 [data-tux-color-scheme='dark'] {
   --tux-v2-pressed-state-strong-opacity: 0.4;
 }
@@ -423,6 +599,7 @@ html *::-webkit-scrollbar-track {
   --ui-text-success-display: rgba(11, 224, 155, 1);
   --ui-text-warning: rgba(255, 181, 84, 1);
   --ui-text-warning-display: rgba(255, 149, 0, 1);
+  --ui-search-button: rgba(31, 31, 31, 1);
 }
 [data-theme='dark'],
 [data-tux-theme='dark'] {
@@ -719,13 +896,18 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-body a {
+body a[data-theme='dark'] {
   color: rgba(255, 255, 255, 0.9);
   transition: color 250ms;
   text-decoration: none;
   cursor: pointer;
 }
-
+body a[data-theme='light'] {
+  color: rgba(22, 24, 35, 1);
+  transition: color 250ms;
+  text-decoration: none;
+  cursor: pointer;
+}
 button {
   background-color: transparent;
   border: 0px;
@@ -736,8 +918,12 @@ button,
   cursor: pointer;
 }
 
-a {
-  color: #000;
+[data-theme='dark'] a {
+  color: #fff;
+  text-decoration: none;
+}
+[data-theme='light'] a {
+  color: rgb(22, 24, 35);
   text-decoration: none;
 }
 .ALink {

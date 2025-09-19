@@ -184,11 +184,8 @@
   line-height: 24px;
   font-weight: 500;
 }
-.ButtonCategoryItemContainer:hover {
-  color: rgba(255, 255, 255, 0.75);
-  background-color: rgba(255, 255, 255, 0.1);
-}
-:global(.tab-active) .ButtonCategoryItemContainer {
+
+.ButtonCategoryItemContainer[data-active='true'] {
   display: flex;
   -webkit-box-align: center;
   align-items: center;
@@ -201,4 +198,8 @@
   border: none;
   background-color: rgb(241, 241, 241);
   color: rgb(22, 24, 35);
+}
+.ButtonCategoryItemContainer:hover {
+  color: rgba(255, 255, 255, 0.75);
+  background-color: rgba(255, 255, 255, 0.1);
 }

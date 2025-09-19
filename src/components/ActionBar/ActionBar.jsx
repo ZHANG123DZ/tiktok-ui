@@ -16,13 +16,13 @@ import { useArticle } from '../../contexts/ArticleContext';
 
 export default function ActionBar({ data }) {
   const [liked, setLiked] = useState(data.isLiked);
-  const [likes, setLikes] = useState(data.likes);
+  const [likes, setLikes] = useState(data.likeCount);
   const [bookMarked, setBookMarked] = useState(data.isBookMarked);
-  const [bookMarks, setBookMarks] = useState(data.bookMarks);
-  const [follow, setFollow] = useState(data.isFollow);
+  const [bookMarks, setBookMarks] = useState(data.bookMarkCount);
+  const [follow, setFollow] = useState(data.author.isFollow);
   const [tickShown, setTickShown] = useState(false);
-  const [comments, setComments] = useState(data.comments);
-  const [share, setShare] = useState(data.share);
+  const [comments, setComments] = useState(data.commentCount);
+  const [share, setShare] = useState(data.shareCount);
   const shareRef = useRef(null);
   const { clickCommentsButton, clickShareButton } = useArticle();
 
@@ -222,14 +222,16 @@ export default function ActionBar({ data }) {
           target="_self"
           rel="opener"
           data-e2e="video-music"
-          aria-label={`Watch more videos with music nhạc nền - ${data.music.name}`}
+          aria-label={`Watch more videos with music nhạc nền - ${data.music.author}`}
           className="link-a11y-focus"
-          to={`/music/nhạc-nền-${data.music.slug}`}
+          to={`/music/${
+            data.music.author?.name.replaceAll(' ', '-') + '-' || ''
+          }${data.music.id}`}
         >
           <div
             className={clsx(styles.MusicCoverDisc, styles.e1nplrh00)}
             style={{
-              backgroundImage: `url(${data.music.poster})`,
+              backgroundImage: `url(${data.music.thumbnail})`,
             }}
           ></div>
         </Link>

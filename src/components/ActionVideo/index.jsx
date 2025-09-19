@@ -14,6 +14,7 @@ import Icon from '../Icon/Icon';
 import { useState } from 'react';
 import ShareModal from '../ShareModal';
 import handleCopy from '../../utils/handleCopy';
+import formatNumberShort from '../../utils/formatNumberShort';
 
 const ActionVideo = ({ data }) => {
   const buttons = [
@@ -106,9 +107,10 @@ const ActionVideo = ({ data }) => {
     },
   ];
   const [activeShare, setActiveShare] = useState(false);
-  const [liked, setLiked] = useState(data.isLiked);
-  const [likes, setLikes] = useState(data.likes);
-  const [bookMarked, setBookMarked] = useState(data.isBookMarked);
+  const [liked, setLiked] = useState(data?.isLiked || false);
+  const [likes, setLikes] = useState(data?.likeCount || 0);
+  const [bookMarks, setBookMarks] = useState(data?.bookMarkCount || 0);
+  const [bookMarked, setBookMarked] = useState(data?.isBookMarked || false);
 
   const toggleLike = () => {
     setLiked((prev) => !prev);
@@ -117,6 +119,7 @@ const ActionVideo = ({ data }) => {
 
   const toggleBookMarked = async () => {
     setBookMarked(!bookMarked);
+    setBookMarks((prev) => (bookMarks ? prev - 1 : prev + 1));
   };
 
   return (
@@ -127,13 +130,14 @@ const ActionVideo = ({ data }) => {
             {/* Like Button */}
             <button
               type="button"
-              aria-label="2162 Lượt thích"
+              aria-label={`${likes} Lượt thích`}
               aria-pressed="false"
               className={styles.ButtonActionItem}
             >
               <span
                 data-e2e="browse-like-icon"
                 className={styles.SpanIconWrapper}
+                onClick={() => toggleLike()}
               >
                 <FontAwesomeIcon
                   icon={faHeart}
@@ -144,14 +148,13 @@ const ActionVideo = ({ data }) => {
                       ? 'var(--ui-shape-primary)'
                       : 'rgba(255, 255, 255, .9)',
                   }}
-                  onClick={() => toggleLike()}
                 />
               </span>
               <strong
                 data-e2e="browse-like-count"
                 className={styles.StrongText}
               >
-                2162
+                {formatNumberShort(likes)}
               </strong>
             </button>
 
@@ -173,14 +176,17 @@ const ActionVideo = ({ data }) => {
                 data-e2e="browse-comment-count"
                 className={styles.StrongText}
               >
-                167
+                {data?.commentCount}
               </strong>
             </button>
 
             {/* Collect Button */}
             <div aria-expanded="false" aria-haspopup="dialog">
               <button type="button" className={styles.ButtonActionItem}>
-                <span className={styles.SpanIconWrapper}>
+                <span
+                  className={styles.SpanIconWrapper}
+                  onClick={() => toggleBookMarked()}
+                >
                   <FontAwesomeIcon
                     icon={faBookmark}
                     style={{
@@ -190,10 +196,11 @@ const ActionVideo = ({ data }) => {
                         ? 'rgb(255, 195, 0)'
                         : 'rgba(255, 255, 255, .9)',
                     }}
-                    onClick={() => toggleBookMarked()}
                   />
                 </span>
-                <strong className={styles.StrongText}>244</strong>
+                <strong className={styles.StrongText}>
+                  {formatNumberShort(bookMarks)}
+                </strong>
               </button>
             </div>
           </div>

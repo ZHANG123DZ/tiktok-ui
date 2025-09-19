@@ -1,6 +1,6 @@
 import UserCard from '../../components/UserCard';
 import styles from './styles.module.scss';
-
+//Call API
 function Friends() {
   return (
     <main className={styles.DivMainContainer}>

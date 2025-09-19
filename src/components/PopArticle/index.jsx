@@ -7,7 +7,7 @@ import {
   deletePost,
   getPosts,
   updatePost,
-} from '../../services/Posts/posts.service';
+} from '../../services/post/post.service';
 
 function PopoverArticle({ data, active, setPosts, setActive }) {
   const delPost = async () => {

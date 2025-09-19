@@ -82,16 +82,17 @@ function RegisterEmailForm() {
   //Action: Send Code
   const sendCode = async (email) => {
     try {
-      await authService.sendCode({ email });
+      await authService.sendCode({ target: email, action: 'verify_email' });
     } catch (error) {
       toast.error('Gửi mã Code thất bại! Vui lòng nhấn gửi lại!');
       console.log(error);
     }
   };
 
-  const verifyEmail = async (data) => {
+  const verifyCode = async (data) => {
+    const { email, code } = data;
     try {
-      await authService.verifyEmail(data);
+      await authService.verifyCode({ email, code, action: 'verify_email' });
       return true;
     } catch (error) {
       setError('code', {
@@ -115,7 +116,7 @@ function RegisterEmailForm() {
   //Đưa dữ liệu cho bước cuối cùng
   const onSubmit = async (data) => {
     try {
-      const verified = await verifyEmail(data);
+      const verified = await verifyCode(data);
       const email = await checkEmail(data);
       if (email) {
         setEmailExits(true);
@@ -127,7 +128,7 @@ function RegisterEmailForm() {
         throw new Error('Lỗi xác thực');
       }
       const { code, ...payload } = data;
-      dispatch(setRegister(payload)); //Đưa dữ liệu vào Redux
+      dispatch(setRegister(payload));
       dispatch(setComponent('finalRegister'));
     } catch (err) {
       console.error('Submit failed:', err);
@@ -150,7 +151,9 @@ function RegisterEmailForm() {
           errors={errors}
           watch={watch}
           setValue={setValue}
-          onChange={(field, value) => setValue(field, value)}
+          onChange={(field, value) => {
+            setValue(field, value);
+          }}
         />
         <div className={styles.DivDescription}>
           Email
@@ -247,7 +250,7 @@ function RegisterEmailForm() {
           name="code"
           targetField="email"
           requiredFields={['day', 'month', 'year', 'email']}
-          countDown={60}
+          countDown={0}
           errors={errors}
           trigger={trigger}
           register={register}

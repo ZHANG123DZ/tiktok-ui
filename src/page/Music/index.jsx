@@ -8,20 +8,19 @@ import {
   faPlay,
   faShare,
 } from '@fortawesome/free-solid-svg-icons';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
-import video1 from '/public/Download (1).mp4';
-import video2 from '/public/Download (2).mp4';
-import video3 from '/public/Download (3).mp4';
-import video4 from '/public/Download (4).mp4';
 import { useEffect, useRef, useState } from 'react';
 import VideoCard from '../../components/VideoCard';
 import ShareModal from '../../components/ShareModal';
 import Button from '../../components/Button';
 import MorePopover from '../../components/MorePopover/MorePopover';
-
+import musicService from '../../services/music/music.service';
+//Call API
 function Music() {
   const params = useParams();
+  const musicId = params.name.split('-').at(-1);
+
   const [activeShare, setActiveShare] = useState(false);
   const [videos, setVideos] = useState([]);
   const [music, setMusic] = useState({});
@@ -111,82 +110,12 @@ function Music() {
   };
 
   useEffect(() => {
-    const mockMusic = {
-      thumbnail:
-        'https://auvi.edu.vn/wp-content/uploads/2025/02/anh-gai-22.jpg',
-      video: video4,
-      videos: {
-        total: 300,
-      },
-      author: {
-        username: 'hi#dj',
-      },
+    const fetchMusic = async () => {
+      const musicData = await musicService.getMusic(musicId);
+      setMusic(musicData);
+      setVideos(musicData.posts);
     };
-    setMusic(mockMusic);
-  }, []);
-
-  useEffect(() => {
-    // Gọi API get list post của topic
-    const mockVideos = [
-      {
-        video: video1,
-        thumbnail:
-          'https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/avatar-anh-meo-cute-11.jpg',
-        description:
-          'Tổng thống Mỹ Donald Trump tuyên bố, sự kiên nhẫn của Mỹ đã cạn kiệt và ông đang cân nhắc có nên can dự sâu hơn vào cuộc xung đột này hay không. Những tuyên bố này của người đứng đầu Nhà Trắng như đổ thêm dầu vào ngọn lửa xung đột',
-        publishedAt: '2025-08-12 18:02:00.956',
-        tags: ['tiktoknews', '#vtvdigital', '#vtv24', '#iran', '#israel'],
-        author: {
-          avatar:
-            'https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/avatar-anh-meo-cute-5.jpg',
-          username: 'huyenthor_',
-        },
-        likes: 12343,
-      },
-      {
-        video: video2,
-        thumbnail:
-          'https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/avatar-anh-meo-cute-11.jpg',
-        description: 'Tôi bị gay',
-        publishedAt: '2025-08-12 18:02:00.956',
-        tags: ['tiktoknews', '#vtvdigital', '#vtv24', '#iran', '#israel'],
-        author: {
-          avatar:
-            'https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/avatar-anh-meo-cute-5.jpg',
-          username: 'huyenthor_',
-        },
-        likes: 12343,
-      },
-      {
-        video: video3,
-        thumbnail:
-          'https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/avatar-anh-meo-cute-11.jpg',
-        description: 'Tôi bị gay',
-        publishedAt: '2025-08-12 18:02:00.956',
-        tags: ['tiktoknews', '#vtvdigital', '#vtv24', '#iran', '#israel'],
-        author: {
-          avatar:
-            'https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/avatar-anh-meo-cute-5.jpg',
-          username: 'huyenthor_',
-        },
-        likes: 12343,
-      },
-      {
-        video: video4,
-        thumbnail:
-          'https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/avatar-anh-meo-cute-11.jpg',
-        publishedAt: '2025-08-12 18:02:00.956',
-        description: 'Tôi bị sẽ',
-        tags: ['tiktoknews', '#vtvdigital', '#vtv24', '#iran', '#israel'],
-        author: {
-          avatar:
-            'https://cellphones.com.vn/sforum/wp-content/uploads/2024/02/avatar-anh-meo-cute-5.jpg',
-          username: 'superman',
-        },
-        likes: 12343,
-      },
-    ];
-    setVideos(mockVideos);
+    fetchMusic();
   }, []);
 
   return (
@@ -209,7 +138,7 @@ function Music() {
                 }}
               >
                 <div className={styles.DivPlayer}>
-                  <video ref={videoRef} src={music.video} playsInline />
+                  <video ref={videoRef} src={music.audio} playsInline />
                 </div>
                 {isPlaying && (
                   <>
@@ -289,21 +218,21 @@ function Music() {
                   WebkitLineClamp: '2',
                 }}
               >
-                {params.name}
+                {music.author?.name}
               </h1>
               <h2 data-e2e="music-creator" className={styles.H2ShareSubTitle}>
-                <a
+                <Link
                   className="link-a11y-focus"
-                  href={`/@${music.author?.username}`}
+                  to={`/@${music.author?.username}`}
                 >
-                  {music.author?.username}
-                </a>
+                  {music.author?.name}
+                </Link>
               </h2>
               <h2
                 data-e2e="music-video-count"
                 className={clsx(styles.H2ShareSubTitleThin)}
               >
-                {music.videos?.total} videos
+                {music.videoCount} video
               </h2>
             </div>
           </div>
@@ -327,6 +256,7 @@ function Music() {
               <ShareModal
                 isOpen={activeShare}
                 onClose={() => setActiveShare(false)}
+                shareToFriends={false}
               />
             )}
             <div
@@ -358,7 +288,7 @@ function Music() {
           <div className={styles.DivVideoFeedV2}>
             {videos.map((video, i) => (
               <VideoCard
-                key={video.video}
+                key={video.content}
                 data={video}
                 variant="topic"
                 onHover={() => handleHover(i)}

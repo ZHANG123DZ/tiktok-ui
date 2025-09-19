@@ -45,12 +45,22 @@ export const sendCode = async (data) => {
   }
 };
 
+export const verifyCode = async (data) => {
+  try {
+    const res = await httpRequest.post('/auth/verify-code', data);
+    return res;
+  } catch (err) {
+    console.error('Xác thực mã code thất bại:', err);
+    throw err;
+  }
+};
+
 export const verifyEmail = async (data) => {
   try {
     const res = await httpRequest.post('/auth/verify-email', data);
     return res;
   } catch (err) {
-    console.error('Logout thất bại:', err);
+    console.error('Xác thực email thất bại:', err);
     throw err;
   }
 };
@@ -71,6 +81,7 @@ export default {
   register,
   checkEmail,
   sendCode,
+  verifyCode,
   verifyEmail,
   logout,
 };

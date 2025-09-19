@@ -6,10 +6,10 @@ const formatTime = (date) => {
   const minutes = Math.floor(diff / (1000 * 60));
   const hours = Math.floor(diff / (1000 * 60 * 60));
   const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  if (minutes < 1) return 'now';
-  if (minutes < 60) return `${minutes}m`;
-  if (hours < 24) return `${hours}h`;
-  if (days < 7) return `${days}d`;
+  if (minutes < 1) return 'bây giờ';
+  if (minutes < 60) return `${minutes} phút`;
+  if (hours < 24) return `${hours} giờ`;
+  if (days < 7) return `${days} ngày`;
   return date.toLocaleDateString();
 };
 

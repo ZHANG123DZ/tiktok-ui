@@ -1,0 +1,259 @@
+.DivDrawerContainer {
+  width: 20rem;
+  height: 100vh;
+  position: fixed;
+  inset-inline-start: 4.5rem;
+  background-color: var(--ui-page-flat-1);
+  z-index: 99;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  overscroll-behavior: contain;
+}
+.DivMessageDrawerContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: start;
+  align-items: start;
+}
+.DivConversationListContainer {
+  position: relative;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  background: unset;
+  box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 8px;
+  border-radius: 8px;
+}
+.DivFullSideNavConversationHeader {
+  height: 4.5rem;
+  width: 100%;
+  display: flex;
+  flex-shrink: 0;
+  margin-inline-start: 1rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+  gap: 0.5rem;
+}
+.DivListContent {
+  overflow: auto;
+  height: 100%;
+}
+.DivScrollContainer-StyledScroll {
+  overflow: hidden auto;
+  overscroll-behavior-y: contain;
+  perspective: 1px;
+  transform-style: preserve-3d;
+  padding-right: 12px;
+  perspective-origin: right top;
+}
+.DivScrollContainer-StyledScroll:hover .DivScrollBar {
+  opacity: 1;
+}
+.DivFullSideNavEmptyMessageContainer {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 0.675rem;
+  -webkit-box-pack: start;
+  justify-content: flex-start;
+  width: 100%;
+  background: var(--ui-shape-neutral-4);
+  padding: 0.5rem;
+}
+.DivFullSideNavEmptyMessageIconContainer {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  border: 1px solid var(--ui-shape-neutral-3);
+}
+.DivScrollBar {
+  position: absolute;
+  padding: 0px 4px;
+  top: 0px;
+  transition: opacity 0.5s;
+  opacity: 0;
+  right: 0px;
+  transform-origin: right top;
+}
+.DivScrollBarThumb {
+  width: 6px;
+  height: 100%;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+}
+.DivRequestGroup {
+  position: relative;
+  width: 100%;
+  height: 72px;
+  background-color: unset;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  padding-inline: 1rem 20px;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.DivRequestGroup:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+.DivMessageStatus {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0px, 0px, 0px, 0px);
+  white-space: nowrap;
+}
+.DivRequestInfo {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.StyledRequestAvatar {
+  display: block;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  fill: none;
+}
+.DivInfoTextWrapper {
+  padding-left: 12px;
+}
+.PInfoNickname {
+  font-size: 16px;
+  line-height: 22px;
+  min-height: 22px;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 180px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  font-family: TikTokFont;
+  font-weight: 600;
+}
+.PInfoExtractTime {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  max-width: 180px;
+  padding-top: 4px;
+  font-size: 14px;
+  line-height: normal;
+  color: rgba(255, 255, 255, 0.75);
+  font-family: TikTokFont;
+}
+.SpanInfoExtract {
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.DivItemWrapper {
+  position: relative;
+  width: 100%;
+  height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-inline: 1rem 20px;
+  box-sizing: border-box;
+  background-color: unset;
+  cursor: pointer;
+}
+.DivItemWrapper:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+.DivItemWrapper:hover .SpanNewMessage {
+  opacity: 0;
+}
+.DivItemInfo {
+  display: flex;
+  align-items: center;
+}
+
+.DivInfoAvatarWrapper {
+  position: relative;
+  width: 48px;
+  height: 48px;
+}
+
+.DivInfoAvatarMask {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: 48px;
+  height: 48px;
+  border: 1px solid rgba(22, 24, 35, 0.12);
+  border-radius: 50%;
+}
+
+.SpanAvatarContainer {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-feature-settings: 'tnum';
+  overflow: hidden;
+  color: #fff;
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 32px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  border-radius: 50%;
+  background-color: rgba(136, 136, 136, 0.5);
+}
+
+.ImgAvatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.SpanInfoTime {
+  display: inline-block;
+  flex-shrink: 0;
+  line-height: 20px;
+  color: rgba(255, 255, 255, 0.6);
+  padding-left: 4px;
+}
+.SpanNewMessage {
+  position: absolute;
+  display: block;
+  min-width: 20px;
+  height: 20px;
+  top: 32px;
+  color: rgb(255, 255, 255);
+  background: rgb(254, 44, 85);
+  border-radius: 10px;
+  text-align: center;
+  padding: 2px;
+  right: 20px;
+}
+.StyledMoreActionIcon {
+  position: absolute;
+  display: none;
+  width: 24px;
+  height: 24px;
+  top: 24px;
+  color: rgba(255, 255, 255, 0.9);
+  right: 16px;
+}
+.DivItemWrapper:hover .StyledMoreActionIcon {
+  display: block;
+}

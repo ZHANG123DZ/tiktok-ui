@@ -1,69 +1,58 @@
-import clsx from 'clsx';
-import {
+import React, {
+  cloneElement,
   createContext,
   useContext,
   useState,
-  useRef,
-  useEffect,
-  Children,
-  cloneElement,
 } from 'react';
+import clsx from 'clsx';
 
-// Tạo context
 const TabsContext = createContext();
 
-export function Tabs({ defaultIndex = 0, onChange, children }) {
-  const [currentIndex, setCurrentIndex] = useState(defaultIndex);
-
-  const changeIndex = (index) => {
-    if (index !== currentIndex) {
-      setCurrentIndex(index);
-      onChange?.(index);
-    }
-  };
+export function Tabs({ defaultValue, children, className, ...props }) {
+  const [activeValue, setActiveValue] = useState(defaultValue);
 
   return (
-    <TabsContext.Provider value={{ currentIndex, setIndex: changeIndex }}>
-      {children}
+    <TabsContext.Provider value={{ activeValue, setActiveValue }}>
+      <div className={clsx('tabs-container', className)} {...props}>
+        {children}
+      </div>
     </TabsContext.Provider>
   );
 }
 
 export function useTabs() {
   const ctx = useContext(TabsContext);
-  if (!ctx) throw new Error('useTabs must be used inside <Tabs />');
+  if (!ctx) throw new Error('useTabs must be used inside <Tabs>');
   return ctx;
 }
 
-export function Tab({ isActive, onSelect, children, className, ...rest }) {
-  return (
-    <button
-      onClick={onSelect}
-      className={clsx(isActive ? 'tab-active' : 'tab-inactive', className)}
-      {...rest}
-    >
-      {children}
-    </button>
-  );
+export function TabList({ children, ...props }) {
+  return <>{children}</>;
 }
 
-export function TabList({ children, className }) {
-  const { currentIndex, setIndex } = useTabs();
+export function Tab({ value, children }) {
+  const { activeValue, setActiveValue } = useTabs();
+  const isActive = activeValue === value || activeValue.startsWith(value);
 
-  return (
-    <div className={clsx('flex gap-2', className)} style={{ display: 'flex' }}>
-      {Children.map(children, (child, index) =>
-        cloneElement(child, {
-          isActive: currentIndex === index,
-          onSelect: () => setIndex(index),
-        })
-      )}
-    </div>
-  );
+  return cloneElement(children, {
+    onClick: () => setActiveValue(value),
+    'data-active': isActive,
+  });
 }
 
 export function TabPanels({ children }) {
-  const { currentIndex } = useTabs();
-  const panels = Children.toArray(children);
-  return <>{panels[currentIndex]}</>;
+  const { activeValue } = useTabs();
+
+  // chỉ render đúng panel có value trùng
+  return React.Children.toArray(children).find(
+    (child) => child.props.value === activeValue
+  );
+}
+
+export function TabPanel({ value, children }) {
+  const { activeValue } = useTabs();
+
+  if (activeValue !== value) return null;
+
+  return <>{children}</>;
 }

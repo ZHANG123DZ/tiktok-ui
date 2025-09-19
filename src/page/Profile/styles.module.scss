@@ -296,15 +296,113 @@
   }
 }
 
-.DivErrorContainer {
+.PPost {
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  position: relative;
   display: flex;
-  flex-direction: column;
   -webkit-box-align: center;
   align-items: center;
   -webkit-box-pack: center;
   justify-content: center;
+  flex-shrink: 0;
+  height: 44px;
+  padding: 0px 32px;
+  cursor: pointer;
   text-align: center;
-  margin: 0px auto;
+  gap: 4px;
+}
+.DivBottomLine {
+  position: absolute;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.9);
+  bottom: 0px;
+  transition: transform 0.3s;
+  inset-inline-start: 0px;
+}
+.DivFeedTabWrapper::after {
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+  content: '';
+  width: 100%;
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.12);
+  transform: scaleY(0.5);
+}
+.PFavorite {
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  position: relative;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 44px;
+  padding: 0px 32px;
+  cursor: pointer;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  gap: 4px;
+}
+.PLike {
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  position: relative;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 44px;
+  padding: 0px 32px;
+  cursor: pointer;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  gap: 4px;
+}
+.PLike[data-active='true'] {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.9);
+}
+.PRepost[data-active='true'] {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.9);
+}
+.PPost[data-active='true'] {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.9);
+}
+.PRepost {
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 24px;
+  position: relative;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  flex-shrink: 0;
+  height: 44px;
+  padding: 0px 32px;
+  cursor: pointer;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.5);
+  gap: 4px;
+}
+.SpanUnit:hover {
+  text-decoration: underline;
 }
 
 .DivErrorIconWrapper {
@@ -318,22 +416,4 @@
   justify-content: center;
   -webkit-box-align: center;
   align-items: center;
-}
-.PTitle {
-  font-size: 24px;
-  line-height: 30px;
-  font-family: 'IBM Plex Sans', 'Montserrat', Arial, Tahoma, PingFangSC,
-    sans-serif;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.9);
-  margin-top: 24px;
-}
-.PDesc {
-  font-size: 16px;
-  line-height: 21px;
-  font-family: 'IBM Plex Sans', 'Montserrat', Arial, Tahoma, PingFangSC,
-    sans-serif;
-  font-weight: 400;
-  color: rgba(255, 255, 255, 0.75);
-  margin-top: 8px;
 }

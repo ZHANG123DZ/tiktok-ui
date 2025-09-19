@@ -5,7 +5,7 @@ import React, { useEffect, useState } from 'react';
 import formatNumberShort from '../../utils/formatNumberShort';
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 
 /**
  * @typedef {'discover' | 'search' | 'profile' | 'live'} VideoVariant
@@ -54,7 +54,7 @@ function VideoCard({
               onMouseEnter={() => setShowVideo(true)}
               onClick={(e) => {
                 e.stopPropagation();
-                navigate(`/@${data.author.username}/video/${data.video}`);
+                navigate(`/@${data.author.username}/video/${data.id}`);
               }}
             >
               <canvas
@@ -84,7 +84,7 @@ function VideoCard({
                     >
                       <picture>
                         <img
-                          alt="Đang hay thì mất điện 😂#nonsstop #xuhuongtiktok #nhacsong #b14 #nhacsancucmanh #Gialai  created by ANH TUKUĐA 🧠😱 with ANH TUKUĐA 🧠😱’s nhạc nền - Anh TUKUĐA 💩🧠"
+                          alt={data.title}
                           fetchPriority="auto"
                           decoding="async"
                           src={data.thumbnail}
@@ -102,6 +102,7 @@ function VideoCard({
                             maxWidth: '100%',
                             minHeight: '100%',
                             maxHeight: '100%',
+                            objectFit: 'cover',
                           }}
                         />
                       </picture>
@@ -129,7 +130,7 @@ function VideoCard({
                               objectFit: 'cover',
                             }}
                             onMouseEnter={onHover}
-                            src={data.video}
+                            src={data.content}
                             muted
                           ></video>
                           <div></div>
@@ -148,13 +149,13 @@ function VideoCard({
                           className={styles.IconThumbsUp}
                         />
                         <div className={styles.LiveText}>
-                          {formatNumberShort(data.likes)}
+                          {formatNumberShort(data.likeCount)}
                         </div>
                       </div>
                     </div>
                   )}
                 </div>
-                {!isTopic && (
+                {!isTopic && !isProfile && (
                   <div
                     data-e2e="explore-card-info"
                     className={clsx(styles['DivPlayContainer'])}
@@ -179,7 +180,7 @@ function VideoCard({
                             d="M40.96 24.15c1.83-4.8 1.05-8.61-.8-11.33a10.87 10.87 0 0 0-6.34-4.49 9.43 9.43 0 0 0-6.83 1.17c-1.08.65-2.1 1.53-2.99 2.66-.9-1.13-1.9-2.01-3-2.66a9.43 9.43 0 0 0-6.82-1.17 10.87 10.87 0 0 0-6.34 4.49c-1.85 2.72-2.63 6.54-.8 11.33 1.43 3.74 4.5 7.23 7.6 9.98a46.31 46.31 0 0 0 8.6 6.12l.76.4.76-.4a46.31 46.31 0 0 0 8.6-6.12c3.1-2.75 6.17-6.24 7.6-9.98ZM24 17.58c2.3-2.88 4.7-6.2 9.03-5.33a6.95 6.95 0 0 1 3.82 2.81c1.07 1.58 1.76 4.02.37 7.66-1.09 2.86-3.6 5.82-6.51 8.43A44.84 44.84 0 0 1 24 36.09a44.84 44.84 0 0 1-6.7-4.94c-2.93-2.6-5.43-5.57-6.52-8.43-1.4-3.64-.7-6.08.37-7.66a6.95 6.95 0 0 1 3.82-2.8c4.33-.88 6.73 2.44 9.03 5.32Z"
                           />
                         </svg>
-                        <span>{formatNumberShort(data.likes)}</span>
+                        <span>{formatNumberShort(data.likeCount)}</span>
                       </div>
                     </div>
                   </div>
@@ -225,7 +226,7 @@ function VideoCard({
                   </div>
                 )}
                 {/* Button Muted */}
-                {!isTopic && (
+                {!isTopic && !isProfile && (
                   <div className={clsx(styles['DivMuteIconContainer'])}>
                     <svg
                       width="24"
@@ -242,6 +243,21 @@ function VideoCard({
                     </svg>
                   </div>
                 )}
+                {isProfile && (
+                  <div className={styles.DivCardFooter}>
+                    <FontAwesomeIcon
+                      icon={faPlay}
+                      className={styles.StyledPlay}
+                      style={{ color: '#fff' }}
+                    />
+                    <strong
+                      data-e2e="video-views"
+                      className={styles.StrongVideoCount}
+                    >
+                      {formatNumberShort(data?.views || 0)}
+                    </strong>
+                  </div>
+                )}
                 {isProfile && data?.isPinned && (
                   <div className={styles.DivHeaderContainer}>
                     <div className={styles.DivLeftSection}>
@@ -249,7 +265,7 @@ function VideoCard({
                         data-e2e="video-card-badge"
                         className={styles.DivBadge}
                       >
-                        Pinned
+                        Đã ghim
                       </div>
                     </div>
                   </div>
@@ -259,17 +275,17 @@ function VideoCard({
           </div>
         </div>
       </div>
-      {/* Description */}
+      {/* Title */}
       {isTopic && (
         <div className={clsx(styles.DivDesContainer, styles.eih2qak4)}>
           <div
-            aria-label="ขอบคุณครับที่เอ็นดูปังปัง"
+            aria-label={data.title}
             data-e2e="music-item-desc"
             className={clsx(styles.DivTagCardDesc, styles.eih2qak1)}
           >
-            <a
-              title="ขอบคุณครับที่เอ็นดูปังปัง"
-              href="https://www.tiktok.com/@apiruk_9043/video/7509377295518289160"
+            <Link
+              title={data.title}
+              to={`/@${data.author.username}/video/${data.id}`}
               className={clsx(styles.AMetaCaptionLine, styles.eih2qak0)}
             >
               <div
@@ -279,10 +295,10 @@ function VideoCard({
                 )}
               >
                 <span data-e2e="new-desc-span" style={{ fontWeight: 400 }}>
-                  ขอบคุณครับที่เอ็นดูปังปัง
+                  {data.title}
                 </span>
               </div>
-            </a>
+            </Link>
           </div>
           <span
             className={clsx(styles.SpanInfoExpandWrapper, styles.eih2qak5)}
@@ -290,7 +306,7 @@ function VideoCard({
         </div>
       )}
       {/* Author Info */}
-      {!isTopic && (
+      {!isTopic && !isProfile && (
         <div
           data-e2e="explore-card-desc"
           className={styles.DivVideoExploreCardDesc}
@@ -302,9 +318,9 @@ function VideoCard({
             >
               <div className={styles.DivDescriptionContentContainer}>
                 <span data-e2e="new-desc-span" style={{ fontWeight: '400' }}>
-                  {data.description}{' '}
+                  {data.title}{' '}
                 </span>
-                {data.tags.map((tag, i) => (
+                {data.tags?.map((tag, i) => (
                   <React.Fragment key={tag}>
                     <a
                       data-e2e="search-common-link"

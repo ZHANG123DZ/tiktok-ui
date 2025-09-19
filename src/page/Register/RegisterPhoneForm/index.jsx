@@ -82,7 +82,7 @@ function RegisterPhoneForm() {
           name="code"
           targetField="phone"
           requiredFields={['day', 'month', 'year', 'phone']}
-          countDown={60}
+          countDown={0}
           errors={errors}
           trigger={trigger}
           register={register}

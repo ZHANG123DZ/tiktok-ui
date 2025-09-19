@@ -260,7 +260,7 @@
 }
 /* NavButton: END */
 .StyledTUXSearchButton:global(.TUXButton):global(.TUXButton) {
-  background-color: rgb(31, 31, 31);
+  background-color: var(--ui-search-button);
   min-width: 0px;
   height: 2.5rem;
   padding: 0px;
@@ -278,7 +278,7 @@
     display: none;
   }
   .StyledTUXSearchButton {
-    background-color: rgb(31, 31, 31);
+    background-color: var(--ui-search-button);
     height: 2.5rem;
     width: 2.5rem;
     border-radius: 50%;
@@ -343,7 +343,6 @@
   box-sizing: content-box;
 }
 .DivSideNavPlaceholderContainerOnDrawer {
-  width: 4.5rem;
   flex-shrink: 0;
   z-index: 99;
 }

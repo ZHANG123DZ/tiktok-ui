@@ -1,0 +1,29 @@
+.DivErrorContainer {
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  text-align: center;
+  margin: 0px auto;
+}
+
+.PTitle {
+  font-size: 24px;
+  line-height: 30px;
+  font-family: 'IBM Plex Sans', 'Montserrat', Arial, Tahoma, PingFangSC,
+    sans-serif;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  margin-top: 24px;
+}
+.PDesc {
+  font-size: 16px;
+  line-height: 21px;
+  font-family: 'IBM Plex Sans', 'Montserrat', Arial, Tahoma, PingFangSC,
+    sans-serif;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.75);
+  margin-top: 8px;
+}

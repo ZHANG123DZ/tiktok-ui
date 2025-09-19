@@ -1,4 +1,10 @@
-import { Tab, TabList, TabPanels, Tabs } from '../../components/Tabs/Tabs';
+import {
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from '../../components/Tabs/Tabs';
 import styles from './Search.module.scss';
 import UserList from '../../components/UserList/UserList';
 
@@ -8,7 +14,10 @@ import video3 from '/public/Download (3).mp4';
 import video4 from '/public/Download (4).mp4';
 import VideoList from '../../components/VideoList';
 import RecommendationFeed from '../../components/RecommendationFeed';
-
+import { useSearchParams } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import searchService from '../../services/search/search.service';
+//Call API
 const mockPosts = [
   {
     id: 5,
@@ -102,122 +111,153 @@ const mockPosts = [
 ];
 
 function Search() {
-  const postsLive = mockPosts;
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get('q');
+
+  const [resultSearch, setResultSearch] = useState(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await searchService.search(query);
+      setResultSearch(res);
+    };
+    fetchData();
+  }, [query]);
 
   return (
     <div className={styles.DivMainContainer} style={{ width: '100%' }}>
       <div className={styles.DivSearchContainer}>
-        <Tabs>
-          <TabList className={styles.DivTabsContainer}>
-            {/* Top */}
-            <Tab>
-              <div
-                data-e2e="tab-item"
-                className={styles['DivTab']}
-                style={{
-                  justifyContent: 'flex-start',
-                  width: 'auto',
-                  paddingRight: '80px',
-                }}
-              >
+        <Tabs defaultValue={'top'}>
+          <TabList>
+            <div className={styles.DivTabsContainer}>
+              {/* Top */}
+              <Tab value={'top'}>
                 <div
-                  role="tab"
-                  tabIndex={0}
-                  aria-selected="true"
-                  id="tabs-0-tab-search_top"
-                  aria-controls="tabs-0-panel-search_top"
+                  data-e2e="tab-item"
+                  className={styles['DivTab']}
+                  style={{
+                    justifyContent: 'flex-start',
+                    width: 'auto',
+                    paddingRight: '80px',
+                  }}
                 >
-                  Top
+                  <div
+                    role="tab"
+                    tabIndex={0}
+                    aria-selected="true"
+                    id="tabs-0-tab-search_top"
+                    aria-controls="tabs-0-panel-search_top"
+                  >
+                    Top
+                  </div>
                 </div>
-              </div>
-            </Tab>
-            {/* User */}
-            <Tab>
-              <div
-                data-e2e="tab-item"
-                className={styles['DivTab']}
-                style={{
-                  justifyContent: 'flex-start',
-                  width: 'auto',
-                  paddingRight: '80px',
-                }}
-              >
+              </Tab>
+              {/* User */}
+              <Tab value={'user'}>
                 <div
-                  role="tab"
-                  tabIndex={0}
-                  aria-selected="true"
-                  id="tabs-0-tab-search_user"
-                  aria-controls="tabs-0-panel-search_user"
+                  data-e2e="tab-item"
+                  className={styles['DivTab']}
+                  style={{
+                    justifyContent: 'flex-start',
+                    width: 'auto',
+                    paddingRight: '80px',
+                  }}
                 >
-                  Người dùng
+                  <div
+                    role="tab"
+                    tabIndex={0}
+                    aria-selected="true"
+                    id="tabs-0-tab-search_user"
+                    aria-controls="tabs-0-panel-search_user"
+                  >
+                    Người dùng
+                  </div>
                 </div>
-              </div>
-            </Tab>
-            {/* Video */}
-            <Tab>
-              <div
-                data-e2e="tab-item"
-                className={styles['DivTab']}
-                style={{
-                  justifyContent: 'flex-start',
-                  width: 'auto',
-                  paddingRight: '80px',
-                }}
-              >
+              </Tab>
+              {/* Video */}
+              <Tab value={'video'}>
                 <div
-                  role="tab"
-                  tabIndex={0}
-                  aria-selected="true"
-                  id="tabs-0-tab-search_video"
-                  aria-controls="tabs-0-panel-search_video"
+                  data-e2e="tab-item"
+                  className={styles['DivTab']}
+                  style={{
+                    justifyContent: 'flex-start',
+                    width: 'auto',
+                    paddingRight: '80px',
+                  }}
                 >
-                  Video
+                  <div
+                    role="tab"
+                    tabIndex={0}
+                    aria-selected="true"
+                    id="tabs-0-tab-search_video"
+                    aria-controls="tabs-0-panel-search_video"
+                  >
+                    Video
+                  </div>
                 </div>
-              </div>
-            </Tab>
-            {/* LIVE */}
-            <Tab>
-              <div
-                data-e2e="tab-item"
-                className={styles['DivTab']}
-                style={{
-                  justifyContent: 'flex-start',
-                  width: 'auto',
-                  paddingRight: '80px',
-                }}
-              >
+              </Tab>
+              {/* LIVE */}
+              <Tab value={'live'}>
                 <div
-                  role="tab"
-                  tabIndex={0}
-                  aria-selected="true"
-                  id="tabs-0-tab-search_live"
-                  aria-controls="tabs-0-panel-search_live"
+                  data-e2e="tab-item"
+                  className={styles['DivTab']}
+                  style={{
+                    justifyContent: 'flex-start',
+                    width: 'auto',
+                    paddingRight: '80px',
+                  }}
                 >
-                  LIVE
+                  <div
+                    role="tab"
+                    tabIndex={0}
+                    aria-selected="true"
+                    id="tabs-0-tab-search_live"
+                    aria-controls="tabs-0-panel-search_live"
+                  >
+                    LIVE
+                  </div>
                 </div>
-              </div>
-            </Tab>
+              </Tab>
+            </div>
           </TabList>
           <TabPanels>
             {/* Notify */}
-            <div className={styles.DivPanelContainer}>
+            <TabPanel value={'top'}>
               <div className={styles.DivPanelContainer}>
-                <RecommendationFeed />
+                <div className={styles.DivPanelContainer}>
+                  {resultSearch && <RecommendationFeed data={resultSearch} />}
+                </div>
               </div>
-            </div>
-            <div className={styles.DivPanelContainer}>
-              <UserList />
-            </div>
-            <div className={styles.DivPanelContainer}>
+            </TabPanel>
+            <TabPanel value={'user'}>
               <div className={styles.DivPanelContainer}>
-                <VideoList variant="search" />
+                {resultSearch?.users && <UserList data={resultSearch?.users} />}
               </div>
-            </div>
-            <div className={styles.DivPanelContainer}>
+            </TabPanel>
+            <TabPanel value={'video'}>
               <div className={styles.DivPanelContainer}>
-                <VideoList variant="live" />
+                {resultSearch?.posts && (
+                  <div className={styles.DivPanelContainer}>
+                    <VideoList
+                      variant="search"
+                      videosData={resultSearch?.posts}
+                    />
+                  </div>
+                )}
               </div>
-            </div>
+            </TabPanel>
+            <TabPanel value={'live'}>
+              <div className={styles.DivPanelContainer}>
+                <div className={styles.DivPanelContainer}>
+                  {resultSearch?.posts && (
+                    <VideoList
+                      variant="live"
+                      videosData={resultSearch?.posts}
+                    />
+                  )}
+                </div>
+              </div>
+            </TabPanel>
           </TabPanels>
         </Tabs>
       </div>

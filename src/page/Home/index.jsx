@@ -1,5 +1,5 @@
 import styles from './Home.module.scss';
-import { getPosts } from '../../services/Posts/posts.service';
+import postService, { getPosts } from '../../services/post/post.service';
 import { useCallback, useEffect, useRef } from 'react';
 import { useState } from 'react';
 import { ArticleProvider } from '../../contexts/ArticleContext';
@@ -10,11 +10,12 @@ import video1 from '/public/Download (1).mp4';
 import video2 from '/public/Download (2).mp4';
 import video3 from '/public/Download (3).mp4';
 import video4 from '/public/Download (4).mp4';
-
+//Call API
+//Table post,
 const mockPosts = [
   {
     id: 5,
-    video: video2,
+    content: video2,
     slug: 'hot-search-video',
     thumbnail: 'https://auvi.edu.vn/wp-content/uploads/2025/02/anh-gai-22.jpg',
     likes: 490,
@@ -23,7 +24,6 @@ const mockPosts = [
     share: 12,
     isLiked: true,
     isBookMarked: false,
-    isFollow: false,
     music: {
       slug: 'hello',
       name: 'Video này hot vc',
@@ -35,6 +35,7 @@ const mockPosts = [
       username: 'tinnongmoingay08',
       name: 'Hello Kitty',
       avatar: 'https://auvi.edu.vn/wp-content/uploads/2025/02/anh-gai-22.jpg',
+      isFollow: false,
     },
     tags: [
       { slug: 'theanh28news', name: 'theanh2t8news' },
@@ -45,7 +46,7 @@ const mockPosts = [
   },
   {
     id: 6,
-    video: video3,
+    content: video3,
     slug: 'hot-search-video',
     thumbnail: 'https://auvi.edu.vn/wp-content/uploads/2025/02/anh-gai-22.jpg',
     likes: 490,
@@ -54,7 +55,6 @@ const mockPosts = [
     share: 12,
     isLiked: true,
     isBookMarked: true,
-    isFollow: true,
     music: {
       slug: 'hello',
       name: 'Video này hot vc',
@@ -65,6 +65,7 @@ const mockPosts = [
       username: 'tinnongmoingay08',
       name: 'Hello Kitty',
       avatar: 'https://auvi.edu.vn/wp-content/uploads/2025/02/anh-gai-22.jpg',
+      isFollow: true,
     },
     tags: [
       { slug: 'theanh28news', name: 'theanh28tenews' },
@@ -74,7 +75,7 @@ const mockPosts = [
   },
   {
     id: 7,
-    video: video4,
+    content: video4,
     slug: 'hot-search-video',
     thumbnail: 'https://auvi.edu.vn/wp-content/uploads/2025/02/anh-gai-22.jpg',
     likes: 490,
@@ -83,7 +84,6 @@ const mockPosts = [
     share: 12,
     isLiked: true,
     isBookMarked: true,
-    isFollow: false,
     music: {
       slug: 'hello',
       name: 'Video này hot vc',
@@ -94,6 +94,7 @@ const mockPosts = [
       username: 'tinnongmoingay08',
       name: 'Hello Kitty',
       avatar: 'https://auvi.edu.vn/wp-content/uploads/2025/02/anh-gai-22.jpg',
+      isFollow: false,
     },
     tags: [
       { slug: 'theanh28news', name: 'theanh28tenews' },
@@ -110,12 +111,24 @@ function Home() {
   const [activeComments, setActiveComments] = useState(false);
   const [comments, setComments] = useState(mockComments);
   //CurrentPost
+  const [posts, setPosts] = useState([]);
   const [currentPost, setCurrentPost] = useState(null);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const data = await postService.getPosts();
+        setPosts(data);
+      } catch (err) {
+        console.error('Lỗi khi fetch posts:', err);
+      }
+    };
+    fetchPosts();
+  }, []);
 
   return (
     <main className={styles.DivMainContainer}>
       <div className={styles.DivColumnListContainer}>
-        {mockPosts.map((post) => (
+        {posts.map((post) => (
           <ArticleProvider
             key={post.id}
             data={post}

@@ -155,3 +155,15 @@
   flex-direction: column;
   gap: 10px;
 }
+
+.TUXModal--entered {
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  opacity: 1;
+}
+.TUXModal--height-Compact {
+  height: auto;
+}
+.TUXModal--width-Compact {
+  width: auto;
+}

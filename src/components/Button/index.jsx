@@ -1,7 +1,11 @@
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight, faSpinner } from '@fortawesome/free-solid-svg-icons';
+import {
+  faChevronRight,
+  faClose,
+  faSpinner,
+} from '@fortawesome/free-solid-svg-icons';
 import clsx from 'clsx';
 import './Button.css';
 import styles from './Button.module.scss';
@@ -22,10 +26,11 @@ function Button({
   primary = false,
   secondary = false,
   borderless = false,
+  backIcon = false,
   size = '',
   responsiveButton = false,
   iconOnlyButton = false,
-  segmentControl = false,
+  segmentControl = '',
   mentionSuggest = false,
   emoji = false,
   styledButton = false,
@@ -46,10 +51,11 @@ function Button({
       [`TUXButton--secondary`]: secondary,
       [`TUXButton--capsule`]: capsule,
       ['TUXButton--borderless']: borderless,
-      ['TUXSegmentedControl']: segmentControl,
+      ['TUXSegmentedControl TUXSegmentedControl-item']: segmentControl,
       ['TUXUnstyledButton']: unstyledButton,
       [styles['Button-StyledButton']]: styledButton,
       [styles.StyledTUXIconOnlyButton]: iconOnlyButton,
+      [styles.StyledTUXMoreBackButton]: backIcon,
       [styles.StyledTUXResponsiveButton]: responsiveButton,
       [styles.StyledMentionSuggestionButton]: mentionSuggest,
       [styles.StyledEmojiButton]: emoji,
@@ -89,7 +95,17 @@ function Button({
           <div className="TUXButton-content">
             {icon && (
               <div className="TUXButton-iconContainer">
-                <div className={styles.DivIconWithRedDotContainer}>{icon}</div>
+                <div
+                  className={
+                    styles[
+                      backIcon
+                        ? 'DivBackIconWrapper'
+                        : 'DivIconWithRedDotContainer'
+                    ]
+                  }
+                >
+                  {icon}
+                </div>
               </div>
             )}
             {expand && (
@@ -113,6 +129,13 @@ function Button({
             )}
             {label && <div className="TUXButton-label">{label}</div>}
             {children && <div>{children}</div>}
+            {segmentControl && (
+              <div className="TUXSegmentedControl-itemTitleContainer">
+                <div className="TUXSegmentedControl-itemTitle">
+                  {segmentControl}
+                </div>
+              </div>
+            )}
           </div>
         )}
       </Component>
@@ -135,8 +158,9 @@ Button.propTypes = {
   borderless: PropTypes.bool,
   responsiveButton: PropTypes.bool,
   iconOnlyButton: PropTypes.bool,
-  segmentControl: PropTypes.bool,
+  segmentControl: PropTypes.string,
   mentionSuggest: PropTypes.bool,
+  backIcon: PropTypes.bool,
   emoji: PropTypes.bool,
   listIcon: PropTypes.array,
   styledButton: PropTypes.bool,

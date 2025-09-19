@@ -7,6 +7,141 @@ import { faEllipsis, faSearch } from '@fortawesome/free-solid-svg-icons';
 import styles from './PostComment.module.scss';
 
 function PostComment() {
+  const topSearch = 'nga và mỹ';
+  const mockComments = [
+    {
+      id: 23,
+      postId: 4,
+      content: 'Đây là cái gì v',
+      likes: 234,
+      isLiked: false,
+      isAuthorLiked: true,
+      author: {
+        id: 6,
+        username: 'dang',
+        name: 'Đăng đẹp trai',
+        avatar:
+          'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-dam.jpg',
+        followers: 2345,
+        likes: 2395,
+      },
+      replies: [
+        {
+          id: 23,
+          postId: 4,
+          content: 'Đây là qq gì v',
+          likes: 234,
+          isLiked: true,
+          isAuthorLiked: false,
+          author: {
+            id: 7,
+            username: 'dansg',
+            name: 'Đăng đần',
+            avatar:
+              'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-chan-dai.jpg',
+            followers: 2345,
+            likes: 2395,
+          },
+          parentId: 23,
+          sender: 'other',
+          createdAt: '2025-08-14 18:14:16.868',
+        },
+        {
+          id: 26,
+          postId: 4,
+          content: 'Đây là qq gì v',
+          likes: 234,
+          isLiked: true,
+          parentId: 23,
+          isAuthorLiked: true,
+          author: {
+            id: 7,
+            username: 'dangd',
+            name: 'Đăng đần',
+            avatar:
+              'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-chan-dai.jpg',
+            followers: 2345,
+            likes: 25,
+          },
+          sender: 'other',
+          createdAt: '2025-08-14 18:14:16.868',
+        },
+      ],
+      sender: 'other',
+      createdAt: '2025-08-14 18:14:16.868',
+    },
+    {
+      id: 28,
+      postId: 4,
+      content: 'Đây là cái gì v',
+      likes: 234,
+      isLiked: false,
+      isAuthorLiked: true,
+      author: {
+        id: 6,
+        username: 'dang',
+        name: 'Đăng đẹp trai',
+        avatar:
+          'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-dam.jpg',
+        followers: 2345,
+        likes: 2395,
+      },
+      replies: [
+        {
+          id: 23,
+          postId: 4,
+          content: 'Đây là qq gì v',
+          likes: 234,
+          isLiked: true,
+          isAuthorLiked: false,
+          author: {
+            id: 1,
+            username: 'dansg',
+            name: 'Đăng đần',
+            avatar:
+              'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-chan-dai.jpg',
+            followers: 2345,
+            likes: 2395,
+          },
+          parentId: 23,
+          sender: 'other',
+          createdAt: '2025-08-14 18:14:16.868',
+        },
+        {
+          id: 26,
+          postId: 4,
+          content: 'Đây là qq gì v',
+          likes: 234,
+          isLiked: true,
+          parentId: 23,
+          isAuthorLiked: true,
+          author: {
+            id: 8,
+            username: 'dangd',
+            name: 'Đăng đần',
+            avatar:
+              'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-chan-dai.jpg',
+            followers: 2345,
+            likes: 25,
+          },
+          sender: 'other',
+          createdAt: '2025-08-14 18:14:16.868',
+        },
+      ],
+      sender: 'other',
+      createdAt: '2025-08-14 18:14:16.868',
+    },
+  ];
+
+  const post = {
+    author: {
+      id: 7,
+      avatar:
+        'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-chan-dai.jpg',
+    },
+    comments: 3,
+  };
+
   return (
     <div>
       <div data-e2e="search-comment-top" className={styles.DivCommentTop}>
@@ -14,7 +149,7 @@ function PostComment() {
         &nbsp;
         <span className={styles.SpanWordContainer}>
           <span data-e2e="search-comment-top-word" className={styles.SpanWord}>
-            nga và mỹ
+            {topSearch}
           </span>
           <FontAwesomeIcon
             icon={faSearch}
@@ -32,10 +167,11 @@ function PostComment() {
           </div>
         </div>
       </div>
-      <div style={{ marginBottom: '80px' }}>
-        <Comment />
+      <div style={{ marginBottom: '90px' }}>
+        {mockComments.map((comment) => (
+          <Comment key={comment.id} data={comment} post={post} />
+        ))}
       </div>
-
       <div
         className={styles.DivBottomCommentContainer}
         style={{

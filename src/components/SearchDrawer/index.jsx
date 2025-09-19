@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import styles from './styles.module.scss';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import debounce from '../../utils/debounce';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowTrendUp,
@@ -16,7 +16,10 @@ import {
   faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import Text from '../Text';
-
+import searchService from '../../services/search/search.service';
+import MorePopover from '../MorePopover/MorePopover';
+import { useDrawerStore } from '../../store/drawerStore';
+//Call API
 const suggestionsRes = [
   'israel và iran mới nhất',
   'israel và iran mới nhất 2025',
@@ -45,23 +48,22 @@ const guessSearchRes = [
 ];
 
 function SearchDrawer() {
-  // const searchContent = 'israel và iran mới nhất';
+  const { closeDrawer } = useDrawerStore();
   const navigate = useNavigate();
   const buttonMoreRefs = useRef([]);
   const popoverMoreRefs = useRef([]);
   const [showAction, setShowAction] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState('');
-  const [suggestions, setSuggestions] = useState(suggestionsRes);
+  const [suggestions, setSuggestions] = useState([]);
   const [recentSearch, setRecentSearch] = useState(recentSearchRes);
   const [guessSearch, setGuessSearch] = useState(guessSearchRes);
   const [seeMore, setSeeMore] = useState(false);
+
   const fetchSuggestions = async (query) => {
     try {
-      //Gọi API truy vấn bảng suggestions để tìm gợi ý
-      const res = await fetch(`/api/search?q=${encodeURIComponent(query)}`);
-      const data = await res.json();
-      // setSuggestions(data);
+      const data = await searchService.suggestion(query);
+      setSuggestions(data);
     } catch (err) {
       console.error(err);
     }
@@ -70,30 +72,30 @@ function SearchDrawer() {
   useEffect(() => {
     const searchQuery = searchParams.get('q') || '';
     setSearch(searchQuery);
-
-    // if (searchQuery.trim()) {
-    //   fetchSearch(searchQuery);
-    // } else {
-    //   setSuggestions([]); // clear result nếu không có query
-    // }
   }, [searchParams]);
 
   const debouncedFetchSuggestions = useCallback(
     debounce(async (value) => {
-      fetchSuggestions(value);
-    }, 500),
+      if (value) fetchSuggestions(value);
+    }, 800),
     []
   );
 
   const handleChangeInput = (e) => {
     const value = e.target.value;
     setSearch(value);
-    debouncedFetchSuggestions(value); // chỉ gọi khi ngừng gõ
+    debouncedFetchSuggestions(value);
   };
 
   const handleResetSearchForm = () => {
     setSearch('');
     setSuggestions([]);
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    closeDrawer('search');
+    navigate(`/search?q=${encodeURIComponent(search)}`);
   };
 
   return (
@@ -114,6 +116,7 @@ function SearchDrawer() {
           data-e2e="search-box"
           className={clsx('search-input', styles.FormElement)}
           action="/search"
+          onSubmit={(e) => handleSearch(e)}
         >
           <h1 style={{ display: 'none', alignItems: 'center' }}>{search}</h1>
           <input
@@ -168,11 +171,15 @@ function SearchDrawer() {
           {search &&
             suggestions.map((text, idx) => (
               <li
-                key={idx}
                 id={`sug-list-item-${idx}`}
                 data-e2e="content-sug-item"
                 role="option"
                 className={styles.LiItemContainer}
+                key={idx}
+                onClick={() => {
+                  setSearch(text);
+                  navigate(`/search?q=${encodeURIComponent(text)}`);
+                }}
               >
                 <div className={styles.DivSearchIconContainer}>
                   <FontAwesomeIcon
@@ -182,14 +189,7 @@ function SearchDrawer() {
                 </div>
                 <div className={styles.DivSugItemContent}>
                   <div className={styles.DivSugItemWrapper}>
-                    <h4
-                      className={styles.H4ItemTitle}
-                      onClick={() =>
-                        navigate(`/search/${encodeURIComponent(text)}`)
-                      }
-                    >
-                      {text}
-                    </h4>
+                    <h4 className={styles.H4ItemTitle}>{text}</h4>
                     <div className={styles.DivActionContainer}>
                       <div
                         aria-label="more"
@@ -205,7 +205,7 @@ function SearchDrawer() {
                         />
 
                         {buttonMoreRefs.current[idx] && showAction && (
-                          <MorePopoverr
+                          <MorePopover
                             triggerElement={buttonMoreRefs.current[idx]}
                             ref={(el) => (popoverMoreRefs.current[idx] = el)}
                           />
@@ -234,7 +234,7 @@ function SearchDrawer() {
                   <h4
                     className={styles.H4ItemText}
                     onClick={() =>
-                      navigate(`/search/${encodeURIComponent(text)}`)
+                      navigate(`/search?q=${encodeURIComponent(text)}`)
                     }
                   >
                     {text}
@@ -316,7 +316,7 @@ function SearchDrawer() {
                   <h4
                     className={styles.H4ItemText}
                     onClick={() =>
-                      navigate(`/search/${encodeURIComponent(guess.text)}`)
+                      navigate(`/search?q=${encodeURIComponent(guess.text)}`)
                     }
                   >
                     {guess.text}

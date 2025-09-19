@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import VideoSimple from '../VideoSimple';
 import styles from './VideoSimpleList.module.scss';
 import video from '/public/Download (3).mp4';
-
+//Call API
 function VideoSimpleList() {
   const dataVideos = [
     {

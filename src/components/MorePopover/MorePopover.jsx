@@ -60,7 +60,7 @@ const MorePopover = forwardRef(
     }, [isOpen]);
 
     return createPortal(
-      <div data-tux-color-scheme="dark" data-theme="dark">
+      <div>
         <span
           tabIndex={-1}
           aria-hidden="true"

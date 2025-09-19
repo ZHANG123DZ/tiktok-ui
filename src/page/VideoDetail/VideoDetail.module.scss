@@ -338,8 +338,9 @@
   width: 50%;
   height: 100%;
 }
-:global(.tab-active).DivTabItemContainer {
+.DivTabItemContainer[data-active='true'] {
   border-bottom: 2px solid rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.9);
 }
 .DivBorder {
   border-top: 1px solid rgba(255, 255, 255, 0.12);

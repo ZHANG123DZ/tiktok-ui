@@ -64,6 +64,7 @@ export const ArticleProvider = ({
           <ShareModal
             isOpen={activeShare}
             onClose={() => setActiveShare(false)}
+            shareToFriends={true}
           />
         )}
       </ArticleContext.Provider>

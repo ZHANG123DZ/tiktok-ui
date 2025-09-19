@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { createPost } from '../../services/Posts/posts.service';
+import { createPost } from '../../services/post/post.service';
 import styles from './styles.module.scss';
 
 function Upload() {

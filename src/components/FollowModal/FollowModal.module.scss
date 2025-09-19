@@ -1,0 +1,142 @@
+.DivModalContainer {
+  height: 696px;
+  min-width: 560px;
+  max-width: 700px;
+}
+.DivHeaderContainer {
+  padding: 24px;
+  line-height: 36px;
+  display: flex;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.H1Header {
+  font-family: TikTokFont;
+  font-weight: 700;
+  font-size: 24px;
+  color: rgba(255, 255, 255, 0.9);
+  width: 100%;
+  text-align: center;
+}
+.DivCloseContainer {
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+}
+.DivTabs {
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  height: 42px;
+  border-bottom: 0.5px solid rgba(255, 255, 255, 0.12);
+  margin-bottom: 1px;
+}
+.DivTabItem {
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  position: relative;
+  line-height: 24px;
+  display: flex;
+  height: 44px;
+  padding: 10px 24px;
+  cursor: pointer;
+  column-gap: 5px;
+  border-bottom: none;
+  color: rgba(255, 255, 255, 0.5);
+}
+.DivTabItem[data-active='true'] {
+  border-bottom: 2px solid rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.9);
+}
+.DivUserListContainer {
+  height: 569px;
+  width: 100%;
+  padding: 0px;
+  margin-bottom: 20px;
+  list-style-type: none;
+  overflow-y: auto;
+}
+.DivUserContainer {
+  padding: 16px 40px;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.DivUserItem {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.StyledUserInfoLink {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+}
+.SpanAvatarContainer {
+  display: inline-block;
+  box-sizing: border-box;
+  margin: 0px;
+  padding: 0px;
+  font-feature-settings: 'tnum';
+  position: relative;
+  overflow: hidden;
+  color: rgb(255, 255, 255);
+  white-space: nowrap;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 32px;
+  border-radius: 50%;
+  background-color: rgba(136, 136, 136, 0.5);
+}
+.ImgAvatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.DivCTAContainer {
+  display: flex;
+  flex-direction: row;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.DivFollowButtonWrapperV2 {
+}
+.StyledFollowButtonV2 {
+  border: none;
+  color: rgb(255, 255, 255);
+  background-color: rgb(255, 59, 92);
+  min-width: 106px;
+  min-height: 28px;
+  display: flex;
+  position: relative;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+  padding: 6px 8px;
+  user-select: none;
+  cursor: pointer;
+  box-sizing: border-box;
+  font-family: TikTokFont;
+  font-weight: 600;
+  font-size: 16px;
+  flex: 1 1 0%;
+  line-height: 36px;
+  border-radius: 8px;
+}
+.ListUser {
+  padding: 0px 50px;
+}
+.ListUser:hover {
+  background-color: #1c1c1c;
+  border: 6px;
+}

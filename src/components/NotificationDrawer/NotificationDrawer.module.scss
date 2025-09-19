@@ -1,0 +1,143 @@
+.DivDrawerContainer {
+  width: 20rem;
+  height: 100vh;
+  position: fixed;
+  inset-inline-start: 4.5rem;
+  background-color: var(--ui-page-flat-1);
+  z-index: 99;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-left: 1px solid rgba(255, 255, 255, 0.12);
+  overscroll-behavior: contain;
+}
+.DivActivityContainer > div {
+  max-height: 100vh;
+}
+.DivInboxContainer {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.DivInboxHeaderContainer {
+  padding-top: 24px;
+  flex: 0 0 auto;
+  padding-left: 16px;
+}
+.H2InboxTitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-family: TikTokDisplayFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 30px;
+  display: flex;
+}
+.DivGroupContainer {
+  color: rgba(255, 255, 255, 0.9);
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  margin-top: 16px;
+  display: flex;
+  flex-flow: wrap;
+}
+.ButtonGroupItem:not(:last-child) {
+  margin-right: 8px;
+}
+
+.ButtonGroupItem {
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.08);
+  border: none;
+  padding: 2px 8px;
+  margin-bottom: 12px;
+  text-align: center;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: 300ms;
+}
+.ButtonGroupItem:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+.ButtonGroupItem[data-active='true'] {
+  color: rgb(18, 18, 18);
+  background: rgba(255, 255, 255, 0.9);
+}
+.DivInboxContentContainer {
+  flex: 1 1 auto;
+  overflow: auto;
+}
+.PTimeGroupTitle {
+  color: rgba(255, 255, 255, 0.5);
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 18px;
+  padding: 0px 16px;
+  margin-top: 8px;
+}
+.UlInboxItemListContainer {
+  padding: 0px;
+  margin: 0px;
+  list-style-type: none;
+}
+.LiInboxItemWrapper {
+  padding: 0px;
+  margin: 0px;
+  list-style-type: none;
+}
+.DivSystemNotifItemContainer {
+  font-family: TikTokFont, Arial, Tahoma, PingFangSC, sans-serif;
+  font-size: 14px;
+  line-height: 18px;
+  display: flex;
+  flex-direction: row;
+  padding: 10px 16px;
+  cursor: pointer;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.DivSystemNotifIconContainer {
+  min-width: 48px;
+  width: 48px;
+  height: 48px;
+  border-radius: 24px;
+  border: 1px solid rgb(22, 24, 35);
+  background-color: rgb(22, 24, 35);
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.DivContentContainer {
+  padding: 0px 12px;
+  flex: 1 1 auto;
+}
+:global(.TUXAlertBadgeDot-reference) {
+  display: inline-block;
+  position: relative;
+}
+.PSystemNotifDescText {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  color: rgba(255, 255, 255, 0.5);
+  max-height: 130px;
+  word-break: break-word;
+}
+.PTitleText {
+  display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  font-weight: 600;
+  word-break: break-all;
+}
+.DivArrowContainer {
+  min-width: 16px;
+  width: 16px;
+  height: 16px;
+}

@@ -1,0 +1,72 @@
+.DivMoreDrawerContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-align: start;
+  align-items: start;
+}
+.DivMoreDrawerHeader {
+  height: 4.5rem;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+  margin-inline-start: 1rem;
+  flex-shrink: 0;
+  -webkit-box-align: start;
+  align-items: start;
+}
+.UlMoreScrollingContentContainer {
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  width: 100%;
+  -webkit-box-align: center;
+  align-items: center;
+  gap: 0.25rem;
+  list-style-type: none;
+  margin: 0px;
+  padding: 0.5rem;
+  scrollbar-width: none;
+}
+.LiMoreButtonContainer {
+  width: 100%;
+  list-style-type: none;
+}
+.StyledTUXMoreOptionButton:global(.TUXButton):global(.TUXButton) {
+  min-width: 0px;
+  height: 2.5rem;
+  padding: 0px;
+}
+.StyledTUXMoreOptionButton:not(:hover) {
+  background-color: unset;
+}
+.StyledTUXMoreOptionButton > div {
+  gap: 1rem;
+  -webkit-box-pack: justify;
+  justify-content: space-between;
+  margin-inline: 0.5rem;
+}
+.StyledTUXMoreOptionButton > div > .TUXButton-label {
+  margin: unset;
+}
+.StyledTUXMoreOptionButton {
+  width: 100%;
+}
+
+.DivBackIconWrapper {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
+}
+.StyledTUXText {
+  line-height: 1.5625rem;
+  letter-spacing: 0.3px;
+  font-size: 1.25rem !important;
+}

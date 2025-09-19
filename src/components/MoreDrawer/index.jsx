@@ -1,17 +1,18 @@
 import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faChevronRight } from '@fortawesome/free-solid-svg-icons';
-
 import Button from '../Button';
 import styles from './MoreDrawer.module.scss';
 
-import authService from '../../services/auth/auth.service';
+import { useDrawerStore } from '../../store/drawerStore';
+import Menu from '../Menu';
+import LogoutConfirm from '../LogoutConfirm';
+import { useState } from 'react';
+import toggleTheme from '../../utils/toggleTheme';
 
 function MoreDrawer() {
-  const logOutHandle = () => {
-    // const data = authService.logout();
-    // console.log(data);
-  };
+  const { closeDrawer, openDrawer, closeAllDrawers, closeAllExcept } =
+    useDrawerStore();
+
+  const [isOpenLogout, setOpenLogout] = useState(false);
 
   return (
     <div className={styles.DivMoreDrawerContainer}>
@@ -92,6 +93,25 @@ function MoreDrawer() {
             isDefault
             size="small"
             secondary
+            onClick={() => {
+              closeAllExcept(['messages']);
+              openDrawer(
+                'more-theme',
+                <Menu
+                  title="Chế độ tối"
+                  menu={[
+                    { label: 'Tự động' },
+                    { label: 'Chế độ tối', onClick: toggleTheme },
+                    { label: 'Chế độ sáng', onClick: toggleTheme },
+                  ]}
+                  onClickBackIcon={() => {
+                    closeAllDrawers();
+                    openDrawer('more', <MoreDrawer />);
+                  }}
+                />,
+                { closeButton: false }
+              );
+            }}
           />
         </li>
 
@@ -136,8 +156,14 @@ function MoreDrawer() {
             isDefault
             size="small"
             secondary
-            onClick={() => logOutHandle()}
+            onClick={() => setOpenLogout(true)}
           />
+          {isOpenLogout && (
+            <LogoutConfirm
+              isOpen={isOpenLogout}
+              onClose={() => setOpenLogout(false)}
+            />
+          )}
         </li>
       </ul>
     </div>

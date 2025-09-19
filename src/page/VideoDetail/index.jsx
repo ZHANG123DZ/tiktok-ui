@@ -14,18 +14,99 @@ import {
   faVolumeHigh,
   faVolumeXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import video from '/public/Download (6).mp4';
-import { Tab, TabList, TabPanels, Tabs } from '../../components/Tabs/Tabs';
+import video1 from '/public/Download (1).mp4';
+import video2 from '/public/Download (2).mp4';
+import video3 from '/public/Download (3).mp4';
+import video4 from '/public/Download (4).mp4';
+import video5 from '/public/Download (5).mp4';
+import {
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+} from '../../components/Tabs/Tabs';
 import VideoSimpleList from '../../components/VideoSimpleList';
 import PostComment from '../../components/PostComment';
 import FloatingPlayerIcon from '../../components/Icon/FloatingPlayerIcon';
 import { useEffect, useRef, useState } from 'react';
+import postService from '../../services/post/post.service';
+import { useNavigate } from 'react-router-dom';
+
+//Call API
+const videos = [video1, video2, video3, video5, video4];
+
+const videoData = {
+  isLike: false,
+  isBookMarked: false,
+  likes: 2345,
+  bookMarks: 12345,
+  comments: 1234,
+};
 
 function VideoDetail({ postId, username }) {
-  console.log(postId);
-  const videoData = {
-    video: postId,
+  const searchContent = 'tôi bị ngu';
+  const navigate = useNavigate();
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentPost, setCurrentPost] = useState(null);
+
+  const isScrolling = useRef(false);
+  useEffect(() => {
+    const fetchPost = async () => {
+      const post = await postService.getPost(postId);
+      setCurrentPost(post);
+    };
+    fetchPost();
+  }, []);
+  const changeVideo = (direction) => {
+    setCurrentIndex((prev) => {
+      if (direction === 'next') {
+        return prev < videos.length - 1 ? prev + 1 : prev;
+      } else {
+        return prev > 0 ? prev - 1 : prev;
+      }
+    });
   };
+
+  const handleWheel = (e) => {
+    if (isScrolling.current) return;
+    isScrolling.current = true;
+
+    if (e.deltaY > 0) {
+      changeVideo('next');
+    } else if (e.deltaY < 0) {
+      changeVideo('prev');
+    }
+
+    // reset flag ngay sau khi frame render xong
+    requestAnimationFrame(() => {
+      isScrolling.current = false;
+    });
+  };
+
+  // Bấm phím
+  const handleKeyDown = (e) => {
+    if (e.code === 'ArrowDown') {
+      changeVideo('next');
+    } else if (e.code === 'ArrowUp') {
+      changeVideo('prev');
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    window.addEventListener('keydown', handleKeyDown);
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
+  useEffect(() => {
+    window.addEventListener('wheel', handleWheel, { passive: true });
+    return () => window.removeEventListener('wheel', handleWheel);
+  }, []);
 
   const getInitialVolume = () => {
     const storedVolume = localStorage.getItem('videoVolume');
@@ -55,14 +136,17 @@ function VideoDetail({ postId, username }) {
 
   const [isVolumeDragging, setIsVolumeDragging] = useState(false);
   const volumeSliderRef = useRef(null);
-  const [progressBarWidth, setProgressBarWidth] = useState(0);
 
-  useEffect(() => {
-    const progressBar = progressBarRef.current;
-    if (progressBar) {
-      setProgressBarWidth(progressBar.offsetWidth);
-    }
-  }, [videoData]);
+  // Thanh tiến trình video
+
+  // const [progressBarWidth, setProgressBarWidth] = useState(0);
+
+  // useEffect(() => {
+  //   const progressBar = progressBarRef.current;
+  //   if (progressBar) {
+  //     setProgressBarWidth(progressBar.offsetWidth);
+  //   }
+  // }, []);
 
   useEffect(() => {
     const video = videoRef.current;
@@ -109,7 +193,7 @@ function VideoDetail({ postId, username }) {
       video.removeEventListener('pause', handlePause);
       video.removeEventListener('ended', handleEnded);
     };
-  }, [volume, isMuted, videoData]);
+  }, [volume, isMuted, currentPost]);
   //Video Function
   const handleProgressClick = (e) => {
     const progressBar = progressBarRef.current;
@@ -281,7 +365,7 @@ function VideoDetail({ postId, username }) {
               action="/search"
             >
               <h1 style={{ display: 'none', alignItems: 'center' }}>
-                kết quả cuộc gặp nga mỹ
+                {searchContent}
               </h1>
               <input
                 placeholder="cận cảnh đón tổng thống mỹ"
@@ -348,60 +432,6 @@ function VideoDetail({ postId, username }) {
         {/* Video Wrapper*/}
         <div className={clsx(styles.DivVideoWrapper, styles.e11s2kul3)}>
           <div mode="2" className={clsx(styles.DivContainer, styles.e1yey0rl0)}>
-            {/* <div className={clsx(styles.cssSq145r)}>
-              <span
-                style={{
-                  boxSizing: 'border-box',
-                  display: 'block',
-                  overflow: 'hidden',
-                  width: 'initial',
-                  height: 'initial',
-                  background: 'none',
-                  opacity: 1,
-                  border: 0,
-                  margin: 0,
-                  padding: 0,
-                  position: 'absolute',
-                  inset: 0,
-                }}
-              >
-                <picture>
-                  <img
-                    alt="Cuộc gặp thượng đỉnh lịch sử giữa hai tổng Thống thống Mỹ, Nga đã kết thúc. Hai ông đã có buổi họp báo chung thông báo kết quả. #tintuc #tinnong24 #trump #putin #xuhuong "
-                    fetchPriority="auto"
-                    decoding="async"
-                    src="https://p16-sign-sg.tiktokcdn.com/tos-alisg-p-0037/oMQf0jjIgDA8DgZfFRyAeQkMoCWVF2PM9slddC~tplv-tiktokx-origin.image?dr=14575&amp;x-expires=1755568800&amp;x-signature=vr01XdxPiHEjEwVlng8krOJpbJ8%3D&amp;t=4d5b0474&amp;ps=13740610&amp;shp=81f88b70&amp;shcp=43f4a2f9&amp;idc=my2"
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      boxSizing: 'border-box',
-                      padding: 0,
-                      border: 'none',
-                      margin: 'auto',
-                      display: 'block',
-                      width: '0px',
-                      height: '0px',
-                      minWidth: '100%',
-                      maxWidth: '100%',
-                      minHeight: '100%',
-                      maxHeight: '100%',
-                    }}
-                  />
-                </picture>
-                <div
-                  style={{
-                    width: '100%',
-                    height: '100%',
-                    position: 'absolute',
-                    top: 0,
-                    left: 0,
-                  }}
-                >
-                  <div></div>
-                </div>
-              </span>
-            </div> */}
-
             <div
               data-e2e="browse-video"
               className={clsx(styles.DivBasicPlayerWrapper, styles.e1yey0rl2)}
@@ -427,7 +457,7 @@ function VideoDetail({ postId, username }) {
                       top: 0,
                       left: 0,
                     }}
-                    src={videoData.video}
+                    src={currentPost?.content}
                   ></video>
                   <div></div>
                 </div>
@@ -492,6 +522,7 @@ function VideoDetail({ postId, username }) {
             styles['ButtonBasicButtonContainer-StyledCloseIconContainer'],
             styles.e11s2kul6
           )}
+          onClick={() => navigate(-1)}
         >
           <FontAwesomeIcon
             icon={faClose}
@@ -539,20 +570,23 @@ function VideoDetail({ postId, username }) {
           </button>
         </div>
         {/*  */}
-        <button
-          data-e2e="arrow-left"
-          role="button"
-          aria-label="Go to previous video"
-          className={clsx(
-            styles['ButtonBasicButtonContainer-StyledVideoSwitchUp'],
-            styles.e11s2kul10
-          )}
-        >
-          <FontAwesomeIcon
-            icon={faChevronUp}
-            style={{ width: '26px', height: '26px', fontSize: '26px' }}
-          />
-        </button>
+        {currentIndex > 0 && (
+          <button
+            data-e2e="arrow-left"
+            role="button"
+            aria-label="Go to previous video"
+            className={clsx(
+              styles['ButtonBasicButtonContainer-StyledVideoSwitchUp'],
+              styles.e11s2kul10
+            )}
+            onClick={() => changeVideo('prev')}
+          >
+            <FontAwesomeIcon
+              icon={faChevronUp}
+              style={{ width: '26px', height: '26px', fontSize: '26px' }}
+            />
+          </button>
+        )}
         <button
           data-e2e="arrow-left"
           role="button"
@@ -561,6 +595,7 @@ function VideoDetail({ postId, username }) {
             styles['ButtonBasicButtonContainer-StyledVideoSwitchDown'],
             styles.e11s2kul10
           )}
+          onClick={() => changeVideo('next')}
         >
           <FontAwesomeIcon
             icon={faChevronDown}
@@ -590,26 +625,36 @@ function VideoDetail({ postId, username }) {
         <div className={styles.DivCommentContainer}>
           <div className={styles.DivCommentListContainer}>
             <div className={styles.DivProfileWrapper}>
-              <DescriptionVideo />
-              <ActionVideo data={videoData} />
+              <DescriptionVideo data={currentPost} />
+              <ActionVideo data={currentPost} />
             </div>
 
             {/* Tab */}
-            <Tabs defaultIndex={0}>
+            <Tabs defaultValue={'comments'}>
               <div className={styles.DivTabMenuWrapper}>
-                <TabList className={styles.DivTabMenuContainer}>
-                  <Tab className={styles.DivTabItemContainer}>
-                    <div className={styles.DivTabItem}>Comments (173)</div>
-                  </Tab>
-                  <Tab className={styles.DivTabItemContainer}>
-                    <div className={styles.DivTabItem}>Creator videos</div>
-                  </Tab>
+                <TabList>
+                  <div className={styles.DivTabMenuContainer}>
+                    <Tab value={'comments'}>
+                      <div className={styles.DivTabItemContainer}>
+                        <div className={styles.DivTabItem}>Comments (173)</div>
+                      </div>
+                    </Tab>
+                    <Tab value={'creatorVideos'}>
+                      <div className={styles.DivTabItemContainer}>
+                        <div className={styles.DivTabItem}>Creator videos</div>
+                      </div>
+                    </Tab>
+                  </div>
                 </TabList>
               </div>
               <div className={styles.DivBorder}></div>
               <TabPanels>
-                <PostComment />
-                <VideoSimpleList />
+                <TabPanel value={'comments'}>
+                  <PostComment />
+                </TabPanel>
+                <TabPanel value={'creatorVideos'}>
+                  <VideoSimpleList />
+                </TabPanel>
               </TabPanels>
             </Tabs>
           </div>

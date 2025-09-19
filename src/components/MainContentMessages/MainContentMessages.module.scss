@@ -1,0 +1,25 @@
+.css-it0zxx-DivFullSideNavLayout {
+  display: flex;
+  flex-direction: row;
+  width: calc(100% - 24.5rem);
+  -webkit-box-pack: center;
+  justify-content: center;
+}
+.css-1693v3y-DivChatBox {
+  z-index: unset;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background: var(--ui-page-flat-1);
+  box-shadow: unset;
+  border-radius: 8px;
+}
+.css-1xdo7n9-DivIconContainer {
+  height: 100%;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  justify-content: center;
+}

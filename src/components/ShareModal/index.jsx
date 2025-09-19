@@ -2,14 +2,18 @@ import Text from '../Text';
 import styles from './ShareModal.module.scss';
 import './ShareModal.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClose, faCode } from '@fortawesome/free-solid-svg-icons';
+import { faClose, faCode, faSearch } from '@fortawesome/free-solid-svg-icons';
 import { createPortal } from 'react-dom';
 import { FaFacebookF, FaTelegram, FaWhatsapp } from 'react-icons/fa';
 import Icon from '../Icon/Icon';
 import { useEffect, useRef } from 'react';
 import handleCopy from '../../utils/handleCopy';
 
-export default function ShareModal({ isOpen = false, onClose = () => {} }) {
+export default function ShareModal({
+  isOpen = false,
+  onClose = () => {},
+  shareToFriends = true,
+}) {
   const shareOptions = [
     {
       icon: (
@@ -80,7 +84,7 @@ export default function ShareModal({ isOpen = false, onClose = () => {} }) {
           }}
         />
       ),
-      name: 'facebook',
+      name: 'Facebook',
     },
     {
       icon: (
@@ -115,7 +119,6 @@ export default function ShareModal({ isOpen = false, onClose = () => {} }) {
     <div
       className="TUXModal-overlay"
       data-transition-status="open"
-      data-tux-color-scheme="dark"
       dir="ltr"
       style={{
         position: 'fixed',
@@ -153,7 +156,20 @@ export default function ShareModal({ isOpen = false, onClose = () => {} }) {
       >
         {/* Header */}
         <div className="TUXModalNavBar">
-          <div className="TUXModalNavBar-leading" />
+          <div className="TUXModalNavBar-leading">
+            {shareToFriends && (
+              <button
+                type="button"
+                className="TUXNavBarIconButton TUXUnstyledButton"
+                style={{ paddingLeft: '10px', paddingRight: '10px' }}
+              >
+                <FontAwesomeIcon
+                  icon={faSearch}
+                  style={{ width: '24px', height: '24px' }}
+                />
+              </button>
+            )}
+          </div>
           <h2 className="TUXModalNavBar-title">Share to</h2>
           <div className="TUXModalNavBar-trailing">
             <button
@@ -175,6 +191,81 @@ export default function ShareModal({ isOpen = false, onClose = () => {} }) {
           className={styles.DivActionGroupContainer}
           style={{ gap: '0.75rem' }}
         >
+          {shareToFriends && (
+            <>
+              <div className={styles['css-nkwb4a']}>
+                <div
+                  className={styles['css-18yu2gh']}
+                  style={{ height: '7.75rem' }}
+                >
+                  <div
+                    style={{
+                      width: '112px',
+                      height: '100%',
+                      position: 'relative',
+                    }}
+                  >
+                    <div
+                      style={{
+                        position: 'absolute',
+                        top: 0,
+                        insetInlineStart: 0,
+                        height: '100%',
+                        width: '88px',
+                        transform: 'translateX(12px)',
+                      }}
+                    >
+                      <div className={styles.DivQuickShareUserItem}>
+                        <div
+                          data-e2e="share-thanghoang9051"
+                          className={styles.DivActionContainer}
+                        >
+                          <div tabIndex={0} className={styles.DivAction}>
+                            <div style={{ display: 'flex' }}>
+                              <div className={styles['css-1vztbgn']}>
+                                <div
+                                  data-e2e="share-avatar"
+                                  className={styles['css-uwwqev']}
+                                >
+                                  <img
+                                    src="https://p16-common-sign-useastred.tiktokcdn-eu.com/tos-useast2a-avt-0068-giso/7132002602534830107~tplv-tiktokx-cropcenter:720:720.jpeg?dr=14579&refresh_token=d656bc50&x-expires=1756627200&x-signature=bjzEDkvIdpCs9hbccQVb64rbork%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=my2"
+                                    alt="thanghoang9051"
+                                    width={64}
+                                    height={64}
+                                    className="TUXBaseAvatar-src"
+                                    style={{ width: '64px', height: '64px' }}
+                                  />
+                                </div>
+                              </div>
+                            </div>
+                            <p
+                              className={`${styles['css-1p6jlgy']} TUXText TUXText--tiktok-sans TUXText--align-center e1vx58lt0`}
+                              style={{
+                                color: 'inherit',
+                                fontSize: '12px',
+                                letterSpacing: '0.1608px',
+                              }}
+                            >
+                              thanghoang9051
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    className={`${styles.arrowsContainer} css-15obktd`}
+                    style={{ top: '2.75rem' }}
+                  />
+                </div>
+              </div>
+              <div
+                role="separator"
+                className="tux-separator tux-separator-thin--horizontal"
+                style={{ backgroundColor: 'var(--ui-shape-neutral-3)' }}
+              ></div>{' '}
+            </>
+          )}
           <div className={styles['css-nkwb4a']}>
             <div
               className={styles['css-18yu2gh']}
@@ -212,23 +303,6 @@ export default function ShareModal({ isOpen = false, onClose = () => {} }) {
               <div className={styles['css-14gbl02']}></div>
             </div>
           </div>
-          {/* {[
-            { label: 'Copy', icon: '🔗' },
-            { label: 'WhatsApp', icon: '📱' },
-            { label: 'Embed', icon: '</>' },
-            { label: 'Facebook', icon: '📘' },
-            { label: 'Telegram', icon: '✈️' },
-            { label: 'X', icon: '𝕏' },
-            { label: 'LinkedIn', icon: '💼' },
-            { label: 'Email', icon: '✉️' },
-            { label: 'Reddit', icon: '👽' },
-            { label: 'Line', icon: '💬' },
-          ].map((item) => (
-            <button key={item.label} className="share-button">
-              <span className="icon">{item.icon}</span>
-              <p>{item.label}</p>
-            </button>
-          ))} */}
         </div>
       </div>
     </div>,

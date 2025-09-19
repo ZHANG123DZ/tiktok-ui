@@ -81,7 +81,11 @@
   height: 1.75rem;
   padding: 0px;
 }
-
+.StyledTUXMoreCloseButton {
+  min-width: 0px;
+  height: 1.75rem;
+  padding: 0px;
+}
 //Button-StyledAvatarFollowButton
 
 .Button-StyledAvatarFollowButton {
@@ -292,4 +296,18 @@
 .TUXAlertBadgeDot-reference {
   display: inline-block;
   position: relative;
+}
+.StyledTUXMoreBackButton:global(.TUXButton):global(.TUXButton) {
+  min-width: 0px;
+  height: 1.5rem;
+  padding: 0px;
+}
+.DivBackIconWrapper {
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  -webkit-box-pack: center;
+  justify-content: center;
+  -webkit-box-align: center;
+  align-items: center;
 }

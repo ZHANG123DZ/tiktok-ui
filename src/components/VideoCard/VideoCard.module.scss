@@ -426,3 +426,38 @@
   height: 12px;
   color: rgb(255, 255, 255);
 }
+@media screen and (max-width: 479px) {
+  .DivCardFooter {
+    padding-top: 72px;
+  }
+}
+
+.DivCardFooter {
+  position: absolute;
+  width: 100%;
+  bottom: 0px;
+  height: 100px;
+  background: linear-gradient(
+    rgba(22, 24, 35, 0) 2.92%,
+    rgba(22, 24, 35, 0.5) 98.99%
+  );
+  padding: 67px 13px 17px;
+}
+@media screen and (max-width: 479px) {
+  .StyledPlay {
+    vertical-align: -0.15em;
+  }
+}
+
+.StyledPlay {
+  margin-right: 4px;
+  vertical-align: middle;
+}
+
+.StrongVideoCount {
+  color: rgb(255, 255, 255);
+  font-family: TikTokFont;
+  font-weight: 600;
+  vertical-align: middle;
+  font-size: 16px;
+}

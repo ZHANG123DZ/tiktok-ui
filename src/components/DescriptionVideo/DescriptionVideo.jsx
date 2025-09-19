@@ -1,23 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Text from '../Text';
 import styles from './DescriptionVideo.module.scss'; // nếu bạn muốn tách CSS module
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMusic } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'react-router-dom';
+import formatTime from '../../utils/formatTime';
+import Translate from '../Translate/Translate';
 
-const DescriptionVideo = () => {
-  const dataVideo = {
-    description:
-      'Cuộc gặp thượng đỉnh lịch sử giữa hai tổng Thống thống Mỹ, Nga đã kết thúc. Hai ông đã có buổi họp báo chung thông báo kết quả.',
-    tags: ['tintuc', 'tinnong24', 'trump', 'putin', 'xuhuong'],
-    author: {
-      username: 'superman',
-      avatar:
-        'https://p9-sign-sg.tiktokcdn.com/tos-alisg-avt-0068/8f8a257ee263c7f7cf3a6d7202027975~tplv-tiktokx-cropcenter:100:100.jpeg?dr=14579&refresh_token=830bf52f&x-expires=1755525600&x-signature=VoHL41fkIlfcp%2Bg3YX6X1vaW0Go%3D&t=4d5b0474&ps=13740610&shp=a5d48078&shcp=81f88b70&idc=my2',
-      name: '🆃🅸🅽 🅽🅾🅽🅶 24',
-    },
-  };
-
+const DescriptionVideo = ({ data }) => {
+  const [title, setTitle] = useState(data?.title);
   const [follow, setFollow] = useState(false);
+
+  useEffect(() => {
+    if (data?.title) {
+      setTitle(data.title);
+    }
+  }, [data?.title]);
   const toggleFollow = async () => {
     setFollow(!follow);
   };
@@ -28,12 +26,12 @@ const DescriptionVideo = () => {
     <div className={styles.DivDescriptionContentWrapper}>
       <div className={styles.DivInfoContainer}>
         {/* Avatar */}
-        <a
+        <Link
           rel="opener"
           target="_self"
           data-e2e="browse-user-avatar"
           className={styles['css-1q3wyxm']}
-          href={`/@${dataVideo.author.username}`}
+          to={`/@${data?.author.username}`}
         >
           <div
             className={styles.DivContainer}
@@ -48,39 +46,40 @@ const DescriptionVideo = () => {
               <img
                 loading="lazy"
                 alt=""
-                src={dataVideo.author.avatar}
+                src={data?.author.avatar}
                 className={styles.ImgAvatar}
               />
             </span>
           </div>
-        </a>
+        </Link>
 
         {/* Username + nickname */}
-        <a
+        <Link
           target="_self"
           rel="opener"
           className={styles.StyledLink}
-          href={`/@${dataVideo.author.username}`}
+          to={`/@${data?.author.username}`}
         >
           <span data-e2e="browse-username" className={styles.SpanUniqueId}>
-            <span className={styles.SpanEllipsis}>
-              {dataVideo.author.username}
-            </span>
+            <span className={styles.SpanEllipsis}>{data?.author.username}</span>
           </span>
           <br />
           <span data-e2e="browser-nickname" className={styles.SpanOtherInfos}>
-            <span className={styles.SpanEllipsis}>{dataVideo.author.name}</span>
+            <span className={styles.SpanEllipsis}>{data?.author.name}</span>
             <span style={{ margin: '0px 4px' }}> · </span>
-            <span>11h ago </span>
+            <span>{formatTime(data?.createdAt)} trước</span>
           </span>
-        </a>
+        </Link>
 
         {/* Follow button */}
         <div data-e2e="browse-follow" className={styles.DivBtnWrapper}>
           <button
             className={styles.Button}
             style={{
-              backgroundColor: follow ? 'inherit' : 'var(--tux-colorPrimary)',
+              backgroundColor: follow
+                ? 'rgba(255, 255, 255, 0.12)'
+                : 'var(--tux-colorPrimary)',
+              border: follow && '0px',
             }}
           >
             <div className={styles.ButtonContent}>
@@ -126,17 +125,17 @@ const DescriptionVideo = () => {
                 className={styles.DivDescriptionContentContainer}
               >
                 <span data-e2e="new-desc-span" style={{ fontWeight: 400 }}>
-                  {dataVideo.description}{' '}
+                  {title}{' '}
                 </span>
-                {dataVideo.tags.map((tag, idx) => (
+                {data?.tags.map((tag, idx) => (
                   <React.Fragment key={tag}>
-                    <a
+                    <Link
                       data-e2e="search-common-link"
                       target="_self"
                       rel="opener"
                       aria-label={`Watch more videos of the #${tag} category`}
                       className={styles.StyledCommonLink}
-                      href={`/tag/${tag}`}
+                      to={`/tag/${tag}`}
                     >
                       <strong
                         color="rgba(143, 190, 233, 1)"
@@ -144,9 +143,9 @@ const DescriptionVideo = () => {
                       >
                         #{tag}{' '}
                       </strong>
-                    </a>
+                    </Link>
 
-                    {idx + 1 !== dataVideo.tags.length && (
+                    {idx + 1 !== data?.tags.length && (
                       <span
                         data-e2e="new-desc-span"
                         style={{ fontWeight: 400 }}
@@ -170,31 +169,31 @@ const DescriptionVideo = () => {
             </button>
           )}
         </div>
-
-        <Text
-          weight="medium"
-          className="StyledTUXText-StyledDescriptionTranslationToggleText"
-          style={{ color: 'var(--ui-text-3)', fontSize: '14px' }}
-        >
-          See translation
-        </Text>
+        {/* Translation */}
+        <Translate
+          content={title}
+          source={data?.title}
+          setNewContent={setTitle}
+        />
         {/* Music */}
         <h4 data-e2e="browse-music" className={styles.H4Link}>
-          <a
+          <Link
             target="_self"
             rel="opener"
-            aria-label="Watch more videos with music nhạc nền  - 🆃🅸🅽 🅽🅾🅽🅶 24"
+            aria-label={`Watch more videos with music nhạc nền  - ${data?.music?.author?.name}`}
             className={styles.StyledLink}
             style={{ display: 'flex', alignItems: 'center' }}
-            href="/music/nhạc-nền-🆃🅸🅽-🅽🅾🅽🅶-24-7539003946375875345"
+            to={`/music/${data?.music?.author?.name}-${data?.music?.id}`}
           >
             <FontAwesomeIcon
               icon={faMusic}
               className={styles.MusicNoteIcon}
               style={{ color: 'rgba(255, 255, 255, .9)' }}
             />
-            <div className={styles.DivMusicText}>nhạc nền - 🆃🅸🅽 🅽🅾🅽🅶 24</div>
-          </a>
+            <div className={styles.DivMusicText}>
+              nhạc nền - {data?.music?.author?.name}
+            </div>
+          </Link>
         </h4>
 
         <div className={styles.DivAnchorTagWrapper}></div>

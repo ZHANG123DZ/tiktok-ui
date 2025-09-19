@@ -9,28 +9,48 @@ import Button from '../Button';
 import TikTokIcon from '/public/tiktok-Icon.svg';
 import TikTokFullWidth from '/public/tiktok-full-width.png';
 import clsx from 'clsx';
-import navigationUser from '../../navigationUser';
+import { navigationUser } from '../../navigationUser';
 import { useWindowSize } from '../../hooks/useWindowSize';
-import { Navigate, NavLink } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import DrawerHost from '../DrawerHost';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useDrawerStore } from '../../store/drawerStore';
+import DrawerHost from '../DrawerHost';
 import MoreDrawer from '../MoreDrawer';
-import Text from '../Text';
 import SearchDrawer from '../SearchDrawer';
+import Text from '../Text';
+import { useEffect } from 'react';
+import MessageDrawer from '../MessageDrawer';
+import { useSelector } from 'react-redux';
 
 function SideNavUser() {
   const { width } = useWindowSize();
   const {
-    openDrawer,
-    closeDrawer,
-    closeAllDrawer,
-    isDrawerOpen,
     toggleDrawer,
+    closeDrawer,
+    hasOpenDrawers,
+    openDrawer,
+    closeAllDrawers,
+    closeAllExcept,
   } = useDrawerStore();
   const currentUser = useSelector((state) => state.auth.currentUser);
-  const isOpen = isDrawerOpen(['search', 'more', 'active']);
+  const location = useLocation();
+  useEffect(() => {
+    const isMessages = location.pathname.startsWith('/messages');
+    if (isMessages) {
+      openDrawer('messages', <MessageDrawer />, { mask: false });
+    } else {
+      closeDrawer('messages');
+    }
+  }, [location, openDrawer, closeDrawer]);
+
+  const isOpen = hasOpenDrawers();
   const smallSideNav = width <= 1024 || isOpen;
+  const navItems = navigationUser(
+    toggleDrawer,
+    closeDrawer,
+    openDrawer,
+    closeAllDrawers
+  );
+
   return (
     <div
       className={clsx(
@@ -49,7 +69,9 @@ function SideNavUser() {
             styles.DivAnimationCover,
             isOpen && styles.DivAnimationCoverOnDrawer
           )}
-        ></div>
+        />
+
+        {/* Logo */}
         <div className={styles.DivFixedContentContainer}>
           <div
             className={clsx(
@@ -61,49 +83,47 @@ function SideNavUser() {
               <img
                 src={smallSideNav ? TikTokIcon : TikTokFullWidth}
                 alt="logoTikTok"
-                style={{
-                  height: '42px',
-                  width: '118px',
-                  objectFit: 'contain',
-                }}
+                style={{ height: '42px', width: '118px', objectFit: 'contain' }}
               />
             </NavLink>
           </div>
+
+          {/* Search Button */}
           <div
             className={clsx(
               styles.DivSearchWrapper,
               isOpen && styles.DivSearchWrapperOnDrawer
             )}
             onClick={() => {
-              closeDrawer(['more']);
+              closeDrawer(['more', 'activity', 'messages']);
               toggleDrawer('search', <SearchDrawer />);
             }}
           >
-            {
-              <Button
-                label="Tìm kiếm"
-                secondary
-                className={clsx(
-                  styles.StyledTUXSearchButton,
-                  isOpen && styles.StyledTUXSearchButtonOnDrawer
-                )}
-                size="medium"
-                capsule
-                icon={<FontAwesomeIcon icon={faSearch} />}
-              ></Button>
-            }
+            <Button
+              label="Tìm kiếm"
+              secondary
+              className={clsx(
+                styles.StyledTUXSearchButton,
+                isOpen && styles.StyledTUXSearchButtonOnDrawer
+              )}
+              size="medium"
+              capsule
+              icon={<FontAwesomeIcon icon={faSearch} />}
+            />
           </div>
         </div>
+
+        {/* Nav Buttons */}
         <div className={styles.DivScrollingContentContainer}>
           <div className={styles.DivMainNavContainer}>
-            {Object.values(navigationUser).map((data) => (
+            {Object.values(navItems).map((item) => (
               <div
                 className="TUXTooltip-reference StyledTUXTooltip"
-                key={data.label}
+                key={item.label}
               >
                 <Button
-                  to={data.link}
-                  label={data.label}
+                  to={item.link}
+                  label={item.label}
                   isDefault
                   size="medium"
                   secondary
@@ -111,18 +131,20 @@ function SideNavUser() {
                     styles.StyledTUXNavButton,
                     isOpen && styles.StyledTUXNavButtonOnDrawer
                   )}
-                  icon={data.icon}
-                  onClick={data.onClick}
-                ></Button>
+                  icon={item.icon}
+                  onClick={item.onClick}
+                />
               </div>
             ))}
+
+            {/* Profile */}
             <div
               className="TUXTooltip-reference StyledTUXTooltip"
-              key={'profile'}
+              key="profile"
             >
               <Button
                 to={`/@${currentUser.username}`}
-                label={'Hồ sơ'}
+                label="Hồ sơ"
                 isDefault
                 size="medium"
                 secondary
@@ -131,11 +153,14 @@ function SideNavUser() {
                   isOpen && styles.StyledTUXNavButtonOnDrawer
                 )}
                 icon={<FontAwesomeIcon icon={faUser} />}
-              ></Button>
+                onClick={() => closeAllDrawers()}
+              />
             </div>
-            <div className="TUXTooltip-reference StyledTUXTooltip" key={'more'}>
+
+            {/* More Drawer */}
+            <div className="TUXTooltip-reference StyledTUXTooltip" key="more">
               <Button
-                label={'Thêm'}
+                label="Thêm"
                 isDefault
                 size="medium"
                 secondary
@@ -145,16 +170,18 @@ function SideNavUser() {
                 )}
                 icon={<FontAwesomeIcon icon={faEllipsis} />}
                 onClick={() => {
-                  closeDrawer(['search']);
+                  closeAllExcept(['more', 'messages']);
                   toggleDrawer('more', <MoreDrawer />);
                 }}
-              ></Button>
+              />
             </div>
           </div>
+
+          {/* Followed Accounts */}
           {!smallSideNav && (
             <div className={styles.SubMainNavContentContainer}>
               <div className={styles.DivUserContainer}>
-                <Text as="p" weight={'medium'} className={styles.StyledTUXText}>
+                <Text as="p" weight="medium" className={styles.StyledTUXText}>
                   Các tài khoản Đã follow
                 </Text>
                 <ul className={styles.UlAccountList}>
@@ -163,6 +190,8 @@ function SideNavUser() {
               </div>
             </div>
           )}
+
+          {/* Footer */}
           {!smallSideNav && (
             <div className={styles.SubMainNavFooterContainer}>
               <div className={styles.DivFooterContainer}>
@@ -179,6 +208,8 @@ function SideNavUser() {
             </div>
           )}
         </div>
+
+        {/* Drawer Host */}
         <DrawerHost stylesDrawer={{ left: '0px' }} />
       </div>
     </div>

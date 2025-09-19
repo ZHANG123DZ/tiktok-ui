@@ -7,7 +7,7 @@ import video2 from '/public/Download (2).mp4';
 import video3 from '/public/Download (3).mp4';
 import video4 from '/public/Download (4).mp4';
 import video5 from '/public/Download (5).mp4';
-
+//Call API
 function Following() {
   const mockProfiles = [
     {

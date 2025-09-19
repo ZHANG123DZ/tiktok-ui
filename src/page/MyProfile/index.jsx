@@ -40,7 +40,7 @@ function MyProfile({ data }) {
                 style={{ width: '212px', height: '212px' }}
               >
                 <img
-                  src={data.avatar_url || defaultAvatar}
+                  src={data.avatar || defaultAvatar}
                   alt=""
                   className={styles.ImgAvatar}
                 />

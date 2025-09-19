@@ -2,7 +2,6 @@ import { useLocation } from 'react-router-dom';
 import ProfileWrapper from '../ProfileWrapper';
 import NotFound from '../../page/NotFound';
 import VideoDetail from '../../page/VideoDetail';
-import Profile from '../../page/Profile';
 
 // Logic xử lý KÝ Tự trước params
 function UserRouter() {
@@ -23,7 +22,7 @@ function UserRouter() {
     }
 
     if (segments.length === 1) {
-      return <Profile username={username} />;
+      return <ProfileWrapper username={username} />;
     }
   }
 
