@@ -12,9 +12,8 @@ export const search = async (query) => {
 };
 
 export const suggestion = async (query) => {
-  const queryContent = encodeURIComponent(query);
   try {
-    const res = await httpRequest.get(`/search/suggestion?q=${queryContent}`);
+    const res = await httpRequest.post(`/search/suggestion`, { query: query });
     return res.data;
   } catch (error) {
     console.error('Failed to fetch post:', error);

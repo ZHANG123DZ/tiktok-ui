@@ -254,7 +254,7 @@ function VideoCard({
                       data-e2e="video-views"
                       className={styles.StrongVideoCount}
                     >
-                      {formatNumberShort(data?.views || 0)}
+                      {formatNumberShort(data?.viewCount || 0)}
                     </strong>
                   </div>
                 )}
