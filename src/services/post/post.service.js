@@ -28,9 +28,9 @@ export const deletePost = async (slug) => {
   }
 };
 
-export const getPosts = async () => {
+export const getPosts = async (page = 1, limit = 10) => {
   try {
-    const res = await httpRequest.get(`/posts`);
+    const res = await httpRequest.get(`/posts?page=${page}&limit=${limit}`);
     return res.data;
   } catch (error) {
     console.error('Failed to fetch posts:', error);

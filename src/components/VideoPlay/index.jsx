@@ -1,7 +1,9 @@
 import { useRef, useState, useEffect } from 'react';
+import usePauseOnTabHidden from '../../hooks/usePauseOnTabHidden';
 
 const VideoPlay = ({ videoUrl, thumbnail }) => {
   const videoRef = useRef(null);
+  usePauseOnTabHidden(videoRef);
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0); // phần trăm tiến trình
 

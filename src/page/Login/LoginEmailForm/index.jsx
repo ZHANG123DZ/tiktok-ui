@@ -21,9 +21,7 @@ import { useProtectedButton } from '../../../contexts/ProtectedButtonContext';
 
 function LoginEmailForm() {
   const dispatch = useDispatch();
-  const shouldRedirectAfterLogin = useSelector(
-    (state) => state.auth.redirectAfterLogin
-  );
+  const authReducer = useSelector((state) => state.auth);
   let schema = useMemo(() => loginEmailPasswordSchema, []);
   const methods = useForm({
     resolver: yupResolver(schema),
@@ -42,7 +40,7 @@ function LoginEmailForm() {
   } = methods;
   const { notifyRedirect } = useProtectedButton();
   const onSubmit = async (data) => {
-    await dispatch(setRedirectAfterLogin(false));
+    dispatch(setRedirectAfterLogin(false));
     try {
       const payload = {
         email: data.email,
@@ -50,7 +48,7 @@ function LoginEmailForm() {
       };
       const res = await authService.login(payload);
       if (res.success === true) {
-        await dispatch(getCurrentUser());
+        dispatch(getCurrentUser());
         toast.success('Đăng nhập thành công', { closeButton: true });
       } else {
         setError('password', {

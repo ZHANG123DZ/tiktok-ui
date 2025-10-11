@@ -1,10 +1,19 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import styles from './VideoList.module.scss';
 import VideoCard from '../VideoCard';
+import { useDispatch } from 'react-redux';
+import { setListVideo, setPreUrl } from '../../features/video/listVideoSlice';
+import { useLocation } from 'react-router-dom';
 
-function VideoList({ topic = 'all', variant = 'discover', videosData = [] }) {
+function VideoList({ variant = 'discover', videosData = [] }) {
+  const dispatch = useDispatch();
+  const location = useLocation();
   const [videos, setVideos] = useState(videosData);
   const videoRefs = useRef([]);
+
+  useEffect(() => {
+    setVideos(videosData);
+  }, [videosData]);
 
   const [activeIndex, setActiveIndex] = useState();
 
@@ -31,6 +40,10 @@ function VideoList({ topic = 'all', variant = 'discover', videosData = [] }) {
             setRef={(el) => (videoRefs.current[i] = el)}
             currentIndex={i}
             activeIndex={activeIndex}
+            onClick={() => {
+              dispatch(setPreUrl(location.pathname));
+              dispatch(setListVideo(videos.map((v) => v.id)));
+            }}
           />
         ))}
       </div>

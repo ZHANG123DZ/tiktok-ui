@@ -13,8 +13,14 @@ import { Link } from 'react-router-dom';
 import formatNumberShort from '../../utils/formatNumberShort';
 import { useRef, useState } from 'react';
 import { useArticle } from '../../contexts/ArticleContext';
+import followService from '../../services/follow/follow.service';
+import ProtectedButton from '../ProtectedButton';
+import likeService from '../../services/like/like.service';
+import bookMarkService from '../../services/bookMark/bookMark.service';
 
 export default function ActionBar({ data }) {
+  const authorId = data.author?.id;
+  const postId = data.id;
   const [liked, setLiked] = useState(data.isLiked);
   const [likes, setLikes] = useState(data.likeCount);
   const [bookMarked, setBookMarked] = useState(data.isBookMarked);
@@ -27,18 +33,51 @@ export default function ActionBar({ data }) {
   const { clickCommentsButton, clickShareButton } = useArticle();
 
   const toggleFollow = async () => {
-    setFollow((prev) => !prev);
-    setTickShown(!follow);
+    try {
+      if (follow) {
+        await followService.unfollow({ followAbleId: authorId, type: 'user' });
+      } else {
+        await followService.follow({ followAbleId: authorId, type: 'user' });
+      }
+      setFollow((prev) => !prev);
+      setTickShown(!follow);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const toggleLike = () => {
-    setLiked((prev) => !prev);
-    setLikes((prev) => (liked ? prev - 1 : prev + 1));
+  const toggleLike = async () => {
+    try {
+      if (liked) {
+        await likeService.unlike({ likeAbleId: postId, type: 'post' });
+      } else {
+        await likeService.like({ likeAbleId: postId, type: 'post' });
+      }
+      setLiked((prev) => !prev);
+      setLikes((prev) => (liked ? prev - 1 : prev + 1));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const toggleBookMark = () => {
-    setBookMarked((prev) => !prev);
-    setBookMarks((prev) => (bookMarked ? prev - 1 : prev + 1));
+  const toggleBookMark = async () => {
+    try {
+      if (bookMarked) {
+        await bookMarkService.unBookMark({
+          bookMarkAbleId: postId,
+          type: 'post',
+        });
+      } else {
+        await bookMarkService.bookmark({
+          bookMarkAbleId: postId,
+          type: 'post',
+        });
+      }
+      setBookMarked((prev) => !prev);
+      setBookMarks((prev) => (bookMarked ? prev - 1 : prev + 1));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -85,57 +124,60 @@ export default function ActionBar({ data }) {
         </Link>
 
         {(!follow || tickShown) && (
-          <button
-            className={clsx(
-              styles.eth6dzb1,
-              styles['Button-StyledAvatarFollowButton'],
-              styles.e1v8cfre0,
-              tickShown && styles.checkFollow
-            )}
-            shape="capsule"
-            data-e2e="feed-follow"
-          >
-            <div className={clsx(styles.ButtonContent, styles.e1v8cfre2)}>
-              <FontAwesomeIcon
-                icon={follow ? faCheck : faPlus}
-                onClick={toggleFollow}
-                style={{ color: follow ? 'rgb(255, 59, 92)' : 'white' }}
-              />
-            </div>
-          </button>
+          <ProtectedButton onClick={toggleFollow}>
+            <button
+              className={clsx(
+                styles.eth6dzb1,
+                styles['Button-StyledAvatarFollowButton'],
+                styles.e1v8cfre0,
+                tickShown && styles.checkFollow
+              )}
+              shape="capsule"
+              data-e2e="feed-follow"
+            >
+              <div className={clsx(styles.ButtonContent, styles.e1v8cfre2)}>
+                <FontAwesomeIcon
+                  icon={follow ? faCheck : faPlus}
+                  style={{ color: follow ? 'rgb(255, 59, 92)' : 'white' }}
+                />
+              </div>
+            </button>
+          </ProtectedButton>
         )}
       </div>
 
       {/* Like Button */}
-      <button
-        type="button"
-        aria-label={`Like video&#10;${likes} likes`}
-        aria-pressed="false"
-        className={clsx(styles.ButtonActionItem, styles.e1hk3hf90)}
-      >
-        <span
-          data-e2e="like-icon"
-          className={clsx(styles.SpanIconWrapper, styles.e1hk3hf91)}
-          style={{
-            color: liked ? '#FE2C55' : 'rgba(255, 255, 255, 0.9)',
-          }}
-          onClick={toggleLike}
+      <ProtectedButton onClick={toggleLike}>
+        <button
+          type="button"
+          aria-label={`Like video&#10;${likes} likes`}
+          aria-pressed="false"
+          className={clsx(styles.ButtonActionItem, styles.e1hk3hf90)}
         >
-          {/* Heart SVG omitted for brevity */}
-          <FontAwesomeIcon
-            icon={faHeart}
-            style={{ width: '24px', height: '24px' }}
-          />
-        </span>
-        <strong
-          data-e2e="like-count"
-          className={clsx(styles.StrongText, styles.e1hk3hf92)}
-        >
-          {formatNumberShort(likes)}
-        </strong>
-      </button>
+          <span
+            data-e2e="like-icon"
+            className={clsx(styles.SpanIconWrapper, styles.e1hk3hf91)}
+            style={{
+              color: liked ? '#FE2C55' : 'rgba(255, 255, 255, 0.9)',
+            }}
+          >
+            {/* Heart SVG omitted for brevity */}
+            <FontAwesomeIcon
+              icon={faHeart}
+              style={{ width: '24px', height: '24px' }}
+            />
+          </span>
+          <strong
+            data-e2e="like-count"
+            className={clsx(styles.StrongText, styles.e1hk3hf92)}
+          >
+            {formatNumberShort(likes)}
+          </strong>
+        </button>
+      </ProtectedButton>
 
       {/* Comment Button */}
+
       <button
         type="button"
         aria-label={`Read or add comments&#10;${comments} comments`}
@@ -161,33 +203,34 @@ export default function ActionBar({ data }) {
       </button>
 
       {/* Favorite Button */}
-      <div aria-expanded="false" aria-haspopup="dialog">
-        <button
-          type="button"
-          aria-label={`Add to Favorites. ${bookMarks} added to Favorites`}
-          className={clsx(styles.ButtonActionItem, styles.e1hk3hf90)}
-        >
-          <span
-            data-e2e="favorite-icon"
-            className={clsx(styles.SpanIconWrapper, styles.e1hk3hf91)}
-            style={{
-              color: bookMarked ? '#FFC300' : 'rgba(255, 255, 255, 0.9)',
-            }}
-            onClick={toggleBookMark}
+      <ProtectedButton onClick={toggleBookMark}>
+        <div aria-expanded="false" aria-haspopup="dialog">
+          <button
+            type="button"
+            aria-label={`Add to Favorites. ${bookMarks} added to Favorites`}
+            className={clsx(styles.ButtonActionItem, styles.e1hk3hf90)}
           >
-            <FontAwesomeIcon
-              icon={faBookmark}
-              style={{ width: '24px', height: '24px' }}
-            />
-          </span>
-          <strong
-            data-e2e="favorite-count"
-            className={clsx(styles.StrongText, styles.e1hk3hf92)}
-          >
-            {formatNumberShort(bookMarks)}
-          </strong>
-        </button>
-      </div>
+            <span
+              data-e2e="favorite-icon"
+              className={clsx(styles.SpanIconWrapper, styles.e1hk3hf91)}
+              style={{
+                color: bookMarked ? '#FFC300' : 'rgba(255, 255, 255, 0.9)',
+              }}
+            >
+              <FontAwesomeIcon
+                icon={faBookmark}
+                style={{ width: '24px', height: '24px' }}
+              />
+            </span>
+            <strong
+              data-e2e="favorite-count"
+              className={clsx(styles.StrongText, styles.e1hk3hf92)}
+            >
+              {formatNumberShort(bookMarks)}
+            </strong>
+          </button>
+        </div>
+      </ProtectedButton>
 
       {/* Share Button */}
       <button

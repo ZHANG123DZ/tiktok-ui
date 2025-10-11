@@ -15,8 +15,42 @@ import { useState } from 'react';
 import ShareModal from '../ShareModal';
 import handleCopy from '../../utils/handleCopy';
 import formatNumberShort from '../../utils/formatNumberShort';
+import { Link } from 'react-router-dom';
+import bookMarkService from '../../services/bookMark/bookMark.service';
+import likeService from '../../services/like/like.service';
 
 const ActionVideo = ({ data }) => {
+  const openShareWindow = (shareUrl) => {
+    window.open(shareUrl, '_blank');
+  };
+
+  // Ví dụ
+  const shareToFacebook = () => {
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+      window.location.href
+    )}`;
+    window.open(url, '_blank');
+  };
+
+  const shareToTwitter = () => {
+    const text = encodeURIComponent('Check out this awesome content!');
+    const url = `https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(
+      window.location.href
+    )}`;
+    window.open(url, '_blank');
+  };
+  const shareToTelegram = () => {
+    const url = `https://t.me/share/url?url=${encodeURIComponent(
+      window.location.href
+    )}`;
+    window.open(url, '_blank');
+  };
+
+  const shareToWhatsApp = () => {
+    const message = encodeURIComponent(`${window.location.href}`);
+    const url = `https://wa.me/?text=${message}`;
+    window.open(url, '_blank');
+  };
   const buttons = [
     {
       icon: (
@@ -86,6 +120,7 @@ const ActionVideo = ({ data }) => {
       ),
       name: 'facebook',
       label: 'Chia sẻ lên Facebook',
+      onClick: () => shareToFacebook(),
     },
     {
       icon: (
@@ -111,15 +146,40 @@ const ActionVideo = ({ data }) => {
   const [likes, setLikes] = useState(data?.likeCount || 0);
   const [bookMarks, setBookMarks] = useState(data?.bookMarkCount || 0);
   const [bookMarked, setBookMarked] = useState(data?.isBookMarked || false);
+  const postId = data?.id;
 
-  const toggleLike = () => {
-    setLiked((prev) => !prev);
-    setLikes((prev) => (liked ? prev - 1 : prev + 1));
+  const toggleLike = async () => {
+    try {
+      if (liked) {
+        await likeService.unlike({ likeAbleId: postId, type: 'post' });
+      } else {
+        await likeService.like({ likeAbleId: postId, type: 'post' });
+      }
+      setLiked((prev) => !prev);
+      setLikes((prev) => (liked ? prev - 1 : prev + 1));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
-  const toggleBookMarked = async () => {
-    setBookMarked(!bookMarked);
-    setBookMarks((prev) => (bookMarks ? prev - 1 : prev + 1));
+  const toggleBookMark = async () => {
+    try {
+      if (bookMarked) {
+        await bookMarkService.unBookMark({
+          bookMarkAbleId: postId,
+          type: 'post',
+        });
+      } else {
+        await bookMarkService.bookmark({
+          bookMarkAbleId: postId,
+          type: 'post',
+        });
+      }
+      setBookMarked((prev) => !prev);
+      setBookMarks((prev) => (bookMarked ? prev - 1 : prev + 1));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -185,7 +245,7 @@ const ActionVideo = ({ data }) => {
               <button type="button" className={styles.ButtonActionItem}>
                 <span
                   className={styles.SpanIconWrapper}
-                  onClick={() => toggleBookMarked()}
+                  onClick={() => toggleBookMark()}
                 >
                   <FontAwesomeIcon
                     icon={faBookmark}
@@ -211,17 +271,17 @@ const ActionVideo = ({ data }) => {
             className={styles.DivFlexCenterRow}
           >
             {buttons.map((btn) => (
-              <a
+              <Link
                 key={btn.name}
                 id={`icon-element-${btn.name}`}
                 mode="0"
-                href="#"
-                data-e2e="video-share-repost"
-                aria-label="Đăng lại"
+                data-e2e={`video-share-${btn.name}`}
+                aria-label={btn.label}
                 className={styles.AShareLink}
+                onClick={btn.onClick}
               >
                 {btn.icon}
-              </a>
+              </Link>
             ))}
 
             {/* Share Dropdown */}

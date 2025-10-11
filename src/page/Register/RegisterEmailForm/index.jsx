@@ -82,7 +82,10 @@ function RegisterEmailForm() {
   //Action: Send Code
   const sendCode = async (email) => {
     try {
-      await authService.sendCode({ target: email, action: 'verify_email' });
+      await authService.sendCode(
+        { target: email, action: 'verify_email' },
+        'email'
+      );
     } catch (error) {
       toast.error('Gửi mã Code thất bại! Vui lòng nhấn gửi lại!');
       console.log(error);

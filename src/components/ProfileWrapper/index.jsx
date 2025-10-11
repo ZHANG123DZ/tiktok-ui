@@ -2,7 +2,6 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
-import MyProfile from '../../page/MyProfile';
 import Profile from '../../page/Profile';
 import NotFoundAccount from '../../page/NotFoundAccount';
 import userService from '../../services/user/user.service';

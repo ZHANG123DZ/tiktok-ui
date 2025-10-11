@@ -1,0 +1,24 @@
+{
+  "search": "Tìm kiếm",
+  "sideNav": {
+    "home": "Đề xuất",
+    "explore": "Khám phá",
+    "following": "Đã follow",
+    "friends": "Bạn bè",
+    "messages": "Tin nhắn",
+    "activity": "Hoạt động",
+    "live": "LIVE",
+    "upload": "Tải lên",
+    "profile": "Hồ sơ",
+    "more": "Thêm"
+  },
+  "subSideNav": {
+    "login": "Đăng nhập",
+    "listFollwing": "Các tài khoản Đã follow",
+    "notification": "Những tài khoản bạn follow sẽ xuất hiện tại đây",
+    "company": "Công ty",
+    "program": "Chương trình",
+    "terms&policies": "Điều khoản và chính sách",
+    "more": "Thêm"
+  }
+}

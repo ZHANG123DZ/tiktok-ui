@@ -1,12 +1,17 @@
-import React from 'react';
 import Comment from '../Comment';
 import CommentInputBox from '../CommentInputBox';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEllipsis, faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import styles from './PostComment.module.scss';
+import { useSelector } from 'react-redux';
+import ProtectedButton from '../ProtectedButton';
+import { useEffect } from 'react';
+import commentService from '../../services/comment/comment.service';
 
 function PostComment() {
+  const isAuth = useSelector((state) => state.auth.isAuth);
+
   const topSearch = 'nga và mỹ';
   const mockComments = [
     {
@@ -141,6 +146,13 @@ function PostComment() {
     },
     comments: 3,
   };
+  const postId = 773;
+  useEffect(() => {
+    const fetchComments = async () => {
+      await commentService.getCommentsByPostId(postId);
+    };
+    fetchComments();
+  }, [postId]);
 
   return (
     <div>
@@ -185,7 +197,20 @@ function PostComment() {
         <div className={styles.DivBorder}></div>
         <div className={styles.DivCommentInputContainer}>
           <div className={styles.DivLayoutContainer}>
-            <CommentInputBox />
+            {isAuth ? (
+              <div className={styles.DivCommentBarContainer}>
+                <div className={styles.DivCommentInputWrapper}>
+                  <CommentInputBox />
+                </div>
+              </div>
+            ) : (
+              <ProtectedButton>
+                <div className={styles.DivLoginBar}>
+                  <span className={styles.SpanLogin}>Đăng nhập</span> để bình
+                  luận
+                </div>
+              </ProtectedButton>
+            )}
           </div>
         </div>
       </div>

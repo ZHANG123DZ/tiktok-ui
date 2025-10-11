@@ -88,7 +88,6 @@ function ProtectedButton({
     ]
   );
 
-  // ⏱ Trigger recheck khi context báo redirect sau login
   useEffect(() => {
     if (!lastTriggerTime || !isAuthenticated) return;
 

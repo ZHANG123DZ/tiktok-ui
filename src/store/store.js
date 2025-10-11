@@ -7,6 +7,10 @@ import logger from 'redux-logger';
 
 import authReducer from '../features/auth/authSlice';
 import urlReducer from '../features/url/urlSlice';
+import volumeReducer from '../features/volume/volumeSlice';
+import autoScrollReducer from '../features/autoScroll/autoScrollSlice';
+import languageReducer from '../features/language/languageSlice';
+import listVideoReducer from '../features/video/listVideoSlice';
 
 const authConfig = {
   key: 'auth',
@@ -25,9 +29,31 @@ const urlConfig = {
   storage,
 };
 
+const volumeConfig = {
+  key: 'volume',
+  storage,
+  whitelist: ['volume'],
+};
+
+const autoScrollConfig = {
+  key: 'autoScroll',
+  storage,
+  whitelist: ['autoScroll'],
+};
+
+const languageConfig = {
+  key: 'language',
+  storage,
+  whitelist: ['language'],
+};
+
 const rootReducer = combineReducers({
   auth: persistReducer(authConfig, authReducer),
   url: persistReducer(urlConfig, urlReducer),
+  volume: persistReducer(volumeConfig, volumeReducer),
+  autoScroll: persistReducer(autoScrollConfig, autoScrollReducer),
+  language: persistReducer(languageConfig, languageReducer),
+  listVideo: listVideoReducer,
 });
 
 const store = configureStore({

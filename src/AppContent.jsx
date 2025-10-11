@@ -4,10 +4,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import { routeTitleMap } from './configs/routeTitleMap';
 import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import useGeolocation from './hooks/useGeolocation';
+import useSystemNotificationOnTabHidden from './hooks/useSystemNotificationOnTabHidden';
 
 function AppContent() {
   const location = useLocation();
-
+  // const geoLocation = useGeolocation();
+  // useSystemNotificationOnTabHidden('Bạn có tin nhắn mới');
   useEffect(() => {
     const path = location.pathname;
     // Map path cứng hoặc parse dynamic route nếu cần

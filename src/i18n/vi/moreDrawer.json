@@ -1,0 +1,24 @@
+{
+  "more": "Thêm",
+  "TikTokStudio": "TikTok Studio",
+  "getCoins": "Nhận xu",
+  "createTikTokEffects": "Tạo hiệu ứng TikTok",
+  "sellOnTikTokShop": "Bán hàng trên TikTok Shop",
+  "tools": "Công cụ tăng trưởng",
+  "language": "Tiếng Việt",
+  "mode": "Chế độ tối",
+  "settings": "Cài đặt",
+  "feedback&help": "Phản hồi và trợ giúp",
+  "logout": "Đăng xuất",
+  "languageSetting": {
+    "language": "Ngôn ngữ",
+    "vietnamese": "Tiếng Việt",
+    "english": "English",
+    "arabic": "عربي"
+  },
+  "modeSetting": {
+    "auto": "Tự động",
+    "darkMode": "Chế độ tối",
+    "lightMode": "Chế độ sáng"
+  }
+}

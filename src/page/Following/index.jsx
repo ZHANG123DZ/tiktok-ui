@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import UserCard from '../../components/UserCard';
 import styles from './styles.module.scss';
 
@@ -7,8 +7,18 @@ import video2 from '/public/Download (2).mp4';
 import video3 from '/public/Download (3).mp4';
 import video4 from '/public/Download (4).mp4';
 import video5 from '/public/Download (5).mp4';
+import userService from '../../services/user/user.service';
 //Call API
 function Following() {
+  const [users, setUsers] = useState([]);
+  const fetchUsers = async () => {
+    const data = await userService.getIntroUsers(1, 10);
+    setUsers(data);
+  };
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
   const mockProfiles = [
     {
       id: 4,
@@ -104,7 +114,7 @@ function Following() {
   return (
     <main className={styles.DivMainContainer}>
       <div className={styles.DivUserListWrapper}>
-        {mockProfiles.map((user, i) => (
+        {users.map((user, i) => (
           <UserCard
             key={user.id}
             data={user}

@@ -2,6 +2,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser } from '@fortawesome/free-solid-svg-icons';
 import { useDispatch } from 'react-redux';
 import { setComponent } from '../../../features/auth/authSlice';
+import FacebookAuth from '../../../components/ConnectWithSocials/FacebookAuth';
+import { GoogleOAuthProvider } from '@react-oauth/google';
+import GoogleAuth from '../../../components/ConnectWithSocials/GoogleAuth';
 
 function RegisterOptionContainer() {
   const dispatch = useDispatch();
@@ -25,6 +28,10 @@ function RegisterOptionContainer() {
             </div>
           </div>
         </div>
+        <FacebookAuth />
+        <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_APP_ID}>
+          <GoogleAuth />
+        </GoogleOAuthProvider>
       </div>
     </div>
   );

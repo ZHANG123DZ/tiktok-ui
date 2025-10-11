@@ -1,0 +1,24 @@
+{
+  "search": "يبحث",
+  "sideNav": {
+    "home": "لك",
+    "explore": "استكشف",
+    "following": "أتابعه",
+    "friends": "الأصدقاء",
+    "messages": "الرسائل",
+    "activity": "النشاط",
+    "live": "LIVE",
+    "upload": "تحميل",
+    "profile": "الملف الشخصي",
+    "more": "المزيد"
+  },
+  "subSideNav": {
+    "login": "تسجيل الدخول",
+    "listFollwing": "حسابات تتابعها",
+    "notification": "ستظهر الحسابات التي تتابعها هنا",
+    "company": "شركة",
+    "program": "برنامج",
+    "terms&policies": "الشروط والسياسات",
+    "more": "المزيد"
+  }
+}

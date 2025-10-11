@@ -10,6 +10,7 @@ import styles from './styles.module.scss';
 import { useEffect, useRef, useState } from 'react';
 import Button from '../Button';
 import MorePopover from '../MorePopover/MorePopover';
+import { Link } from 'react-router-dom';
 
 export default function ReplyItem({ rep, post }) {
   const [liked, setLiked] = useState(rep.isLiked);
@@ -61,10 +62,10 @@ export default function ReplyItem({ rep, post }) {
       id={`${rep.author.username}-${rep.postId}-${rep.id}`}
       className={styles.DivCommentContentContainer}
     >
-      <a
+      <Link
         data-e2e="comment-avatar-1"
         className={styles.StyledUserLinkAvatar}
-        href={`/@${rep.author.username}`}
+        to={`/@${rep.author.username}`}
         style={{ flex: '0 0 40px' }}
       >
         <span
@@ -80,15 +81,15 @@ export default function ReplyItem({ rep, post }) {
             className={styles.ImgAvatar}
           />
         </span>
-      </a>
+      </Link>
 
       <div className={styles.DivContentContainer}>
-        <a
+        <Link
           className={styles.StyledUserLinkName}
-          href={`/@${rep.author.username}`}
+          to={`/@${rep.author.username}`}
         >
           <span className={styles.SpanUserNameText}>{rep.author.name}</span>
-        </a>
+        </Link>
         <p className={styles.PCommentText}>
           <span>{rep.content}</span>
         </p>

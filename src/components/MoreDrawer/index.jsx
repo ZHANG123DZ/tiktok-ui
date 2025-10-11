@@ -7,11 +7,16 @@ import Menu from '../Menu';
 import LogoutConfirm from '../LogoutConfirm';
 import { useState } from 'react';
 import toggleTheme from '../../utils/toggleTheme';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import { setLanguage } from '../../features/language/languageSlice';
 
 function MoreDrawer() {
+  const { t } = useTranslation('moreDrawer');
+  const dispatch = useDispatch();
   const { closeDrawer, openDrawer, closeAllDrawers, closeAllExcept } =
     useDrawerStore();
-
+  const isAuth = useSelector((state) => state.auth.isAuth);
   const [isOpenLogout, setOpenLogout] = useState(false);
 
   return (
@@ -41,7 +46,7 @@ function MoreDrawer() {
           >
             <Button
               className={styles.StyledTUXMoreOptionButton}
-              label="Nhận xu"
+              label={t('getCoins')}
               isDefault
               size="small"
               secondary
@@ -58,7 +63,7 @@ function MoreDrawer() {
           >
             <Button
               className={styles.StyledTUXMoreOptionButton}
-              label="Tạo hiệu ứng TikTok"
+              label={t('createTikTokEffects')}
               isDefault
               size="small"
               secondary
@@ -69,7 +74,7 @@ function MoreDrawer() {
         <li className={styles.LiMoreButtonContainer}>
           <Button
             className={styles.StyledTUXMoreOptionButton}
-            expand="Công cụ dành cho nhà sáng tạo"
+            expand={t('tools')}
             isDefault
             size="small"
             secondary
@@ -79,17 +84,7 @@ function MoreDrawer() {
         <li className={styles.LiMoreButtonContainer}>
           <Button
             className={styles.StyledTUXMoreOptionButton}
-            expand="Tiếng Việt"
-            isDefault
-            size="small"
-            secondary
-          />
-        </li>
-
-        <li className={styles.LiMoreButtonContainer}>
-          <Button
-            className={styles.StyledTUXMoreOptionButton}
-            expand="Chế độ tối"
+            expand={t('language')}
             isDefault
             size="small"
             secondary
@@ -98,11 +93,58 @@ function MoreDrawer() {
               openDrawer(
                 'more-theme',
                 <Menu
-                  title="Chế độ tối"
+                  title={t('languageSetting.language')}
                   menu={[
-                    { label: 'Tự động' },
-                    { label: 'Chế độ tối', onClick: toggleTheme },
-                    { label: 'Chế độ sáng', onClick: toggleTheme },
+                    {
+                      label: t('languageSetting.vietnamese'),
+                      onClick: () => {
+                        dispatch(setLanguage('vi'));
+                        closeAllDrawers();
+                      },
+                    },
+                    {
+                      label: t('languageSetting.english'),
+                      onClick: () => {
+                        dispatch(setLanguage('en'));
+                        closeAllDrawers();
+                      },
+                    },
+                    {
+                      label: t('languageSetting.arabic'),
+                      onClick: () => {
+                        dispatch(setLanguage('ar'));
+                        closeAllDrawers();
+                      },
+                    },
+                  ]}
+                  onClickBackIcon={() => {
+                    closeAllDrawers();
+                    openDrawer('more', <MoreDrawer />);
+                  }}
+                />,
+                { closeButton: false }
+              );
+            }}
+          />
+        </li>
+
+        <li className={styles.LiMoreButtonContainer}>
+          <Button
+            className={styles.StyledTUXMoreOptionButton}
+            expand={t('mode')}
+            isDefault
+            size="small"
+            secondary
+            onClick={() => {
+              closeAllExcept(['messages']);
+              openDrawer(
+                'more-theme',
+                <Menu
+                  title={t('mode')}
+                  menu={[
+                    { label: t('modeSetting.auto') },
+                    { label: t('modeSetting.darkMode'), onClick: toggleTheme },
+                    { label: t('modeSetting.lightMode'), onClick: toggleTheme },
                   ]}
                   onClickBackIcon={() => {
                     closeAllDrawers();
@@ -124,7 +166,7 @@ function MoreDrawer() {
           >
             <Button
               className={styles.StyledTUXMoreOptionButton}
-              label="Cài đặt"
+              label={t('settings')}
               isDefault
               size="small"
               secondary
@@ -141,7 +183,7 @@ function MoreDrawer() {
           >
             <Button
               className={styles.StyledTUXMoreOptionButton}
-              label="Phản hồi và trợ giúp"
+              label={t('feedback&help')}
               isDefault
               size="small"
               secondary
@@ -149,22 +191,24 @@ function MoreDrawer() {
           </a>
         </li>
 
-        <li className={styles.LiMoreButtonContainer}>
-          <Button
-            className={styles.StyledTUXMoreOptionButton}
-            label="Đăng xuất"
-            isDefault
-            size="small"
-            secondary
-            onClick={() => setOpenLogout(true)}
-          />
-          {isOpenLogout && (
-            <LogoutConfirm
-              isOpen={isOpenLogout}
-              onClose={() => setOpenLogout(false)}
+        {isAuth && (
+          <li className={styles.LiMoreButtonContainer}>
+            <Button
+              className={styles.StyledTUXMoreOptionButton}
+              label={t('logout')}
+              isDefault
+              size="small"
+              secondary
+              onClick={() => setOpenLogout(true)}
             />
-          )}
-        </li>
+            {isOpenLogout && (
+              <LogoutConfirm
+                isOpen={isOpenLogout}
+                onClose={() => setOpenLogout(false)}
+              />
+            )}
+          </li>
+        )}
       </ul>
     </div>
   );

@@ -1,0 +1,24 @@
+{
+  "search": "Search",
+  "sideNav": {
+    "home": "For You",
+    "explore": "Explore",
+    "following": "Following",
+    "friends": "Friends",
+    "messages": "Messages",
+    "activity": "Activity",
+    "live": "LIVE",
+    "upload": "Upload",
+    "profile": "Profile",
+    "more": "More"
+  },
+  "subSideNav": {
+    "login": "Log in",
+    "listFollwing": "Following accounts",
+    "notification": "Accounts you follow will appear here",
+    "company": "Company",
+    "program": "Program",
+    "terms&policies": "Terms & Policies",
+    "more": "More"
+  }
+}

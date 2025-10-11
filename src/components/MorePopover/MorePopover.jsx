@@ -8,6 +8,8 @@ import { createPortal } from 'react-dom';
 import calculatePopoverPosition from '../../function/calculatePopoverPosition';
 
 import styles from './styles.module.scss';
+import { toggleScroll } from '../../features/autoScroll/autoScrollSlice';
+import { useDispatch, useSelector } from 'react-redux';
 /**
  * @typedef {Object} MorePopoverProps
  * @property {React.ReactNode} [children] - Nội dung bên trong popover
@@ -34,6 +36,9 @@ const MorePopover = forwardRef(
     },
     ref
   ) => {
+    const dispatch = useDispatch();
+    const autoScrollReducer = useSelector((state) => state.autoScroll);
+    const autoScroll = autoScrollReducer.autoScroll;
     const [isOpen, setIsOpen] = useState(false);
     const togglePopover = () => setIsOpen(!isOpen);
     const [position, setPosition] = useState({});
@@ -166,6 +171,12 @@ const MorePopover = forwardRef(
                                 role="switch"
                                 type="checkbox"
                                 aria-disabled="false"
+                                checked={autoScroll}
+                                onChange={() => {
+                                  if (item?.key === 'autoScroll') {
+                                    dispatch(toggleScroll());
+                                  }
+                                }}
                               />
                               <div className="TUXSwitch-handle"></div>
                             </div>

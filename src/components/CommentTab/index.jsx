@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import styles from './styles.module.scss';
 import Comment from '../Comment';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from '../Button';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faClose } from '@fortawesome/free-solid-svg-icons';
@@ -10,6 +10,9 @@ import { useDrawer } from '../../contexts/DrawerContext';
 import Text from '../Text';
 import CommentInputBox from '../CommentInputBox';
 import clsx from 'clsx';
+import { useSelector } from 'react-redux';
+import socketClient from '../../utils/socketClient';
+import commentService from '../../services/comment/comment.service';
 
 const mockComments = [
   {
@@ -147,9 +150,15 @@ const post = {
 
 function CommentTab({ postId }) {
   const { closeDrawer } = useDrawer();
+  const isAuth = useSelector((state) => state.auth.isAuth);
   const [commentsList, setComments] = useState(mockComments);
-  const [content, setContent] = useState('');
 
+  useEffect(() => {
+    const fetchComments = async () => {
+      await commentService.getCommentsByPostId(postId);
+    };
+    fetchComments();
+  }, [postId]);
   //Lấy comments
   // const fetchComments = async () => {
   //   if (!postId) {
@@ -182,6 +191,83 @@ function CommentTab({ postId }) {
   // useEffect(() => {
   //   fetchComments();
   // }, [postId]);
+  const addReplyToComments = (comments, parentId, newReply) => {
+    return comments.map((comment) => {
+      if (comment.id === parentId) {
+        return {
+          ...comment,
+          replies: [...(comment.replies || []), newReply],
+        };
+      }
+      if (comment.replies && comment.replies.length > 0) {
+        return {
+          ...comment,
+          replies: addReplyToComments(comment.replies, parentId, newReply),
+        };
+      }
+      return comment;
+    });
+  };
+
+  useEffect(() => {
+    if (!postId) return;
+
+    const pusher = socketClient;
+
+    const channel = pusher.subscribe(`post-${postId}-comments`);
+    channel.bind('new-comment', (newComment) => {
+      if (newComment.parent_id === null) {
+        setComments((prev) => [newComment, ...prev]);
+      } else {
+        setComments((prev) =>
+          addReplyToComments(prev, newComment.parent_id, newComment)
+        );
+      }
+    });
+    channel.bind('updated-comment', (editComment) => {
+      const updateCommentRecursively = (comments) => {
+        return comments.map((comment) => {
+          if (comment.id === editComment.id) {
+            return {
+              ...comment,
+              content: editComment.content,
+              isEdited: true,
+            };
+          }
+          if (comment.replies && comment.replies.length > 0) {
+            return {
+              ...comment,
+              replies: updateCommentRecursively(comment.replies),
+            };
+          }
+          return comment;
+        });
+      };
+      setComments((prev) =>
+        updateCommentRecursively(prev, editComment.id, editComment.content)
+      );
+    });
+    channel.bind('delete-comment', (commentId) => {
+      const deleteCommentRecursively = (comments) => {
+        return comments
+          .filter((comment) => Number(comment.id) !== Number(commentId))
+          .map((comment) => {
+            if (comment.replies && comment.replies.length > 0) {
+              return {
+                ...comment,
+                replies: deleteCommentRecursively(comment.replies),
+              };
+            }
+            return comment;
+          });
+      };
+      setComments((prev) => deleteCommentRecursively(prev));
+    });
+    return () => {
+      channel.unbind_all();
+      channel.unsubscribe();
+    };
+  }, [postId]);
 
   return (
     <div
@@ -249,11 +335,17 @@ function CommentTab({ postId }) {
           </div>
         </div>
         <div className={styles.DivCommentFooter}>
-          <div className={styles.DivCommentBarContainer}>
-            <div className={styles.DivCommentInputWrapper}>
-              <CommentInputBox />
+          {isAuth ? (
+            <div className={styles.DivCommentBarContainer}>
+              <div className={styles.DivCommentInputWrapper}>
+                <CommentInputBox setComments={setComments} postId={postId} />
+              </div>
             </div>
-          </div>
+          ) : (
+            <div className={styles.DivLoginBar}>
+              <span className={styles.SpanLogin}>Đăng nhập</span> để bình luận
+            </div>
+          )}
         </div>
       </section>
     </div>

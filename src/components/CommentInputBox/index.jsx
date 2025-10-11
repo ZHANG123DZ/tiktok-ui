@@ -3,19 +3,76 @@ import styles from './CommentInputBox.module.scss';
 import { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAt, faFaceSmile } from '@fortawesome/free-solid-svg-icons';
+import ChatInput from '../ChatInput';
+import EmojiPanel from '../EmojiPanel';
+import useClickOutside from '../../hooks/useClickOutside';
+import { useSelector } from 'react-redux';
+import commentService from '../../services/comment/comment.service';
 
-function CommentInputBox() {
+// {
+//     id: 28,
+//     postId: 4,
+//     content: 'Đây là cái gì v',
+//     likes: 234,
+//     isLiked: false,
+//     isAuthorLiked: true,
+//     author: {
+//       id: 6,
+//       username: 'dang',
+//       name: 'Đăng đẹp trai',
+//       avatar:
+//         'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-dam.jpg',
+//       followers: 2345,
+//       likes: 2395,
+//     },
+//     replies: [
+//       {
+//         id: 23,
+//         postId: 4,
+//         content: 'Đây là qq gì v',
+//         likes: 234,
+//         isLiked: true,
+//         isAuthorLiked: false,
+//         author: {
+//           id: 1,
+//           username: 'dansg',
+//           name: 'Đăng đần',
+//           avatar:
+//             'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-chan-dai.jpg',
+//           followers: 2345,
+//           likes: 2395,
+//         },
+//         parentId: 23,
+//         sender: 'other',
+//         createdAt: '2025-08-14 18:14:16.868',
+//       },
+
+function CommentInputBox({ setComments = () => {}, replyId = null, postId }) {
   const [content, setContent] = useState('');
-  const contentEditableRef = useRef(null);
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const handleTyping = (text) => setContent(text);
+  const [submitTick, setSubmitTick] = useState(0);
 
-  const handlePost = () => {
-    if (content.trim()) {
-      //   onSubmit?.(content.trim()); // Gửi content ra ngoài qua props nếu có
-      console.log(content.trim());
+  //Emoji
+  const [openEmoji, setOpenEmoji] = useState(false);
+  const buttonEmojiRef = useRef();
+  const emojiPanelRef = useRef();
+  const emojiInsertRef = useRef();
+
+  useClickOutside([emojiPanelRef, buttonEmojiRef], () => {
+    setOpenEmoji(false);
+  });
+
+  const handlePost = async () => {
+    if (currentUser?.id && content.trim()) {
+      const data = {
+        postId: postId,
+        authorId: currentUser.id,
+        content,
+        parentId: replyId,
+      };
+      await commentService.createComment(postId, data);
       setContent('');
-      if (contentEditableRef.current) {
-        contentEditableRef.current.innerText = '';
-      }
     }
   };
 
@@ -28,40 +85,15 @@ function CommentInputBox() {
             className={styles.DivInputEditorContainer}
           >
             <div className={styles.DivInputArea}>
-              <div className="DraftEditor-root">
-                {!content && (
-                  <div className={styles['public-DraftEditorPlaceholder-root']}>
-                    <div
-                      className={styles['public-DraftEditorPlaceholder-inner']}
-                      id="placeholder-bpr6b"
-                      style={{ whiteSpace: 'pre-wrap' }}
-                    >
-                      Add comment...
-                    </div>
-                  </div>
-                )}
-                <div className={styles['DraftEditor-editorContainer']}>
-                  <div
-                    ref={contentEditableRef}
-                    aria-describedby="placeholder-bpr6b"
-                    className={clsx(
-                      'notranslate',
-                      styles['public-DraftEditor-content']
-                    )}
-                    contentEditable={true}
-                    role="textbox"
-                    spellCheck={false}
-                    style={{
-                      outline: 'none',
-                      userSelect: 'text',
-                      whiteSpace: 'pre-wrap',
-                      overflowWrap: 'break-word',
-                    }}
-                    onInput={(e) => setContent(e.currentTarget.textContent)}
-                    suppressContentEditableWarning={true}
-                  />
-                </div>
-              </div>
+              <ChatInput
+                value={content}
+                placeholder="Thêm bình luận..."
+                onSubmit={handlePost}
+                onChange={handleTyping}
+                submitSignal={submitTick}
+                submitEvenIfEmpty={true}
+                onInsertEmojiRef={emojiInsertRef}
+              />
             </div>
           </div>
 
@@ -85,9 +117,16 @@ function CommentInputBox() {
             tabIndex={0}
             data-e2e="comment-emoji-icon"
             className={styles.DivEmojiButton}
+            onClick={() => setOpenEmoji((prev) => !prev)}
           >
             <FontAwesomeIcon icon={faFaceSmile} />
           </div>
+          {openEmoji && (
+            <EmojiPanel
+              panelRef={emojiPanelRef}
+              handleClickEmoji={(emoji) => emojiInsertRef.current?.(emoji)}
+            />
+          )}
         </div>
       </div>
       {/* Post Button */}

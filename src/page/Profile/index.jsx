@@ -128,7 +128,6 @@ function Profile({ profile }) {
                   styles.actionsProfile
                 )}
               >
-                <ProtectedButton redirectToLogin={false}></ProtectedButton>
                 {isSelf ? (
                   <>
                     <Button
@@ -142,7 +141,7 @@ function Profile({ profile }) {
                     />
                     {activeEdit && (
                       <ModalProvider isActive={activeEdit}>
-                        <EditProfile data={profile} />
+                        <EditProfile />
                       </ModalProvider>
                     )}
                     <Button
@@ -172,25 +171,28 @@ function Profile({ profile }) {
                   </>
                 ) : (
                   <>
-                    <Button
-                      label={follow ? 'Hủy theo dõi' : 'Theo dõi'}
-                      isDefault
-                      size="medium"
-                      primary
-                      onClick={toggleFollow}
-                      style={{
-                        backgroundColor: follow
-                          ? 'rgba(255, 255, 255, 0.12)'
-                          : 'var(--ui-shape-primary)',
-                      }}
-                    />
-                    <Button
-                      label="Nhắn tin"
-                      isDefault
-                      size="medium"
-                      secondary
-                      to="/messages"
-                    />
+                    <ProtectedButton onClick={toggleFollow}>
+                      <Button
+                        label={follow ? 'Hủy theo dõi' : 'Theo dõi'}
+                        isDefault
+                        size="medium"
+                        primary
+                        style={{
+                          backgroundColor: follow
+                            ? 'rgba(255, 255, 255, 0.12)'
+                            : 'var(--ui-shape-primary)',
+                        }}
+                      />
+                    </ProtectedButton>
+                    <ProtectedButton>
+                      <Button
+                        label="Nhắn tin"
+                        isDefault
+                        size="medium"
+                        secondary
+                        to="/messages"
+                      />
+                    </ProtectedButton>
                     <Button
                       icon={<FontAwesomeIcon icon={faShare} />}
                       isDefault

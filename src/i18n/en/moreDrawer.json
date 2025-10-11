@@ -1,0 +1,24 @@
+{
+  "more": "More",
+  "TikTokStudio": "TikTok Studio",
+  "getCoins": "Get Coins",
+  "createTikTokEffects": "Create TikTok effects",
+  "sellOnTikTokShop": "Sell On TikTok Shop",
+  "tools": "Growth tools",
+  "language": "English (US)",
+  "mode": "Dark mode",
+  "settings": "Settings",
+  "feedback&help": "Feedback and help",
+  "logout": "Log out",
+  "languageSetting": {
+    "language": "Language",
+    "vietnamese": "Tiếng Việt",
+    "english": "English",
+    "arabic": "عربي"
+  },
+  "modeSetting": {
+    "auto": "Auto",
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode"
+  }
+}

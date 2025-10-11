@@ -1,11 +1,9 @@
 import { Outlet } from 'react-router-dom';
-import SideNav from '../../components/SideNav';
+
 import styles from './DefaultLayout.module.scss';
-import { useSelector } from 'react-redux';
-import Modal from '../../components/Modal';
+import SideNav from './components/SideNav';
 
 function DefaultLayout() {
-
   return (
     <div className={styles.DivBodyContainer}>
       <SideNav />

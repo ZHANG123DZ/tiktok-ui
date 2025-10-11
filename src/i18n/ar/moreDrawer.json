@@ -1,0 +1,24 @@
+{
+  "more": "المزيد",
+  "TikTokStudio": "TikTok Studio",
+  "getCoins": "احصل على عملات",
+  "createTikTokEffects": "إنشاء مؤثرات TikTok",
+  "sellOnTikTokShop": "البيع على TikTok Shop",
+  "tools": "أدوات النمو",
+  "language": "لغة",
+  "mode": "الوضع المظلم",
+  "settings": "إعدادات",
+  "feedback&help": "الملاحظات والمساعدة",
+  "logout": "تسجيل الخروج",
+  "languageSetting": {
+    "language": "لغة",
+    "vietnamese": "Tiếng Việt",
+    "english": "English",
+    "arabic": "عربي"
+  },
+  "modeSetting": {
+    "auto": "آلي",
+    "darkMode": "الوضع المظلم",
+    "lightMode": "وضع الإضاءة"
+  }
+}

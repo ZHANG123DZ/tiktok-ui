@@ -16,25 +16,13 @@ import { useEffect, useRef, useState } from 'react';
 import VideoCard from '../../components/VideoCard';
 import ShareModal from '../../components/ShareModal';
 import tagService from '../../services/tag/tag.service';
+import VideoList from '../../components/VideoList';
 //Call API
 function Tag() {
   const params = useParams();
   const [activeShare, setActiveShare] = useState(false);
   const [videos, setVideos] = useState([]);
-  const videoRefs = useRef([]);
-
-  const [activeIndex, setActiveIndex] = useState();
   const [tag, setTag] = useState(null);
-  const handleHover = (index) => {
-    videoRefs.current.forEach((v, i) => {
-      if (i !== index && v) {
-        v.pause();
-        v.currentTime = 0;
-      }
-    });
-    videoRefs.current[index]?.play();
-    setActiveIndex(index);
-  };
 
   useEffect(() => {
     const fetchTag = async () => {
@@ -119,21 +107,7 @@ function Tag() {
             </div>
           </div>
         </div>
-        <div className={styles.DivThreeColumnContainer}>
-          <div className={styles.DivVideoFeedV2}>
-            {videos.map((video, i) => (
-              <VideoCard
-                key={video.id}
-                data={video}
-                variant="topic"
-                onHover={() => handleHover(i)}
-                setRef={(el) => (videoRefs.current[i] = el)}
-                currentIndex={i}
-                activeIndex={activeIndex}
-              />
-            ))}
-          </div>
-        </div>
+        <VideoList variant="topic" videosData={videos} />
       </div>
     </div>
   );

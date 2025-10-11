@@ -1,10 +1,14 @@
 import { createPortal } from 'react-dom';
 import styles from './LogoutConfirm.module.scss';
 import authService from '../../services/auth/auth.service';
+import { useDispatch } from 'react-redux';
+import { getCurrentUser } from '../../features/auth/authAsync';
 
 export default function LogoutConfirm({ isOpen = false, onClose = () => {} }) {
+  const dispatch = useDispatch();
   const logOutHandle = async () => {
     await authService.logout();
+    dispatch(getCurrentUser());
   };
   if (!isOpen) return null;
   return createPortal(

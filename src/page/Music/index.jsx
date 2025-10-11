@@ -11,11 +11,12 @@ import {
 import { Link, useParams } from 'react-router-dom';
 
 import { useEffect, useRef, useState } from 'react';
-import VideoCard from '../../components/VideoCard';
 import ShareModal from '../../components/ShareModal';
 import Button from '../../components/Button';
 import MorePopover from '../../components/MorePopover/MorePopover';
 import musicService from '../../services/music/music.service';
+import usePauseOnTabHidden from '../../hooks/usePauseOnTabHidden';
+import VideoList from '../../components/VideoList';
 //Call API
 function Music() {
   const params = useParams();
@@ -43,9 +44,9 @@ function Music() {
     },
   ];
 
-  const videoRefs = useRef([]);
-
   const videoRef = useRef(null);
+  usePauseOnTabHidden(videoRef);
+
   const [isPlaying, setIsPlaying] = useState(false);
   const [progress, setProgress] = useState(0); // phần trăm tiến trình
 
@@ -96,19 +97,6 @@ function Music() {
   const circumference = 2 * Math.PI * radius;
   const dashOffset = circumference - (progress / 100) * circumference;
 
-  const [activeIndex, setActiveIndex] = useState();
-
-  const handleHover = (index) => {
-    videoRefs.current.forEach((v, i) => {
-      if (i !== index && v) {
-        v.pause();
-        v.currentTime = 0;
-      }
-    });
-    videoRefs.current[index]?.play();
-    setActiveIndex(index);
-  };
-
   useEffect(() => {
     const fetchMusic = async () => {
       const musicData = await musicService.getMusic(musicId);
@@ -116,7 +104,7 @@ function Music() {
       setVideos(musicData.posts);
     };
     fetchMusic();
-  }, []);
+  }, [musicId]);
 
   return (
     <div className={styles['DivShareLayoutBase-StyledShareLayoutV2']}>
@@ -284,21 +272,7 @@ function Music() {
             )}
           </div>
         </div>
-        <div className={styles.DivThreeColumnContainer}>
-          <div className={styles.DivVideoFeedV2}>
-            {videos.map((video, i) => (
-              <VideoCard
-                key={video.content}
-                data={video}
-                variant="topic"
-                onHover={() => handleHover(i)}
-                setRef={(el) => (videoRefs.current[i] = el)}
-                currentIndex={i}
-                activeIndex={activeIndex}
-              />
-            ))}
-          </div>
-        </div>
+        <VideoList variant="topic" videosData={videos} />
       </div>
     </div>
   );

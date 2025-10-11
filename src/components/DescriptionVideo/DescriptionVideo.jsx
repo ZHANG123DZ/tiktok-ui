@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import Text from '../Text';
 import styles from './DescriptionVideo.module.scss'; // nếu bạn muốn tách CSS module
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMusic } from '@fortawesome/free-solid-svg-icons';
 import { Link } from 'react-router-dom';
 import formatTime from '../../utils/formatTime';
 import Translate from '../Translate/Translate';
+import followService from '../../services/follow/follow.service';
+import ProtectedButton from '../ProtectedButton';
 
 const DescriptionVideo = ({ data }) => {
+  const authorId = data?.author?.id;
   const [title, setTitle] = useState(data?.title);
   const [follow, setFollow] = useState(false);
 
@@ -16,8 +18,18 @@ const DescriptionVideo = ({ data }) => {
       setTitle(data.title);
     }
   }, [data?.title]);
+
   const toggleFollow = async () => {
-    setFollow(!follow);
+    try {
+      if (follow) {
+        await followService.unfollow({ followAbleId: authorId, type: 'user' });
+      } else {
+        await followService.follow({ followAbleId: authorId, type: 'user' });
+      }
+      setFollow((prev) => !prev);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const [showMore, setShowMore] = useState(false);
@@ -72,26 +84,28 @@ const DescriptionVideo = ({ data }) => {
         </Link>
 
         {/* Follow button */}
-        <div data-e2e="browse-follow" className={styles.DivBtnWrapper}>
-          <button
-            className={styles.Button}
-            style={{
-              backgroundColor: follow
-                ? 'rgba(255, 255, 255, 0.12)'
-                : 'var(--tux-colorPrimary)',
-              border: follow && '0px',
-            }}
-          >
-            <div className={styles.ButtonContent}>
-              <div
-                className={styles.ButtonLabel}
-                onClick={() => toggleFollow()}
-              >
-                {follow ? 'Following' : 'Follow'}
+        <ProtectedButton>
+          <div data-e2e="browse-follow" className={styles.DivBtnWrapper}>
+            <button
+              className={styles.Button}
+              style={{
+                backgroundColor: follow
+                  ? 'rgba(255, 255, 255, 0.12)'
+                  : 'var(--tux-colorPrimary)',
+                border: follow && '0px',
+              }}
+            >
+              <div className={styles.ButtonContent}>
+                <div
+                  className={styles.ButtonLabel}
+                  onClick={() => toggleFollow()}
+                >
+                  {follow ? 'Following' : 'Follow'}
+                </div>
               </div>
-            </div>
-          </button>
-        </div>
+            </button>
+          </div>
+        </ProtectedButton>
       </div>
 
       {/* Main content */}

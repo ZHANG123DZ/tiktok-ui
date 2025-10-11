@@ -2,6 +2,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import styles from './styles.module.scss';
 import { useEffect, useState } from 'react';
 import VerifyBadge from '../VerifyBadge';
+import { useSelector } from 'react-redux';
+import usePauseOnTabHidden from '../../hooks/usePauseOnTabHidden';
 
 function UserCard({
   data,
@@ -10,6 +12,8 @@ function UserCard({
   setRef,
   onHover = () => {},
 }) {
+  usePauseOnTabHidden(setRef);
+  const isMuted = useSelector((state) => state.volume.isMuted);
   const [follow, setFollow] = useState(data.isFollow);
   const navigate = useNavigate();
   const [showVideo, setShowVideo] = useState(activeIndex === currentIndex);
@@ -63,7 +67,7 @@ function UserCard({
                 <img
                   alt=""
                   decoding="async"
-                  src={data.videoIntro.thumbnail}
+                  src={data.intro?.thumbnail}
                   className={styles.coverImg}
                   style={{
                     position: 'absolute',
@@ -106,8 +110,8 @@ function UserCard({
                     }}
                     autoPlay
                     onMouseEnter={onHover}
-                    src={data.videoIntro.video}
-                    muted
+                    src={data.intro?.content}
+                    muted={isMuted}
                   ></video>
                   <div></div>
                 </div>

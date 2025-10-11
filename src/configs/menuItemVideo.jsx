@@ -24,7 +24,7 @@ const menuItemVideo = [
     label: 'Auto scroll',
     icon: <AutoscrollIcon />,
     hasToggle: true,
-    action: () => console.log('Toggle autoscroll'),
+    key: 'autoScroll',
   },
   {
     label: 'Floating Player',

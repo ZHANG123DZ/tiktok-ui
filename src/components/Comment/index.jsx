@@ -12,6 +12,7 @@ import { useEffect, useRef, useState } from 'react';
 import ReplyItem from './Reply';
 import MorePopover from '../MorePopover/MorePopover';
 import Button from '../Button';
+import { Link } from 'react-router-dom';
 
 function Comment({ data, post, setComments }) {
   const [comment, setComment] = useState(data); // dùng props thay vì hardcode
@@ -74,10 +75,10 @@ function Comment({ data, post, setComments }) {
         className={styles.DivCommentContentContainer}
       >
         {/* Avatar */}
-        <a
+        <Link
           data-e2e="comment-avatar-1"
           className={styles.StyledUserLinkAvatar}
-          href={`/@${comment.author.username}`}
+          to={`/@${comment.author.username}`}
           style={{ flex: '0 0 40px' }}
         >
           <span
@@ -93,13 +94,13 @@ function Comment({ data, post, setComments }) {
               className={styles.ImgAvatar}
             />
           </span>
-        </a>
+        </Link>
 
         {/* Content */}
         <div className={styles.DivContentContainer}>
-          <a
+          <Link
             className={styles.StyledUserLinkName}
-            href={`/@${comment.author.username}`}
+            to={`/@${comment.author.username}`}
           >
             <span className={styles.SpanUserNameText}>
               {comment.author.name}
@@ -115,7 +116,7 @@ function Comment({ data, post, setComments }) {
                 </>
               )}
             </span>
-          </a>
+          </Link>
           <p className={styles.PCommentText}>{comment.content}</p>
           <div className={styles.PCommentSubContent}>
             <span className={styles.SpanCreatedTime}>2d ago</span>

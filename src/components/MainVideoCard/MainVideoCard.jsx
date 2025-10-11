@@ -14,29 +14,28 @@ import Text from '../Text';
 import MorePopover from '../MorePopover/MorePopover';
 import menuItemVideo from '../../configs/menuItemVideo.jsx';
 import { Link } from 'react-router-dom';
-
-const getInitialVolume = () => {
-  const storedVolume = localStorage.getItem('videoVolume');
-  return storedVolume !== null ? parseFloat(storedVolume) : 0.5;
-};
-
-const getInitialMuted = () => {
-  const storedVolume = localStorage.getItem('videoVolume');
-  return storedVolume !== null ? parseFloat(storedVolume) === 0 : false;
-};
+import { useDispatch, useSelector } from 'react-redux';
+import { setMuted, setVolume } from '../../features/volume/volumeSlice';
+import usePauseOnTabHidden from '../../hooks/usePauseOnTabHidden';
 
 const MainVideoCard = ({ data, onEnded = () => {} }) => {
+  const dispatch = useDispatch();
+  const volumeReducer = useSelector((state) => state.volume);
+  const autoScrollReducer = useSelector((state) => state.autoScroll);
+  const autoScroll = autoScrollReducer.autoScroll;
+
   const [videoData, setVideoData] = useState(data);
   const [seeMore, setSeeMore] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const videoRef = useRef(null);
+  usePauseOnTabHidden(videoRef);
   const progressBarRef = useRef(null);
 
   const [isPlaying, setIsPlaying] = useState(false);
-  const [isMuted, setIsMuted] = useState(getInitialMuted);
-  const [volume, setVolume] = useState(0);
-  const [lastVolume, setLastVolume] = useState(getInitialVolume);
+  const isMuted = volumeReducer.isMuted;
+  const volume = volumeReducer.volume;
+
   const [progress, setProgress] = useState(0);
   const [duration, setDuration] = useState(0);
   const [currentTime, setCurrentTime] = useState(0);
@@ -94,10 +93,6 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
     const video = videoRef.current;
     if (!video) return;
 
-    // Đặt âm lượng và trạng thái muted ban đầu
-    video.volume = volume;
-    video.muted = isMuted;
-
     const handleTimeUpdate = () => {
       const current = video.currentTime;
       const total = video.duration;
@@ -135,7 +130,7 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
       video.removeEventListener('pause', handlePause);
       video.removeEventListener('ended', handleEnded);
     };
-  }, [volume, isMuted, videoData]);
+  }, [videoData]);
 
   //Hàm click vào thanh tiến trình
   const handleProgressClick = (e) => {
@@ -213,9 +208,7 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
     let newVolume = (clientX - rect.left) / rect.width;
     newVolume = Math.max(0, Math.min(newVolume, 1));
 
-    setVolume(newVolume);
-    setIsMuted(newVolume === 0);
-    localStorage.setItem('videoVolume', newVolume.toString());
+    dispatch(setVolume(newVolume));
   };
 
   const onVolumeMouseDown = (e) => {
@@ -267,15 +260,9 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
     if (!video) return;
 
     if (isMuted) {
-      const newVolume = lastVolume || 0.5;
-      setVolume(newVolume);
-      setIsMuted(false);
-      localStorage.setItem('videoVolume', newVolume.toString());
+      dispatch(setMuted(false));
     } else {
-      setLastVolume(volume);
-      setVolume(0);
-      setIsMuted(true);
-      localStorage.setItem('videoVolume', '0');
+      dispatch(setMuted(true));
     }
   };
 
@@ -293,9 +280,7 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
   //Hàm thay đổi volume
   const changeVolume = (e) => {
     const value = parseFloat(e.target.value);
-    setVolume(value);
-    setIsMuted(value === 0);
-    localStorage.setItem('videoVolume', value.toString());
+    dispatch(setVolume(value));
   };
 
   const formatTime = (seconds) => {
@@ -406,6 +391,7 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
             >
               <video
                 ref={videoRef}
+                loop={!autoScroll}
                 className=""
                 onClick={togglePlay}
                 onEnded={onEnded}
@@ -459,13 +445,13 @@ const MainVideoCard = ({ data, onEnded = () => {} }) => {
                         ref={volumeSliderRef}
                         style={{
                           width: '70px',
-                          '--progressVolume': `${volume * 100}%`,
+                          '--progressVolume': `${isMuted ? 0 : volume * 100}%`,
                         }}
                         type="range"
                         min="0"
                         max="1"
                         step="0.05"
-                        value={volume}
+                        value={isMuted ? 0 : volume}
                         onChange={changeVolume}
                         onMouseDown={onVolumeMouseDown}
                       />

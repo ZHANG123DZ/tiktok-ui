@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
 import formatNumberShort from '../../utils/formatNumberShort';
 import NowPlayingSVG from '../Icon/NowPlayingSVG';
+import usePauseOnTabHidden from '../../hooks/usePauseOnTabHidden';
 
 function VideoSimple({
   data = {},
@@ -13,6 +14,7 @@ function VideoSimple({
   onHover = () => {},
   onLeave = () => {},
 }) {
+  usePauseOnTabHidden(setRef);
   const [showVideo, setShowVideo] = useState(activeIndex === currentIndex);
 
   useEffect(() => {

@@ -25,6 +25,19 @@ export const register = async (data) => {
   }
 };
 
+export const social = async (data, social = 'google') => {
+  try {
+    const res = await httpRequest.post(
+      `/auth/socials/${social}/callback`,
+      data
+    );
+    return res;
+  } catch (err) {
+    console.error('Register thất bại:', err);
+    throw err;
+  }
+};
+
 export const checkEmail = async (data) => {
   try {
     const res = await httpRequest.post('/auth/check-email', data);
@@ -35,9 +48,12 @@ export const checkEmail = async (data) => {
   }
 };
 
-export const sendCode = async (data) => {
+export const sendCode = async (data, method = 'email') => {
   try {
-    const res = await httpRequest.post('/auth/send-code', data);
+    const res = await httpRequest.post(
+      `/auth/send-code?method=${method}`,
+      data
+    );
     return res;
   } catch (err) {
     console.error('Quá trình tạo mã otp hoặc gửi mã thất bại:', err);
@@ -65,6 +81,16 @@ export const verifyEmail = async (data) => {
   }
 };
 
+export const editProfile = async (data) => {
+  try {
+    const res = await httpRequest.post('/auth/edit-profile', data);
+    return res;
+  } catch (err) {
+    console.error('Edit Profile thất bại:', err);
+    throw err;
+  }
+};
+
 export const logout = async () => {
   try {
     const res = await httpRequest.post('/auth/logout');
@@ -79,9 +105,11 @@ export default {
   getCurrentUser,
   login,
   register,
+  social,
   checkEmail,
   sendCode,
   verifyCode,
   verifyEmail,
+  editProfile,
   logout,
 };

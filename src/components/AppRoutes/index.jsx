@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getCurrentUser } from '../../features/auth/authAsync';
 import { useEffect } from 'react';
 import { DrawerProvider } from '../../contexts/DrawerContext';
+import { usePresenceChannel } from '../../store/usePresenceChannel';
 
 function AppRoutes() {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ function AppRoutes() {
   useEffect(() => {
     dispatch(getCurrentUser());
   }, [dispatch]);
-
+  usePresenceChannel();
   return (
     <>
       <Routes>

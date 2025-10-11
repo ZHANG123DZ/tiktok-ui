@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import ProfileWrapper from '../ProfileWrapper';
 import NotFound from '../../page/NotFound';
-import VideoDetail from '../../page/VideoDetail';
+import VideoView from '../../page/VideoView';
 
 // Logic xử lý KÝ Tự trước params
 function UserRouter() {
@@ -18,7 +18,7 @@ function UserRouter() {
 
     if (segments[1] === 'video' && segments[2]) {
       const postId = segments[2];
-      return <VideoDetail username={username} postId={postId} />;
+      return <VideoView username={username} postId={postId} />;
     }
 
     if (segments.length === 1) {

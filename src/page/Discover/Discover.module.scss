@@ -149,6 +149,9 @@
   width: calc(-336px + 100vw);
   min-width: unset !important;
 }
+.DivCategoryList::-webkit-scrollbar {
+  display: none;
+}
 @media screen and (max-width: 1071px) {
   .DivCategoryList {
     width: calc(-168px + 100vw);
@@ -202,4 +205,53 @@
 .ButtonCategoryItemContainer:hover {
   color: rgba(255, 255, 255, 0.75);
   background-color: rgba(255, 255, 255, 0.1);
+}
+.DivArrowContainer {
+  position: absolute;
+  top: 0px;
+  cursor: pointer;
+  padding: inherit;
+  height: 100%;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  pointer-events: none;
+  direction: ltr;
+  right: 300px;
+}
+.DivArrowIconContainer {
+  z-index: 1;
+  width: 32px;
+  height: 32px;
+  background: rgb(75, 75, 75);
+  color: rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  box-shadow: rgba(0, 0, 0, 0.12) 0px 2.66667px 16px;
+  font-size: 16px;
+  pointer-events: auto;
+  direction: ltr;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  padding-left: 3.555px;
+}
+.DivChevron {
+  display: inline-block;
+  line-height: 0;
+  transform: unset;
+  margin-left: 8px;
+}
+.DivShadow {
+  position: absolute;
+  top: 0px;
+  width: 80px;
+  height: 100%;
+  transform: unset;
+  right: 0px;
+  background: linear-gradient(
+      270deg,
+      rgb(18, 18, 18) 0%,
+      rgba(18, 18, 18, 0) 100%
+    )
+    content-box;
 }

@@ -8,11 +8,13 @@ import AgeSelector from '../../../components/AgeSelector';
 
 import Form from '../../../components/Form';
 import { registerPhoneSchema } from '../../../schema/registerSchema';
-import { setComponent } from '../../../features/auth/authSlice';
+import { setComponent, setRegister } from '../../../features/auth/authSlice';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import Button from '../../../components/Button';
 import { areFieldsFilled } from '../../../function/areFieldsFilled';
+import authService from '../../../services/auth/auth.service';
+import { toast } from 'react-toastify';
 
 function RegisterPhoneForm() {
   const dispatch = useDispatch();
@@ -27,22 +29,49 @@ function RegisterPhoneForm() {
     register,
     getValues,
     setValue,
+    setError,
     clearErrors,
     formState: { errors, isSubmitting, isLoading },
   } = methods;
 
+  const sendCode = async (phone) => {
+    try {
+      await authService.sendCode(
+        { target: phone, action: 'verify_phone' },
+        'phone'
+      );
+    } catch (error) {
+      toast.error('Gửi mã Code thất bại! Vui lòng nhấn gửi lại!');
+      console.log(error);
+    }
+  };
+
+  const verifyCode = async (data) => {
+    const { phone, code } = data;
+    try {
+      await authService.verifyCode({ phone, code, action: 'verify_phone' });
+      return true;
+    } catch (error) {
+      setError('code', {
+        type: 'manual',
+        message: 'Mã xác thực không hợp lệ',
+      });
+      return false;
+    }
+  };
+
   const onSubmit = async (data) => {
     try {
-      const payload = {
-        firstName: 'newUser',
-        lastName: 'newUser',
-        password: data.password,
-        password_confirmation: data.password,
-        email: data.email,
-      };
-      // dispatch(finalRegister(payload));
-    } catch (error) {
-      console.log(error);
+      const verified = await verifyCode(data);
+
+      if (!verified) {
+        throw new Error('Lỗi xác thực');
+      }
+      const { code, ...payload } = data;
+      dispatch(setRegister(payload));
+      dispatch(setComponent('finalRegister'));
+    } catch (err) {
+      console.error('Submit failed:', err);
     }
   };
 
@@ -89,6 +118,7 @@ function RegisterPhoneForm() {
           clearErrors={clearErrors}
           getValues={getValues}
           watch={watch}
+          onSend={(phone) => sendCode(phone)}
         />
         <Button styledButton type="submit" disabled={!isFilled || isSubmitting}>
           Tiếp
