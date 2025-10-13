@@ -31,23 +31,7 @@ export const deleteComment = async (slug, id) => {
 export const getCommentsByPostId = async (slug) => {
   try {
     const res = await httpRequest.get(`/posts/${slug}/comments`);
-
-    const normalizeCommentTree = (comment) => {
-      return {
-        ...comment,
-        author: {
-          ...comment.author,
-          name: comment.author.name,
-          avatar: comment.author.avatar,
-        },
-        createdAt: comment.createdAt,
-        likes: Number(comment.likeCount),
-        replies: comment.replies?.map(normalizeCommentTree) || [],
-      };
-    };
-
-    res.data.comments = res.data.comments.map(normalizeCommentTree);
-    return res;
+    return res.data;
   } catch (error) {
     console.error('Failed to fetch comments:', error);
     throw error;

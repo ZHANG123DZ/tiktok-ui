@@ -60,7 +60,7 @@ function VideoCard({
   }, [activeIndex, currentIndex]);
 
   return (
-    <div className={clsx(styles['DivItemContainerV2'])}>
+    <div className={clsx(styles['DivItemContainerV2'])} onClick={onClick}>
       {/* Video */}
       <div
         data-e2e="explore-item"
@@ -77,6 +77,7 @@ function VideoCard({
               onMouseEnter={() => setShowVideo(true)}
               onClick={(e) => {
                 e.stopPropagation();
+                onClick();
                 navigate(`/@${data.author.username}/video/${data.id}`);
               }}
             >
@@ -155,7 +156,6 @@ function VideoCard({
                             onMouseEnter={onHover}
                             src={data.content}
                             muted={isMuted}
-                            onClick={onClick}
                           ></video>
                           <div></div>
                         </div>
@@ -341,13 +341,13 @@ function VideoCard({
                 </span>
                 {data.tags?.map((tag, i) => (
                   <React.Fragment key={tag}>
-                    <a
+                    <Link
                       data-e2e="search-common-link"
                       target="_self"
                       rel="opener"
                       aria-label={`Watch more videos of the #${tag} category`}
                       className={styles.StyledCommonLink}
-                      href={`/tag/${tag}`}
+                      to={`/tag/${tag}`}
                     >
                       <strong
                         style={{ color: 'rgba(143, 190, 233, 1)' }}
@@ -355,7 +355,7 @@ function VideoCard({
                       >
                         #{tag}
                       </strong>
-                    </a>
+                    </Link>
 
                     {i !== data.tags.length - 1 && (
                       <span
@@ -371,10 +371,10 @@ function VideoCard({
             </div>
             <div className={styles.DivPlayLine}>
               <div className={styles.DivUserInfo}>
-                <a
+                <Link
                   data-e2e="explore-card-user-link"
                   className="link-a11y-focus"
-                  href={`/@${data.author.username}`}
+                  to={`/@${data.author.username}`}
                 >
                   <span
                     shape="circle"
@@ -392,11 +392,11 @@ function VideoCard({
                       className={styles.ImgAvatar}
                     />
                   </span>
-                </a>
-                <a
+                </Link>
+                <Link
                   data-e2e="explore-card-user-link"
                   className="link-a11y-focus"
-                  href={`/@${data.author.username}`}
+                  to={`/@${data.author.username}`}
                   style={{ overflow: 'hidden' }}
                 >
                   <p
@@ -405,7 +405,7 @@ function VideoCard({
                   >
                     {data.author.username}
                   </p>
-                </a>
+                </Link>
               </div>
               <div className={styles.DivExploreCardText}></div>
               {isSearch && (

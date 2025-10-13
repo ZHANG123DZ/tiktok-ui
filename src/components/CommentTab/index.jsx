@@ -14,183 +14,21 @@ import { useSelector } from 'react-redux';
 import socketClient from '../../utils/socketClient';
 import commentService from '../../services/comment/comment.service';
 
-const mockComments = [
-  {
-    id: 23,
-    postId: 4,
-    content: 'Đây là cái gì v',
-    likes: 234,
-    isLiked: false,
-    isAuthorLiked: true,
-    author: {
-      id: 6,
-      username: 'dang',
-      name: 'Đăng đẹp trai',
-      avatar:
-        'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-dam.jpg',
-      followers: 2345,
-      likes: 2395,
-    },
-    replies: [
-      {
-        id: 23,
-        postId: 4,
-        content: 'Đây là qq gì v',
-        likes: 234,
-        isLiked: true,
-        isAuthorLiked: false,
-        author: {
-          id: 7,
-          username: 'dansg',
-          name: 'Đăng đần',
-          avatar:
-            'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-chan-dai.jpg',
-          followers: 2345,
-          likes: 2395,
-        },
-        parentId: 23,
-        sender: 'other',
-        createdAt: '2025-08-14 18:14:16.868',
-      },
-      {
-        id: 26,
-        postId: 4,
-        content: 'Đây là qq gì v',
-        likes: 234,
-        isLiked: true,
-        parentId: 23,
-        isAuthorLiked: true,
-        author: {
-          id: 7,
-          username: 'dangd',
-          name: 'Đăng đần',
-          avatar:
-            'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-chan-dai.jpg',
-          followers: 2345,
-          likes: 25,
-        },
-        sender: 'other',
-        createdAt: '2025-08-14 18:14:16.868',
-      },
-    ],
-    sender: 'other',
-    createdAt: '2025-08-14 18:14:16.868',
-  },
-  {
-    id: 28,
-    postId: 4,
-    content: 'Đây là cái gì v',
-    likes: 234,
-    isLiked: false,
-    isAuthorLiked: true,
-    author: {
-      id: 6,
-      username: 'dang',
-      name: 'Đăng đẹp trai',
-      avatar:
-        'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-dam.jpg',
-      followers: 2345,
-      likes: 2395,
-    },
-    replies: [
-      {
-        id: 23,
-        postId: 4,
-        content: 'Đây là qq gì v',
-        likes: 234,
-        isLiked: true,
-        isAuthorLiked: false,
-        author: {
-          id: 1,
-          username: 'dansg',
-          name: 'Đăng đần',
-          avatar:
-            'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-chan-dai.jpg',
-          followers: 2345,
-          likes: 2395,
-        },
-        parentId: 23,
-        sender: 'other',
-        createdAt: '2025-08-14 18:14:16.868',
-      },
-      {
-        id: 26,
-        postId: 4,
-        content: 'Đây là qq gì v',
-        likes: 234,
-        isLiked: true,
-        parentId: 23,
-        isAuthorLiked: true,
-        author: {
-          id: 8,
-          username: 'dangd',
-          name: 'Đăng đần',
-          avatar:
-            'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-chan-dai.jpg',
-          followers: 2345,
-          likes: 25,
-        },
-        sender: 'other',
-        createdAt: '2025-08-14 18:14:16.868',
-      },
-    ],
-    sender: 'other',
-    createdAt: '2025-08-14 18:14:16.868',
-  },
-];
-
-const post = {
-  author: {
-    id: 7,
-    avatar:
-      'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-chan-dai.jpg',
-  },
-  comments: 3,
-};
-
-function CommentTab({ postId }) {
+function CommentTab({ post }) {
+  const postId = post.id;
   const { closeDrawer } = useDrawer();
   const isAuth = useSelector((state) => state.auth.isAuth);
-  const [commentsList, setComments] = useState(mockComments);
+  const [commentsList, setComments] = useState([]);
+  const [reply, setReply] = useState(null);
 
   useEffect(() => {
     const fetchComments = async () => {
-      await commentService.getCommentsByPostId(postId);
+      const res = await commentService.getCommentsByPostId(postId);
+      setComments(res.comments);
     };
     fetchComments();
   }, [postId]);
-  //Lấy comments
-  // const fetchComments = async () => {
-  //   if (!postId) {
-  //     setComments([]);
-  //     return;
-  //   }
-  //   try {
-  //     // const comments = await getCommentsByPostId(postId);
-  //     const comments = [];
-  //     setComments(comments);
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
 
-  //Đăng comment
-  // const handleSubmitComment = async (event) => {
-  //   event.preventDefault();
-  //   if (!content.trim()) return;
-
-  //   try {
-  //     await createComment(postId, { content });
-  //     setContent('');
-  //     fetchComments();
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
-  // useEffect(() => {
-  //   fetchComments();
-  // }, [postId]);
   const addReplyToComments = (comments, parentId, newReply) => {
     return comments.map((comment) => {
       if (comment.id === parentId) {
@@ -211,16 +49,15 @@ function CommentTab({ postId }) {
 
   useEffect(() => {
     if (!postId) return;
-
     const pusher = socketClient;
 
     const channel = pusher.subscribe(`post-${postId}-comments`);
     channel.bind('new-comment', (newComment) => {
-      if (newComment.parent_id === null) {
+      if (newComment.parentId === null) {
         setComments((prev) => [newComment, ...prev]);
       } else {
         setComments((prev) =>
-          addReplyToComments(prev, newComment.parent_id, newComment)
+          addReplyToComments(prev, newComment.parentId, newComment)
         );
       }
     });
@@ -249,17 +86,7 @@ function CommentTab({ postId }) {
     });
     channel.bind('delete-comment', (commentId) => {
       const deleteCommentRecursively = (comments) => {
-        return comments
-          .filter((comment) => Number(comment.id) !== Number(commentId))
-          .map((comment) => {
-            if (comment.replies && comment.replies.length > 0) {
-              return {
-                ...comment,
-                replies: deleteCommentRecursively(comment.replies),
-              };
-            }
-            return comment;
-          });
+        return comments.filter((comment) => comment.id !== commentId);
       };
       setComments((prev) => deleteCommentRecursively(prev));
     });
@@ -297,7 +124,7 @@ function CommentTab({ postId }) {
               className="StyledTUXText"
               style={{ fontSize: '15px', color: 'inherit' }}
             >
-              {`(${post.comments})`}
+              {`(${post.commentCount})`}
             </Text>
           </div>
           <div className={styles.DivCloseButtonWrapper}>
@@ -327,8 +154,9 @@ function CommentTab({ postId }) {
                   <Comment
                     key={comment.id}
                     data={comment}
-                    setComments={setComments}
                     post={post}
+                    reply={reply}
+                    setReply={setReply}
                   />
                 )
             )}
@@ -338,7 +166,7 @@ function CommentTab({ postId }) {
           {isAuth ? (
             <div className={styles.DivCommentBarContainer}>
               <div className={styles.DivCommentInputWrapper}>
-                <CommentInputBox setComments={setComments} postId={postId} />
+                <CommentInputBox postId={postId} />
               </div>
             </div>
           ) : (

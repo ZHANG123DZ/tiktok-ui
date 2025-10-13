@@ -663,7 +663,7 @@ function VideoView({ postId, username }) {
               <div className={styles.DivBorder}></div>
               <TabPanels>
                 <TabPanel value={'comments'}>
-                  <PostComment />
+                  {currentPost && <PostComment post={currentPost} />}
                 </TabPanel>
                 <TabPanel value={'creatorVideos'}>
                   <VideoSimpleList />

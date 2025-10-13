@@ -1,0 +1,30 @@
+{
+  "notification": "Thông báo",
+  "allActivity": "Tất cả hoạt động",
+  "likes": {
+    "tab": "Thích",
+    "notify": "Lượt thích trên video của bạn",
+    "empty": "Khi ai đó thích một trong các video của bạn, bạn sẽ nhìn thấy ở đây"
+  },
+  "comments": {
+    "tab": "Bình luận",
+    "notify": "Bình luận trên video của bạn",
+    "empty": "Khi ai đó bình luận về một trong các video của bạn, bạn sẽ nhìn thấy ở đây"
+  },
+  "mentionsAndTags": {
+    "tab": "Lượt nhắc đến và lượt gắn thẻ",
+    "notify": "Nhắc đến bạn",
+    "empty": "Khi ai đó nhắc đến bạn, bạn sẽ nhìn thấy ở đây"
+  },
+  "follower": {
+    "tab": "Follower",
+    "notify": "Follow bạn",
+    "empty": "Khi ai đó theo dõi bạn, bạn sẽ nhìn thấy ở đây",
+    "startFollow": "đã bắt đầu follow bạn"
+  },
+  "new": "Mới",
+  "systemNotification": "Thông báo hệ thống",
+  "accountUpdates": "Cập nhật tài khoản",
+  "notificationContent": "Chúng tôi sẽ cập nhật Nguyên tắc Cộng đồng vào ngày 13 tháng 9 năm 2025 để bạn có thể tiếp tục sáng tạo, khám phá và chia sẻ một cách an toàn trên TikTok. Hãy xem có gì mới và tìm hiểu thêm.",
+  "previous": "Trước đây"
+}

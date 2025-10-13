@@ -1,0 +1,15 @@
+{
+  "menuItem": {
+    "quality": {
+      "quality": "Chất lượng",
+      "auto": "Tự động"
+    },
+    "caption": "Phụ đề",
+    "autoScroll": "Cuộn tự động",
+    "floatingPlayer": "Trình phát nổi",
+    "notInterested": "Không quan tâm",
+    "report": "Báo cáo",
+    "ban": "Chặn",
+    "inappropriate": "Đánh dấu là không phù hợp"
+  }
+}

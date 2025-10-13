@@ -1,18 +1,14 @@
 import styles from './Home.module.scss';
 import postService from '../../services/post/post.service';
-import { useEffect } from 'react';
 import { useState } from 'react';
 import { ArticleProvider } from '../../contexts/ArticleContext';
 import CommentTab from '../../components/CommentTab';
 import { DrawerProvider } from '../../contexts/DrawerContext';
 import InfiniteScroller from '../../components/InfiniteScroll';
 
-const mockComments = [{}];
-
 function Home() {
   //Comments
   const [activeComments, setActiveComments] = useState(false);
-  const [comments, setComments] = useState(mockComments);
   //CurrentPost
   const [currentPost, setCurrentPost] = useState(null);
 
@@ -57,7 +53,7 @@ function Home() {
         />
       </div>
       <DrawerProvider isActive={activeComments} setActive={setActiveComments}>
-        {currentPost && <CommentTab postId={currentPost.id} />}
+        {currentPost && <CommentTab post={currentPost} />}
       </DrawerProvider>
     </main>
   );

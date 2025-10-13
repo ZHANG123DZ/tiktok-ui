@@ -13,7 +13,7 @@ export const ArticleProvider = ({
   setActiveComments,
   setPost,
 }) => {
-  const { ref, inView, entry } = useInView();
+  const { ref, inView, entry } = useInView({ threshold: 0.8 });
   useEffect(() => {
     if (inView) setPost(data);
   }, [data, inView, setPost]);

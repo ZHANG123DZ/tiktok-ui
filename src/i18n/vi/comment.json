@@ -1,0 +1,19 @@
+{
+  "post": "Đăng",
+  "addComment": "Thêm bình luận",
+  "comments": "Bình luận",
+  "reply": "Trả lời",
+  "see": "Xem",
+  "answers": "câu trả lời",
+  "seeMore": "Xem thêm",
+  "hide": "Ẩn",
+  "creator": "Nhà sáng tạo",
+  "time": {
+    "minutes": "phút",
+    "hour": "giờ",
+    "day": "ngày",
+    "week": "tuần",
+    "month": "tháng",
+    "ago": "trước"
+  }
+}

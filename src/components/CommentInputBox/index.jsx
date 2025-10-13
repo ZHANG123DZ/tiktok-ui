@@ -2,52 +2,19 @@ import clsx from 'clsx';
 import styles from './CommentInputBox.module.scss';
 import { useRef, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAt, faFaceSmile } from '@fortawesome/free-solid-svg-icons';
+import { faAt, faClose, faFaceSmile } from '@fortawesome/free-solid-svg-icons';
 import ChatInput from '../ChatInput';
 import EmojiPanel from '../EmojiPanel';
 import useClickOutside from '../../hooks/useClickOutside';
 import { useSelector } from 'react-redux';
 import commentService from '../../services/comment/comment.service';
 
-// {
-//     id: 28,
-//     postId: 4,
-//     content: 'Đây là cái gì v',
-//     likes: 234,
-//     isLiked: false,
-//     isAuthorLiked: true,
-//     author: {
-//       id: 6,
-//       username: 'dang',
-//       name: 'Đăng đẹp trai',
-//       avatar:
-//         'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-dam.jpg',
-//       followers: 2345,
-//       likes: 2395,
-//     },
-//     replies: [
-//       {
-//         id: 23,
-//         postId: 4,
-//         content: 'Đây là qq gì v',
-//         likes: 234,
-//         isLiked: true,
-//         isAuthorLiked: false,
-//         author: {
-//           id: 1,
-//           username: 'dansg',
-//           name: 'Đăng đần',
-//           avatar:
-//             'https://maunaildep.com/wp-content/uploads/2025/04/anh-gai-xinh-k10-chan-dai.jpg',
-//           followers: 2345,
-//           likes: 2395,
-//         },
-//         parentId: 23,
-//         sender: 'other',
-//         createdAt: '2025-08-14 18:14:16.868',
-//       },
-
-function CommentInputBox({ setComments = () => {}, replyId = null, postId }) {
+function CommentInputBox({
+  replyId = null,
+  postId,
+  closeButton = false,
+  clickCloseButton = () => {},
+}) {
   const [content, setContent] = useState('');
   const currentUser = useSelector((state) => state.auth.currentUser);
   const handleTyping = (text) => setContent(text);
@@ -73,6 +40,7 @@ function CommentInputBox({ setComments = () => {}, replyId = null, postId }) {
       };
       await commentService.createComment(postId, data);
       setContent('');
+      if (closeButton) clickCloseButton();
     }
   };
 
@@ -144,8 +112,13 @@ function CommentInputBox({ setComments = () => {}, replyId = null, postId }) {
           color: content.trim() ? 'var(--ui-text-primary)' : 'inherit',
         }}
       >
-        Post
+        Đăng
       </div>
+      {closeButton && (
+        <div className={styles.DivCloseBtn} onClick={clickCloseButton}>
+          <FontAwesomeIcon icon={faClose} fontSize={25} />
+        </div>
+      )}
     </div>
   );
 }

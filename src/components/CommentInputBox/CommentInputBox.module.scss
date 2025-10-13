@@ -4,8 +4,17 @@
   align-items: flex-end;
   gap: 0.5rem;
 }
+.DivCloseBtn {
+  cursor: pointer;
+  display: flex;
+  -webkit-box-align: center;
+  align-items: center;
+  height: 39px;
+  color: rgba(255, 255, 255, 0.9);
+}
 .DivLayoutContainer {
   flex: 1 1 auto;
+  word-break: break-all;
 }
 
 .DivInputAreaContainer {

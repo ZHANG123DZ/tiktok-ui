@@ -5,6 +5,7 @@ import {
   faEllipsis,
   faFlag,
   faHeart as faHeartRegular,
+  faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import styles from './styles.module.scss';
@@ -13,30 +14,66 @@ import ReplyItem from './Reply';
 import MorePopover from '../MorePopover/MorePopover';
 import Button from '../Button';
 import { Link } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import commentService from '../../services/comment/comment.service';
+import likeService from '../../services/like/like.service';
+import CommentInputBox from '../CommentInputBox';
+import formatRelativeTime from '../../function/formatRelativeTime';
 
-function Comment({ data, post, setComments }) {
-  const [comment, setComment] = useState(data); // dùng props thay vì hardcode
+function Comment({ data, post, reply, setReply }) {
+  const postId = post.id;
+  const [comment, setComment] = useState(data);
   const [seeMoreReply, setSeeMoreReply] = useState(0);
   const [liked, setLiked] = useState(comment.isLiked);
-  const [likes, setLikes] = useState(comment.likes);
+  const [likes, setLikes] = useState(comment.likeCount);
 
+  useEffect(() => {
+    setComment(data);
+  }, [data]);
+
+  const currentUser = useSelector((state) => state.auth.currentUser);
   const [showPopover, setShowPopover] = useState(false);
   const popoverRef = useRef(null);
   const buttonRef = useRef(null);
-  const popoverContent = [
-    {
+
+  //Service
+  const deleteComment = async () => {
+    await commentService.deleteComment(postId, comment.id);
+  };
+  const popoverContent = [];
+
+  if (!comment.authorId === currentUser?.id || !currentUser) {
+    popoverContent.push({
       button: (
         <Button
           icon={<FontAwesomeIcon icon={faFlag} />}
-          label="Report"
+          label="Báo cáo"
           secondary
           borderless
           size="medium"
           style={{ margin: '0px 8px' }}
         />
       ),
-    },
-  ];
+    });
+  }
+  if (
+    comment.authorId === currentUser?.id ||
+    post.author.id === currentUser?.id
+  ) {
+    popoverContent.push({
+      button: (
+        <Button
+          icon={<FontAwesomeIcon icon={faTrash} />}
+          label="Xóa"
+          secondary
+          borderless
+          size="medium"
+          style={{ margin: '0px 8px' }}
+          onClick={deleteComment}
+        />
+      ),
+    });
+  }
 
   useEffect(() => {
     function handleClickOutside(event) {
@@ -54,10 +91,20 @@ function Comment({ data, post, setComments }) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [showPopover]);
+  const commentId = comment.id;
 
-  const toggleLike = () => {
-    setLiked((prev) => !prev);
-    setLikes((prev) => (liked ? prev - 1 : prev + 1));
+  const toggleLike = async () => {
+    try {
+      if (liked) {
+        await likeService.unlike({ likeAbleId: commentId, type: 'comment' });
+      } else {
+        await likeService.like({ likeAbleId: commentId, type: 'comment' });
+      }
+      setLiked((prev) => !prev);
+      setLikes((prev) => (liked ? prev - 1 : prev + 1));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const totalReplies = comment.replies.length;
@@ -111,7 +158,7 @@ function Comment({ data, post, setComments }) {
                     data-e2e="comment-creator-2"
                     className={styles.SpanIdentity}
                   >
-                    Creator
+                    Nhà sáng tạo
                   </span>
                 </>
               )}
@@ -119,12 +166,19 @@ function Comment({ data, post, setComments }) {
           </Link>
           <p className={styles.PCommentText}>{comment.content}</p>
           <div className={styles.PCommentSubContent}>
-            <span className={styles.SpanCreatedTime}>2d ago</span>
-            <span className={styles.SpanReplyButton} role="button" tabIndex={0}>
-              Reply
+            <span className={styles.SpanCreatedTime}>
+              {formatRelativeTime(comment.createdAt)}
+            </span>
+            <span
+              className={styles.SpanReplyButton}
+              role="button"
+              tabIndex={0}
+              onClick={() => setReply(commentId)}
+            >
+              Trả lời
             </span>
             {/* If creator like this comment */}
-            {data?.isAuthorLiked && (
+            {comment?.isAuthorLiked && (
               <div className={styles.DivFloaterBoundsWrapper}>
                 <img
                   src={post.author.avatar}
@@ -218,11 +272,26 @@ function Comment({ data, post, setComments }) {
           </div>
         </div>
       </div>
-
+      {reply === commentId && (
+        <div className={styles.DivReplyCommentEditorContainer}>
+          <CommentInputBox
+            replyId={commentId}
+            postId={postId}
+            closeButton={true}
+            clickCloseButton={() => setReply(null)}
+          />
+        </div>
+      )}
       {/* Replies */}
       <div className={styles.DivReplyContainer}>
         {displayedReplies.map((rep) => (
-          <ReplyItem key={rep.id} rep={rep} post={post} />
+          <ReplyItem
+            key={rep.id}
+            rep={rep}
+            post={post}
+            reply={reply}
+            setReply={setReply}
+          />
         ))}
         <div className={styles.DivReplyActionContainer}>
           {totalReplies > seeMoreReply && (
