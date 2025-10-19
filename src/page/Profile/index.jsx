@@ -16,7 +16,7 @@ import styles from './styles.module.scss';
 import Button from '../../components/Button';
 import ProtectedButton from '../../components/ProtectedButton';
 import ShareModal from '../../components/ShareModal';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ModalProvider } from '../../contexts/ModalContext';
 import EditProfile from '../../components/EditProfile';
 import formatNumberShort from '../../utils/formatNumberShort';
@@ -33,10 +33,19 @@ import Error from '../../components/Error';
 import VideoList from '../../components/VideoList';
 import FollowModal from '../../components/FollowModal';
 import userService from '../../services/user/user.service';
+import conversationService from '../../services/conversation/conversation.service';
+import { useNavigate } from 'react-router-dom';
+import {
+  setCurrentConversations,
+  setSelectedConversation,
+} from '../../features/conversation/conversationSlice';
 
 function Profile({ profile }) {
   const currentUser = useSelector((state) => state.auth.currentUser);
   const isSelf = currentUser?.username === profile?.username;
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [follow, setFollow] = useState(false);
   const [followers, setFollowers] = useState(0);
@@ -184,13 +193,21 @@ function Profile({ profile }) {
                         }}
                       />
                     </ProtectedButton>
-                    <ProtectedButton>
+                    <ProtectedButton
+                      onClick={async () => {
+                        const res =
+                          await conversationService.getOrCreateConversation(
+                            profile?.id
+                          );
+                        dispatch(setSelectedConversation(res));
+                        navigate(`/messages?conversation=${res.id}`);
+                      }}
+                    >
                       <Button
                         label="Nhắn tin"
                         isDefault
                         size="medium"
                         secondary
-                        to="/messages"
                       />
                     </ProtectedButton>
                     <Button

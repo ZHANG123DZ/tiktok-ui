@@ -11,6 +11,7 @@ import volumeReducer from '../features/volume/volumeSlice';
 import autoScrollReducer from '../features/autoScroll/autoScrollSlice';
 import languageReducer from '../features/language/languageSlice';
 import listVideoReducer from '../features/video/listVideoSlice';
+import conversationReducer from '../features/conversation/conversationSlice';
 
 const authConfig = {
   key: 'auth',
@@ -54,6 +55,7 @@ const rootReducer = combineReducers({
   autoScroll: persistReducer(autoScrollConfig, autoScrollReducer),
   language: persistReducer(languageConfig, languageReducer),
   listVideo: listVideoReducer,
+  conversation: conversationReducer,
 });
 
 const store = configureStore({

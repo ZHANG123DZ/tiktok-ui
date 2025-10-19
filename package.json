@@ -29,6 +29,7 @@
     "@react-oauth/google": "^0.12.2",
     "@reduxjs/toolkit": "^2.8.2",
     "@vitejs/plugin-react-swc": "^4.0.0",
+    "agora-rtc-sdk-ng": "^4.24.0",
     "axios": "^1.8.4",
     "clsx": "^2.1.1",
     "draft-js": "^0.11.7",

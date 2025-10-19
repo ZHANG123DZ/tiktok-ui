@@ -2,53 +2,62 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Button from '../Button';
 import styles from './MessageDrawer.module.scss';
 import { faChevronLeft, faEllipsis } from '@fortawesome/free-solid-svg-icons';
-import { useState } from 'react';
-
-const mockConversations = [
-  {
-    id: 1,
-    avatar:
-      'https://maunailxinh.com/wp-content/uploads/2025/05/anh-meo-ngao-cute-1.jpg',
-    name: 'Hello',
-    unreadCount: 2,
-    acceptMessages: true,
-    lastMessage: {
-      id: 2,
-      content: 'Đã chấp nhận yêu cầu nhắn tin. Bạn có thể bắt đầu trò chuyện.',
-      type: 'system',
-      createdAt: '2025-08-12 18:02:00.956',
-    },
-  },
-];
-
-const mockSentRequests = {
-  id: 1,
-  unreadCount: 1,
-  content: 'Bạn có 1 yêu cầu',
-  request: [
-    {
-      id: 1,
-      avatar:
-        'https://maunailxinh.com/wp-content/uploads/2025/05/anh-meo-ngao-cute-1.jpg',
-      name: 'Hello',
-      unreadCount: 5,
-      acceptMessages: false,
-      lastMessage: {
-        id: 2,
-        content:
-          'Đã chấp nhận yêu cầu nhắn tin. Bạn có thể bắt đầu trò chuyện.',
-        type: 'system',
-        createdAt: '2025-08-12 18:02:00.956',
-      },
-    },
-  ],
-};
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSelectedConversation } from '../../features/conversation/conversationSlice';
+import { getConversations } from '../../features/conversation/getAllAsync';
+import formatRelativeTime from '../../function/formatRelativeTime';
+import { useSearchParams } from 'react-router-dom';
+import socketClient from '../../utils/socketClient';
 
 export default function MessageDrawer() {
-  const [conversations, setConversations] = useState(mockConversations);
-  const [sentRequests, setSentRequests] = useState(mockSentRequests);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const conversations = useSelector(
+    (state) => state.conversation.conversations
+  );
+  const pendingConversations = useSelector(
+    (state) => state.conversation.pendingConversations
+  );
+
   const [isRequest, setIsRequest] = useState(false);
-  const [selectedConversation, setSelectedConversation] = useState({});
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getConversations());
+  }, [dispatch]);
+
+  //Pusher
+  useEffect(() => {
+    if (!currentUser?.id) return;
+    const pusher = socketClient;
+
+    const channelOfUser = pusher.subscribe(`conversation-of-${currentUser.id}`);
+    channelOfUser.bind('new-conversation', async (newConversation) => {
+      console.log(newConversation);
+      // setConversations((prev) => {
+      //   return [newConversation, ...prev];
+      // });
+    });
+
+    channelOfUser.bind('update-conversation', async (updatedConversation) => {
+      // setConversations((prev) => {
+      //   return prev.map((c) =>
+      //     c.id === updatedConversation.id ? updatedConversation : c
+      //   );
+      // });
+    });
+
+    channelOfUser.bind('delete-conversation', async (conversationId) => {
+      // setConversations((prev) => prev.filter((c) => c.id !== conversationId));
+    });
+
+    return () => {
+      channelOfUser.unbind_all();
+      pusher.unsubscribe(channelOfUser.name);
+    };
+  }, [currentUser?.id]);
 
   return (
     <div className={styles.DivDrawerContainer}>
@@ -122,7 +131,7 @@ export default function MessageDrawer() {
                       </div>
                     )}
                     {/* Các request */}
-                    {sentRequests && (
+                    {pendingConversations && (
                       <div
                         className={styles.DivRequestGroup}
                         onClick={() => setIsRequest(true)}
@@ -168,14 +177,14 @@ export default function MessageDrawer() {
                             {/* Last Message */}
                             <p className={styles.PInfoExtractTime}>
                               <span className={styles.SpanInfoExtract}>
-                                {sentRequests.content}
+                                Bạn có {pendingConversations.length} yêu cầu
                               </span>
                             </p>
                           </div>
                         </div>
                         {/* New Message */}
                         <div className={styles.SpanNewMessage}>
-                          {sentRequests.unreadCount}
+                          {pendingConversations.length}
                         </div>
                       </div>
                     )}
@@ -187,6 +196,11 @@ export default function MessageDrawer() {
                         tabIndex={i}
                         data-e2e="chat-list-item"
                         className={styles.DivItemWrapper}
+                        onClick={() => {
+                          searchParams.set('conversation', c.id);
+                          setSearchParams(searchParams);
+                          dispatch(setSelectedConversation(c));
+                        }}
                       >
                         <div className={styles.DivItemInfo}>
                           <div className={styles.DivInfoAvatarWrapper}>
@@ -210,10 +224,12 @@ export default function MessageDrawer() {
                             <p className={styles.PInfoNickname}>{c.name}</p>
                             <p className={styles.PInfoExtractTime}>
                               <span className={styles.SpanInfoExtract}>
-                                {c.lastMessage.content}
+                                {c.lastMessage?.content}
                               </span>
                               <span className={styles.SpanInfoTime}>
-                                {c.lastMessage.createdAt}
+                                {c.lastMessage?.createdAt
+                                  ? formatRelativeTime(c.lastMessage?.createdAt)
+                                  : ''}
                               </span>
                             </p>
                           </div>
@@ -232,13 +248,14 @@ export default function MessageDrawer() {
                     {/* Danh sách các cuộc hội thoại */}
                   </>
                 ) : (
-                  sentRequests.request.map((req, i) => (
+                  pendingConversations.map((req, i) => (
                     <div
                       key={req.id}
                       id="more-acton-icon-0"
                       tabIndex={i}
                       data-e2e="chat-list-item"
                       className={styles.DivItemWrapper}
+                      onClick={() => dispatch(setSelectedConversation(req))}
                     >
                       <div className={styles.DivItemInfo}>
                         <div className={styles.DivInfoAvatarWrapper}>
@@ -262,10 +279,10 @@ export default function MessageDrawer() {
                           <p className={styles.PInfoNickname}>{req.name}</p>
                           <p className={styles.PInfoExtractTime}>
                             <span className={styles.SpanInfoExtract}>
-                              {req.lastMessage.content}
+                              {req.lastMessage?.content}
                             </span>
                             <span className={styles.SpanInfoTime}>
-                              {req.lastMessage.createdAt}
+                              {req.lastMessage?.createdAt}
                             </span>
                           </p>
                         </div>

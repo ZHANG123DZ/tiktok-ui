@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import styles from './DirectMessages.module.scss';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { faImage } from '@fortawesome/free-regular-svg-icons';
 import ChatInput from '../../components/ChatInput';
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { ModalProvider } from '../../contexts/ModalContext';
 import MediaModal from '../../components/MediaModal';
 import clsx from 'clsx';
@@ -17,6 +17,13 @@ import useClickOutside from '../../hooks/useClickOutside';
 import { useRef } from 'react';
 import ReactionIcon from '../../components/Icon/ReactionIcon';
 import ReactionPicker from '../../components/ReactionPicker';
+import { useDispatch, useSelector } from 'react-redux';
+import messageService from '../../services/message/message.service';
+import mediaService from '../../services/media/media.service';
+import anyUrlToFile from '../../utils/anyUrlToFile';
+import socketClient from '../../utils/socketClient';
+import { setSelectedConversation } from '../../features/conversation/conversationSlice';
+import conversationService from '../../services/conversation/conversation.service';
 //Call API
 const mockSelectedConversation = {
   id: 3,
@@ -24,7 +31,8 @@ const mockSelectedConversation = {
   avatar:
     'https://maunailxinh.com/wp-content/uploads/2025/05/anh-meo-ngao-cute-2.jpg',
   username: 'zhang', //logic
-  acceptMessages: true, //logic
+  status: 'accepted', //logic
+  requesterId: 1,
   isGroup: false,
   participants: [
     {
@@ -50,7 +58,7 @@ const mockMessages = [
     content:
       'https://maunailxinh.com/wp-content/uploads/2025/05/anh-meo-ngao-cute-2.jpg',
     type: 'image',
-    sender: 'other',
+    isOwnMessage: false,
     author: {
       name: 'Zhang',
       username: 'zhang',
@@ -62,7 +70,7 @@ const mockMessages = [
       id: 3,
       content: 'hí',
       type: 'text',
-      sender: 'other',
+      isOwnMessage: false,
       author: {
         name: 'Zhang',
         username: 'zhang',
@@ -77,7 +85,7 @@ const mockMessages = [
     id: 3,
     content: 'hí',
     type: 'text',
-    sender: 'other',
+    isOwnMessage: false,
     author: {
       name: 'Zhang',
       username: 'zhang',
@@ -92,7 +100,7 @@ const mockMessages = [
     parentId: null,
     content: 'hí',
     type: 'text',
-    sender: 'other', //logic
+    isOwnMessage: false, //logic
     author: {
       name: 'Zhang',
       username: 'zhang',
@@ -113,7 +121,7 @@ const mockMessages = [
     parentId: null,
     content: 'hí lô',
     type: 'text',
-    sender: 'other',
+    isOwnMessage: false,
     author: {
       name: 'Zhang',
       username: 'zhang',
@@ -126,20 +134,57 @@ const mockMessages = [
 ];
 
 export default function DirectMessages() {
-  const myProfile = {
-    id: 3,
-    name: 'Bảo',
-    username: 'kitty',
-    avatar:
-      'https://maunailxinh.com/wp-content/uploads/2025/05/anh-meo-ngao-cute-1.jpg',
-    createdAt: '',
-  };
-  const [selectedConversation, setSelectedConversation] = useState(
-    mockSelectedConversation
+  const [searchParams, setSearchParams] = useSearchParams();
+  const dispatch = useDispatch();
+  const currentUser = useSelector((state) => state.auth.currentUser);
+
+  const selectedConversation = useSelector(
+    (state) => state.conversation.selectedConversation
   );
+  const conversations = useSelector(
+    (state) => state.conversation.conversations
+  );
+  const pendingConversations = useSelector(
+    (state) => state.conversation.pendingConversations
+  );
+
   const [acceptMessages, setAcceptMessages] = useState(
-    mockSelectedConversation.acceptMessages
+    selectedConversation?.status === 'accepted'
   );
+
+  useEffect(() => {
+    setAcceptMessages(selectedConversation?.status === 'accepted');
+  }, [selectedConversation?.status]);
+
+  const [messages, setMessages] = useState([]);
+
+  useEffect(() => {
+    const conversationId = searchParams.get('conversation');
+    if (!selectedConversation && conversationId) {
+      const fetchData = async () => {
+        const res = await conversationService.getConversationById(
+          conversationId
+        );
+        console.log(res);
+        dispatch(setSelectedConversation(res));
+      };
+      fetchData();
+    }
+  }, [dispatch, searchParams, selectedConversation]);
+
+  useEffect(() => {
+    if (selectedConversation?.id) {
+      const fetchMessages = async () => {
+        const res = await messageService.getMessagesByConversationId(
+          selectedConversation.id
+        );
+        setMessages(res);
+      };
+      fetchMessages();
+    }
+  }, [dispatch, selectedConversation?.id]);
+
+  //Emoji
   const [openEmoji, setOpenEmoji] = useState(false);
   const buttonEmojiRef = useRef();
   const emojiPanelRef = useRef();
@@ -159,7 +204,7 @@ export default function DirectMessages() {
         if (existing) {
           return {
             ...m,
-            reactions: reactions.map((r) =>
+            reactions: reactions?.map((r) =>
               r.emoji === emoji ? { ...r, quantity: r.quantity + 1 } : r
             ),
           };
@@ -172,7 +217,135 @@ export default function DirectMessages() {
       })
     );
   };
-  const [messages, setMessages] = useState(mockMessages);
+
+  useEffect(() => {
+    if (!conversations.length) return;
+    const pusher = socketClient;
+    const channels = [];
+
+    conversations.forEach((conversation) => {
+      const channel = pusher.subscribe(`conversation-${conversation.id}`);
+      channels.push(channel);
+
+      channel.bind('new-message', async (newMessage) => {
+        console.log(newMessage);
+        if (newMessage.author.username === currentUser.username) {
+          newMessage.isOwnMessage = true;
+        } else {
+          newMessage.isOwnMessage = false;
+        }
+
+        // Nếu đang mở conversation và tin nhắn là của người kia → mark read
+        //  if (
+        //    selectedConversation?.id === newMessage.conversationId &&
+        //    newMessage.userId !== currentUser.id
+        //  ) {
+        //    await markAsReadOnServer(
+        //      newMessage.conversation_id,
+        //      newMessage.id,
+        //      new Date()
+        //    );
+        //    markAsRead(newMessage.conversation_id);
+        //  }
+
+        // Update danh sách conversation
+        //  setConversations((prev) => {
+        //    // Cập nhật conversation
+        //    const updated = prev.map((c) => {
+        //      if (c.id !== newMessage.conversation_id) return c;
+        //      return {
+        //        ...c,
+        //        lastMessage: newMessage,
+        //        unreadCount:
+        //          selectedConversation?.id === c.id
+        //            ? 0
+        //            : (c.unreadCount || 0) + 1,
+        //      };
+        //    });
+
+        //    // Đưa conversation vừa có tin nhắn mới lên đầu
+        //    return updated.sort((a, b) => {
+        //      if (a.id === newMessage.conversation_id) return -1; // a lên trước
+        //      if (b.id === newMessage.conversation_id) return 1; // b lên trước
+        //      return 0; // giữ nguyên thứ tự cũ
+        //    });
+        //  });
+
+        // Nếu đang mở thì thêm vào messages
+        if (
+          selectedConversation?.id === conversation.id &&
+          ((newMessage.type === 'text' && newMessage.isOwnMessage) ||
+            !newMessage.isOwnMessage)
+        ) {
+          setMessages((prev) => [newMessage, ...prev]);
+        }
+      });
+    });
+
+    return () => {
+      channels.forEach((channel) => {
+        channel.unbind_all();
+        pusher.unsubscribe(channel.name);
+      });
+    };
+  }, [conversations, selectedConversation?.id, currentUser?.id]);
+
+  // // Cập nhật unreadCount ở FE
+  // const markAsRead = (conversationId) => {
+  //   setConversations((prev) =>
+  //     prev.map((conv) =>
+  //       conv.id === conversationId ? { ...conv, unreadCount: 0 } : conv
+  //     )
+  //   );
+  // };
+  // // Hàm gọi API mark-as-read
+  // const doMarkAsRead = async (conversation, messages) => {
+  //   if (!conversation) return;
+  //   const lastFromOther = [...(messages || currentMessages)]
+  //     .sort((a, b) => b.id - a.id) // newest first
+  //     .find((m) => m.user_id !== cur_user.id);
+
+  //   if (lastFromOther) {
+  //     await markAsReadOnServer(conversation.id, lastFromOther.id, new Date());
+  //     markAsRead(conversation.id);
+  //   }
+  // };
+
+  // // Khi mở conversation → fetch messages + mark 1 lần
+  // useEffect(() => {
+  //   if (!selectedConversation) return;
+
+  //   const fetchMessages = async () => {
+  //     const myMessages = await messageService.getMessagesByConversationId(
+  //       selectedConversation.id
+  //     );
+  //     setCurrentMessages(myMessages);
+
+  //     // Mark khi mở lần đầu
+  //     if (!hasMarkedRead) {
+  //       await doMarkAsRead(selectedConversation, myMessages);
+  //       setHasMarkedRead(false);
+  //     }
+  //   };
+
+  //   fetchMessages();
+  //   setConversations((prev) =>
+  //     prev.map((c) =>
+  //       c.id === selectedConversation?.id ? { ...c, unreadCount: 0 } : c
+  //     )
+  //   );
+  // }, [selectedConversation?.id]);
+
+  // Khi rời conversation → mark lại nếu cần
+  // useEffect(() => {
+  //   return () => {
+  //     if (selectedConversation && currentMessages.length) {
+  //       doMarkAsRead(selectedConversation, currentMessages);
+  //     }
+  //     setHasMarkedRead(false);
+  //   };
+  // }, [selectedConversation?.id]);
+
   const [reply, setReply] = useState(null);
   const [viewMedia, setViewMedia] = useState(false);
   const [media, setMedia] = useState(null);
@@ -180,7 +353,7 @@ export default function DirectMessages() {
   const [videosToDisplay, setVideosToDisplay] = useState([]);
   const [message, setMessage] = useState('');
   const [submitTick, setSubmitTick] = useState(0);
-  const handleSend = ({ text, images }) => {
+  const handleSend = async ({ text, images }) => {
     if (
       !text &&
       !imagesToDisplay.length &&
@@ -189,43 +362,73 @@ export default function DirectMessages() {
     )
       return;
     if (text) {
+      console.log(selectedConversation?.id);
       const newMesText = {
-        id: Date.now(),
         content: text,
         type: 'text',
-        sender: 'me',
-        author: myProfile,
-        createdAt: new Date(),
-        replyTo: reply,
+        replyId: reply?.id,
       };
-      setMessages((prev) => [newMesText, ...prev]);
+      await messageService.createMessage(selectedConversation?.id, newMesText);
     }
 
     const allImages = [...imagesToDisplay, ...(images || [])];
-    allImages.forEach((img) => {
+    allImages.forEach(async (img) => {
       const newMes = {
         id: Date.now() + Math.random(),
         content: img,
         type: 'image',
-        sender: 'me',
-        author: myProfile,
+        isOwnMessage: 'me',
+        author: currentUser,
         replyTo: reply,
         createdAt: new Date(),
       };
       setMessages((prev) => [newMes, ...prev]);
+
+      // Đẩy ảnh lên mạng và post mess
+      const file = await anyUrlToFile(
+        img,
+        `${currentUser.id}-${new Date().toISOString()}`
+      );
+      const { url } = await mediaService.uploadSingleFile({
+        message: file,
+        folder: `conversation/${selectedConversation?.id}`,
+      });
+      const data = {
+        parentId: reply?.id || null,
+        content: url,
+        type: 'image',
+      };
+      await messageService.createMessage(selectedConversation?.id, data);
     });
     //Gửi video
-    videosToDisplay.forEach((vid) => {
+    videosToDisplay.forEach(async (vid) => {
       const newMes = {
         id: Date.now() + Math.random(),
         content: vid,
         type: 'video',
-        sender: 'me',
-        author: myProfile,
+        isOwnMessage: true,
+        author: currentUser,
         createdAt: new Date(),
         replyTo: reply,
       };
       setMessages((prev) => [newMes, ...prev]);
+
+      // Đẩy video lên mạng và post mess
+      const file = await anyUrlToFile(
+        vid,
+        `${currentUser.id}-${new Date().toISOString()}`
+      );
+      const { url } = await mediaService.uploadSingleFile({
+        message: file,
+        folder: `conversation/${selectedConversation?.id}`,
+      });
+      const data = {
+        conversationId: selectedConversation?.id,
+        parentId: reply?.id || null,
+        content: url,
+        type: 'video',
+      };
+      await messageService.createMessage(selectedConversation?.id, data);
     });
     setMessage('');
     setImagesToDisplay([]);
@@ -235,7 +438,6 @@ export default function DirectMessages() {
 
   const handleTyping = (text) => setMessage(text);
   const handleImagePaste = (files) => {
-    // files là một mảng các đối tượng File (blob)
     const newImages = files.map((file) => URL.createObjectURL(file));
     setImagesToDisplay((prev) => [...prev, ...newImages]);
   };
@@ -356,14 +558,14 @@ export default function DirectMessages() {
                   <div
                     className={clsx(
                       styles.DivMessageVerticalContainer,
-                      mes.sender === 'me' ? styles.MyMessage : ''
+                      mes.isOwnMessage ? styles.MyMessage : ''
                     )}
                   >
                     {mes.replyTo && (
                       <>
                         <div className={styles.DivChatItemSenderNameContainer}>
                           Trả lời tới{' '}
-                          {mes.replyTo.sender === 'me'
+                          {mes.replyTo.isOwnMessage
                             ? 'bạn'
                             : mes.replyTo.author.name}
                         </div>
@@ -381,7 +583,7 @@ export default function DirectMessages() {
                       data-area="Actions"
                       className={
                         styles[
-                          mes.sender === 'me'
+                          mes.isOwnMessage
                             ? 'DivMyMessageHorizontalContainer'
                             : 'DivMessageHorizontalContainer'
                         ]
@@ -413,7 +615,7 @@ export default function DirectMessages() {
                           <div
                             className={clsx(
                               styles.DivTextContainer,
-                              mes.sender === 'me' ? styles.MyTextMessage : ''
+                              mes.isOwnMessage ? styles.MyTextMessage : ''
                             )}
                           >
                             <p className={styles.PText}>{mes.content}</p>
@@ -549,7 +751,7 @@ export default function DirectMessages() {
                         aria-haspopup="dialog"
                         className={styles.DivReactionContainer}
                       >
-                        {mes.reactions.map((react, i) => (
+                        {mes?.reactions.map((react, i) => (
                           <span key={i} className={styles.ReactionItem}>
                             <span className={styles.SpanReactionEmoji}>
                               {react.emoji}
@@ -796,7 +998,18 @@ export default function DirectMessages() {
                 </p>
               </div>
               <div className={styles.DivOperation}>
-                <div role="button" tabIndex={0} className={styles.DivItem}>
+                <div
+                  role="button"
+                  tabIndex={0}
+                  className={styles.DivItem}
+                  onClick={async () => {
+                    setAcceptMessages(false);
+                    await conversationService.setStatus(
+                      selectedConversation?.id,
+                      'blocked'
+                    );
+                  }}
+                >
                   Delete
                 </div>
                 <div className={styles.DivSplit}></div>
@@ -804,7 +1017,13 @@ export default function DirectMessages() {
                   role="button"
                   tabIndex={0}
                   className={styles.DivItem}
-                  onClick={() => setAcceptMessages(true)}
+                  onClick={async () => {
+                    setAcceptMessages(true);
+                    await conversationService.setStatus(
+                      selectedConversation?.id,
+                      'accepted'
+                    );
+                  }}
                 >
                   Accept
                 </div>
