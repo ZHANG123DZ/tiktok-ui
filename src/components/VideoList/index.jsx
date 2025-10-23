@@ -41,7 +41,7 @@ function VideoList({ variant = 'discover', videosData = [] }) {
             currentIndex={i}
             activeIndex={activeIndex}
             onClick={() => {
-              dispatch(setPreUrl(location.pathname));
+              dispatch(setPreUrl(location.pathname + location.search));
               dispatch(setListVideo(videos.map((v) => v.id)));
             }}
           />

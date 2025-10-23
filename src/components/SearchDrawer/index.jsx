@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import styles from './styles.module.scss';
 import { useCallback, useEffect, useRef, useState } from 'react';
 import debounce from '../../utils/debounce';
-import { Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faArrowTrendUp,
@@ -48,7 +48,6 @@ function SearchDrawer() {
     if (currentUser?.id) {
       const fetchHistorySearch = async () => {
         const res = await searchService.history();
-        console.log(res);
         setRecentSearch(res);
       };
       fetchHistorySearch();
@@ -81,8 +80,10 @@ function SearchDrawer() {
   const handleSearch = async (e) => {
     e.preventDefault();
     closeDrawer('search');
-    navigate(`/search?q=${encodeURIComponent(search)}`);
-    await searchService.createSearch(search);
+    if (search) {
+      navigate(`/search?q=${encodeURIComponent(search)}`);
+      await searchService.createSearch(search);
+    }
   };
 
   return (
@@ -220,8 +221,8 @@ function SearchDrawer() {
                 <h4
                   className={styles.H4ItemText}
                   onClick={(e) => {
-                    navigate(`/search?q=${encodeURIComponent(r.keyword)}`);
                     handleSearch(e);
+                    navigate(`/search?q=${encodeURIComponent(r.keyword)}`);
                   }}
                 >
                   {r.keyword}
@@ -283,8 +284,8 @@ function SearchDrawer() {
                   id="transfer-list-item-0"
                   className={styles.LiItemContainer}
                   onClick={(e) => {
-                    navigate(`/search?q=${encodeURIComponent(guess.text)}`);
                     handleSearch(e);
+                    navigate(`/search?q=${encodeURIComponent(guess.text)}`);
                   }}
                 >
                   {guess.type === 'top' && (
