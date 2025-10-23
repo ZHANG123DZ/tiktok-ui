@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import interact from '@interactjs/interactjs';
 
 const Draggable = ({ children, style = {}, className = '' }) => {
@@ -9,10 +9,10 @@ const Draggable = ({ children, style = {}, className = '' }) => {
 
     interact(dragRef.current).draggable({
       listeners: {
-        start (event) {
+        start(event) {
           // optional: console.log('drag start', event);
         },
-        move (event) {
+        move(event) {
           const target = event.target;
           const x = (parseFloat(target.getAttribute('data-x')) || 0) + event.dx;
           const y = (parseFloat(target.getAttribute('data-y')) || 0) + event.dy;
@@ -24,10 +24,10 @@ const Draggable = ({ children, style = {}, className = '' }) => {
           target.setAttribute('data-x', x);
           target.setAttribute('data-y', y);
         },
-        end (event) {
+        end(event) {
           // optional: console.log('drag end', event);
-        }
-      }
+        },
+      },
     });
 
     return () => {
