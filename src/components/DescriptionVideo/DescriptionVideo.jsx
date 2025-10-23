@@ -7,8 +7,10 @@ import formatTime from '../../utils/formatTime';
 import Translate from '../Translate/Translate';
 import followService from '../../services/follow/follow.service';
 import ProtectedButton from '../ProtectedButton';
+import { useSelector } from 'react-redux';
 
 const DescriptionVideo = ({ data }) => {
+  const currentUser = useSelector((state) => state.auth.currentUser);
   const authorId = data?.author?.id;
   const [title, setTitle] = useState(data?.title);
   const [follow, setFollow] = useState(false);
@@ -84,28 +86,30 @@ const DescriptionVideo = ({ data }) => {
         </Link>
 
         {/* Follow button */}
-        <ProtectedButton>
-          <div data-e2e="browse-follow" className={styles.DivBtnWrapper}>
-            <button
-              className={styles.Button}
-              style={{
-                backgroundColor: follow
-                  ? 'rgba(255, 255, 255, 0.12)'
-                  : 'var(--tux-colorPrimary)',
-                border: follow && '0px',
-              }}
-            >
-              <div className={styles.ButtonContent}>
-                <div
-                  className={styles.ButtonLabel}
-                  onClick={() => toggleFollow()}
-                >
-                  {follow ? 'Following' : 'Follow'}
+        {currentUser?.id !== authorId && (
+          <ProtectedButton>
+            <div data-e2e="browse-follow" className={styles.DivBtnWrapper}>
+              <button
+                className={styles.Button}
+                style={{
+                  backgroundColor: follow
+                    ? 'rgba(255, 255, 255, 0.12)'
+                    : 'var(--tux-colorPrimary)',
+                  border: follow && '0px',
+                }}
+              >
+                <div className={styles.ButtonContent}>
+                  <div
+                    className={styles.ButtonLabel}
+                    onClick={() => toggleFollow()}
+                  >
+                    {follow ? 'Following' : 'Follow'}
+                  </div>
                 </div>
-              </div>
-            </button>
-          </div>
-        </ProtectedButton>
+              </button>
+            </div>
+          </ProtectedButton>
+        )}
       </div>
 
       {/* Main content */}

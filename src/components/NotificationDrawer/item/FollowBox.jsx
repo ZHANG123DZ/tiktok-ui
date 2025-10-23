@@ -3,8 +3,10 @@ import styles from './FollowBox.module.scss';
 import followService from '../../../services/follow/follow.service';
 import { useState } from 'react';
 import formatRelativeTime from '../../../function/formatRelativeTime';
+import { useSelector } from 'react-redux';
 
 const FollowBox = ({ data }) => {
+  const currentUser = useSelector((state) => state.auth.currentUser);
   const authorId = data.actor.id;
   const [follow, setFollow] = useState(data.actor.isFollow);
 
@@ -48,16 +50,18 @@ const FollowBox = ({ data }) => {
         </p>
       </div>
 
-      <button
-        type="button"
-        data-e2e="follow-back"
-        className={`${
-          !follow ? styles.ButtonFollowBack : styles.StyledFollowButtonInPanel
-        }`}
-        onClick={toggleFollow}
-      >
-        {!follow ? 'Follow lại' : 'Bạn bè'}
-      </button>
+      {currentUser?.id !== authorId && (
+        <button
+          type="button"
+          data-e2e="follow-back"
+          className={`${
+            !follow ? styles.ButtonFollowBack : styles.StyledFollowButtonInPanel
+          }`}
+          onClick={toggleFollow}
+        >
+          {!follow ? 'Follow lại' : 'Bạn bè'}
+        </button>
+      )}
     </div>
   );
 };

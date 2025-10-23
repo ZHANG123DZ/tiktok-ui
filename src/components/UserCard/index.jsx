@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import VerifyBadge from '../VerifyBadge';
 import { useSelector } from 'react-redux';
 import usePauseOnTabHidden from '../../hooks/usePauseOnTabHidden';
+import followService from '../../services/follow/follow.service';
 
 function UserCard({
   data,
@@ -12,6 +13,8 @@ function UserCard({
   setRef,
   onHover = () => {},
 }) {
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const authorId = data?.author?.id;
   usePauseOnTabHidden(setRef);
   const isMuted = useSelector((state) => state.volume.isMuted);
   const [follow, setFollow] = useState(data.isFollow);
@@ -22,9 +25,17 @@ function UserCard({
     setShowVideo(activeIndex === currentIndex);
   }, [activeIndex, currentIndex]);
 
-  const toggleFollow = async (e) => {
-    e.preventDefault();
-    setFollow((prev) => !prev);
+  const toggleFollow = async () => {
+    try {
+      if (follow) {
+        await followService.unfollow({ followAbleId: authorId, type: 'user' });
+      } else {
+        await followService.follow({ followAbleId: authorId, type: 'user' });
+      }
+      setFollow((prev) => !prev);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -149,16 +160,18 @@ function UserCard({
             {data?.isVerifiedBadge && <VerifyBadge />}
           </h4>
 
-          <div className={styles.DivButtonContainer}>
-            <button
-              type="button"
-              data-e2e="card-followbutton"
-              className={styles[follow ? 'unFollowButton' : 'followButton']}
-              onClick={(e) => toggleFollow(e)}
-            >
-              Follow
-            </button>
-          </div>
+          {currentUser?.id !== authorId && (
+            <div className={styles.DivButtonContainer}>
+              <button
+                type="button"
+                data-e2e="card-followbutton"
+                className={styles[follow ? 'unFollowButton' : 'followButton']}
+                onClick={(e) => toggleFollow(e)}
+              >
+                Follow
+              </button>
+            </div>
+          )}
         </div>
       </Link>
     </div>

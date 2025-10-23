@@ -17,6 +17,7 @@ import followService from '../../services/follow/follow.service';
 import ProtectedButton from '../ProtectedButton';
 import likeService from '../../services/like/like.service';
 import bookMarkService from '../../services/bookMark/bookMark.service';
+import { useSelector } from 'react-redux';
 
 export default function ActionBar({ data }) {
   const authorId = data.author?.id;
