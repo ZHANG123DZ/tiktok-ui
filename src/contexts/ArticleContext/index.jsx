@@ -62,9 +62,11 @@ export const ArticleProvider = ({
         </article>
         {activeShare && (
           <ShareModal
+            postId={data.id}
+            authorUserName={data.author.username}
             isOpen={activeShare}
             onClose={() => setActiveShare(false)}
-            shareToFriends={true}
+            // shareToFriends={true}
           />
         )}
       </ArticleContext.Provider>

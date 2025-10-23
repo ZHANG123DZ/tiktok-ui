@@ -88,9 +88,9 @@ function Tag() {
             </div>
             {activeShare && (
               <ShareModal
+                isSharePost={false}
                 isOpen={activeShare}
                 onClose={() => setActiveShare(false)}
-                shareToFriends={false}
               />
             )}
             <div

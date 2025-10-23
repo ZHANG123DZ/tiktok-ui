@@ -6,7 +6,7 @@ import CommentTab from '../../components/CommentTab';
 import { DrawerProvider } from '../../contexts/DrawerContext';
 import InfiniteScroller from '../../components/InfiniteScroll';
 
-function Home() {
+function Home({ initialPost = null }) {
   //Comments
   const [activeComments, setActiveComments] = useState(false);
   //CurrentPost
@@ -38,6 +38,7 @@ function Home() {
     <main className={styles.DivMainContainer}>
       <div className={styles.DivColumnListContainer}>
         <InfiniteScroller
+          initialValue={initialPost ? [initialPost] : []}
           fetchData={fetchPosts}
           className={styles.DivColumnListContainer}
           extractKey={(post) => post.id}

@@ -1,260 +1,163 @@
 import { useState } from 'react';
-import { createPost } from '../../services/post/post.service';
-import styles from './styles.module.scss';
+import styles from './Upload.module.scss';
+import postService from '../../services/post/post.service';
+import mediaService from '../../services/media/media.service';
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import anyUrlToFile from '../../utils/anyUrlToFile';
+import Loading from '../../components/Loading';
 
 function Upload() {
-  const [advancedOpen, setAdvancedOpen] = useState(false);
-  const [selectedFiles, setSelectedFiles] = useState([]);
+  const currentUser = useSelector((state) => state.auth.currentUser);
+  const [isLoading, setIsLoading] = useState(false);
+  const [videoFile, setVideoFile] = useState(null);
+  const [thumbnailFile, setThumbnailFile] = useState(null);
+  const [previewVideo, setPreviewVideo] = useState('');
+  const [previewThumbnail, setPreviewThumbnail] = useState('');
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
 
-  const toggleAdvanced = () => {
-    setAdvancedOpen(!advancedOpen);
-  };
-
-  const handleFileChange = (event) => {
-    const files = Array.from(event.target.files);
-    setSelectedFiles(files);
-  };
-
-  const cancelUpload = () => {
-    if (window.confirm('Bạn có chắc muốn hủy? Tất cả dữ liệu sẽ bị mất.')) {
-      // Reset form logic here
-      setSelectedFiles([]);
-      setAdvancedOpen(false);
+  // Chọn file video
+  const handleVideoChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type === 'video/mp4') {
+      setVideoFile(file);
+      setPreviewVideo(URL.createObjectURL(file));
+    } else {
+      alert('Vui lòng chọn file video MP4!');
     }
   };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Handle form submission logic here
-    console.log('Form submitted');
+  // Chọn file thumbnail
+  const handleThumbnailChange = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith('image/')) {
+      setThumbnailFile(file);
+      setPreviewThumbnail(URL.createObjectURL(file));
+    } else {
+      alert('Vui lòng chọn file ảnh (JPG, PNG, v.v.)!');
+    }
+  };
+
+  // API mẫu
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!videoFile || !thumbnailFile) {
+      alert('Vui lòng chọn đầy đủ video và ảnh thumbnail!');
+      return;
+    }
+
+    setIsLoading(true); // 🟡 Bật loading
+
+    try {
+      const vidFile = await anyUrlToFile(
+        previewVideo,
+        `${currentUser.id}-${new Date().toISOString()}`
+      );
+      const resVid = await mediaService.uploadSingleFile({
+        message: vidFile,
+        folder: `post/video/${currentUser?.id}`,
+      });
+
+      const imgFile = await anyUrlToFile(
+        previewThumbnail,
+        `${currentUser.id}-${new Date().toISOString()}`
+      );
+      const resImg = await mediaService.uploadSingleFile({
+        message: imgFile,
+        folder: `post/thumbnail/${currentUser?.id}`,
+      });
+
+      const postData = {
+        title,
+        description,
+        content: resVid.url,
+        thumbnail: resImg.url,
+        type: 'video',
+      };
+
+      await postService.createPost(postData);
+      toast.success('Đăng bài thành công', { closeButton: true });
+    } catch (err) {
+      console.error('❌ Lỗi khi upload:', err);
+      toast.error('Đăng bài không thành công', { closeButton: true });
+    } finally {
+      setIsLoading(false); // 🔵 Tắt loading dù có lỗi hay không
+    }
   };
 
   return (
-    <div className={styles.container}>
-      <div className={styles.header}>
-        <h1>🎵 TikTok Upload</h1>
-        <p>Đăng video hoặc hình ảnh của bạn</p>
-      </div>
+    <div className={styles.uploadWrapper}>
+      {isLoading && (
+        <div className={styles.overlay}>
+          <Loading />
+        </div>
+      )}
+      <h1 className={styles.title}>🚀 Đăng Video Mới</h1>
 
-      <form onSubmit={handleSubmit}>
-        {/* File Upload */}
-        <div className={styles.formGroup}>
-          <label className={styles.formLabel}>
-            📁 Chọn file video/hình ảnh
-          </label>
-          <label className={styles.fileUpload}>
-            <input
-              type="file"
-              multiple
-              accept="video/*,image/*"
-              required
-              onChange={handleFileChange}
-              style={{ display: 'none' }}
+      <form onSubmit={handleSubmit} className={styles.form}>
+        {/* Video Upload */}
+        <div className={styles.uploadBox}>
+          <label className={styles.label}>🎬 Chọn video (.mp4)</label>
+          <input type="file" accept="video/mp4" onChange={handleVideoChange} />
+          {previewVideo && (
+            <video
+              className={styles.previewVideo}
+              src={previewVideo}
+              controls
             />
-            <div className={styles.fileUploadContent}>
-              <div className={styles.fileIcon}>📎</div>
-              <div className={styles.fileText}>
-                {selectedFiles.length > 0
-                  ? `Đã chọn ${selectedFiles.length} file`
-                  : 'Kéo thả file hoặc nhấn để chọn'}
-              </div>
-              <div className={styles.fileSubtext}>
-                {selectedFiles.length > 0
-                  ? selectedFiles.map((file) => file.name).join(', ')
-                  : 'Hỗ trợ video MP4, MOV và hình ảnh JPG, PNG'}
-              </div>
-            </div>
-          </label>
+          )}
+        </div>
+
+        {/* Thumbnail Upload */}
+        <div className={styles.uploadBox}>
+          <label className={styles.label}>🖼️ Chọn ảnh thumbnail</label>
+          <input
+            type="file"
+            accept="image/*"
+            onChange={handleThumbnailChange}
+          />
+          {previewThumbnail && (
+            <img
+              src={previewThumbnail}
+              alt="Thumbnail Preview"
+              className={styles.previewThumbnail}
+            />
+          )}
         </div>
 
         {/* Title */}
         <div className={styles.formGroup}>
-          <label className={styles.formLabel}>📝 Tiêu đề</label>
+          <label className={styles.label}>📝 Tiêu đề</label>
           <input
             type="text"
-            className={styles.formControl}
-            placeholder="Nhập tiêu đề cho video/hình ảnh của bạn..."
-            required
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Nhập tiêu đề cho video..."
           />
         </div>
 
         {/* Description */}
         <div className={styles.formGroup}>
-          <label className={styles.formLabel}>📄 Mô tả</label>
+          <label className={styles.label}>📄 Mô tả</label>
           <textarea
-            className={styles.formControl}
-            placeholder="Viết mô tả chi tiết về nội dung..."
-            rows={4}
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Nhập mô tả chi tiết..."
           />
         </div>
 
-        {/* Hashtags */}
-        <div className={styles.formGroup}>
-          <label className={styles.formLabel}>#️⃣ Hashtags</label>
-          <input
-            type="text"
-            className={styles.formControl}
-            placeholder="#trending #viral #fyp #xuhuong"
-          />
-        </div>
-
-        {/* Location and Link */}
-        <div className={styles.formRow}>
-          <div className={styles.formGroup}>
-            <label className={styles.formLabel}>📍 Vị trí</label>
-            <input
-              type="text"
-              className={styles.formControl}
-              placeholder="Thêm vị trí..."
-            />
-          </div>
-          <div className={styles.formGroup}>
-            <label className={styles.formLabel}>🔗 Liên kết</label>
-            <input
-              type="url"
-              className={styles.formControl}
-              placeholder="https://..."
-            />
-          </div>
-        </div>
-
-        {/* Privacy Settings */}
-        <div className={styles.formGroup}>
-          <label className={styles.formLabel}>
-            👁️ Ai có thể xem video này?
-          </label>
-          <div className={styles.privacyOptions}>
-            <label className={styles.privacyOption}>
-              <input
-                type="radio"
-                name="privacy"
-                value="public"
-                defaultChecked
-              />
-              <div className={styles.privacyContent}>
-                <span className={styles.privacyIcon}>🌍</span>
-                <div>Công khai</div>
-              </div>
-            </label>
-            <label className={styles.privacyOption}>
-              <input type="radio" name="privacy" value="friends" />
-              <div className={styles.privacyContent}>
-                <span className={styles.privacyIcon}>👥</span>
-                <div>Bạn bè</div>
-              </div>
-            </label>
-            <label className={styles.privacyOption}>
-              <input type="radio" name="privacy" value="private" />
-              <div className={styles.privacyContent}>
-                <span className={styles.privacyIcon}>🔒</span>
-                <div>Riêng tư</div>
-              </div>
-            </label>
-          </div>
-        </div>
-
-        {/* Advanced Options */}
-        <div className={styles.advancedOptions}>
-          <div
-            className={styles.advancedTitle}
-            onClick={toggleAdvanced}
-            role="button"
-            tabIndex={0}
-            onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                toggleAdvanced();
-              }
-            }}
-          >
-            ⚙️ Tùy chọn nâng cao
-          </div>
-          {advancedOpen && (
-            <div className={styles.advancedContent}>
-              {/* Audio Settings */}
-              <div className={styles.formGroup}>
-                <label className={styles.formLabel}>🎵 Âm thanh</label>
-                <div className={styles.selectControl}>
-                  <select className={styles.formControl}>
-                    <option value="original">Âm thanh gốc</option>
-                    <option value="mute">Tắt âm thanh</option>
-                    <option value="music">Thêm nhạc nền</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Target Audience */}
-              <div className={styles.formGroup}>
-                <label className={styles.formLabel}>🎯 Đối tượng</label>
-                <div className={styles.selectControl}>
-                  <select className={styles.formControl}>
-                    <option value="all">Tất cả</option>
-                    <option value="teen">13-17 tuổi</option>
-                    <option value="adult">18+ tuổi</option>
-                  </select>
-                </div>
-              </div>
-
-              {/* Other Options */}
-              <div className={styles.formGroup}>
-                <label className={styles.formLabel}>📊 Tùy chọn khác</label>
-                <div className={styles.checkboxGroup}>
-                  <label className={styles.checkboxItem}>
-                    <input
-                      type="checkbox"
-                      name="options"
-                      value="comments"
-                      defaultChecked
-                    />
-                    <span>Cho phép bình luận</span>
-                  </label>
-                  <label className={styles.checkboxItem}>
-                    <input
-                      type="checkbox"
-                      name="options"
-                      value="duet"
-                      defaultChecked
-                    />
-                    <span>Cho phép Duet</span>
-                  </label>
-                  <label className={styles.checkboxItem}>
-                    <input
-                      type="checkbox"
-                      name="options"
-                      value="stitch"
-                      defaultChecked
-                    />
-                    <span>Cho phép Stitch</span>
-                  </label>
-                  <label className={styles.checkboxItem}>
-                    <input type="checkbox" name="options" value="download" />
-                    <span>Cho phép tải xuống</span>
-                  </label>
-                </div>
-              </div>
-
-              {/* Schedule Post */}
-              <div className={styles.formGroup}>
-                <label className={styles.formLabel}>⏰ Lên lịch đăng</label>
-                <input type="datetime-local" className={styles.formControl} />
-              </div>
-            </div>
-          )}
-        </div>
-
-        {/* Buttons */}
-        <div className={styles.buttonGroup}>
+        <div className={styles.actions}>
           <button
             type="button"
-            className={`${styles.btn} ${styles.btnSecondary}`}
-            onClick={cancelUpload}
+            className={styles.cancelBtn}
+            onClick={() => window.location.reload()}
           >
             ❌ Hủy
           </button>
-          <button
-            type="submit"
-            className={`${styles.btn} ${styles.btnPrimary}`}
-          >
-            🚀 Đăng ngay
+          <button type="submit" className={styles.submitBtn}>
+            🚀 Đăng Ngay
           </button>
         </div>
       </form>

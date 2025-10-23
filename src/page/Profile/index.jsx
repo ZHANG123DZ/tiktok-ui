@@ -21,13 +21,7 @@ import { ModalProvider } from '../../contexts/ModalContext';
 import EditProfile from '../../components/EditProfile';
 import formatNumberShort from '../../utils/formatNumberShort';
 import '../../components/Button/Button.css';
-import {
-  Tab,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-} from '../../components/Tabs/Tabs';
+import { Tab, TabPanel, TabPanels, Tabs } from '../../components/Tabs/Tabs';
 import SegmentControl from '../../components/SegmentControl';
 import Error from '../../components/Error';
 import VideoList from '../../components/VideoList';
@@ -35,10 +29,10 @@ import FollowModal from '../../components/FollowModal';
 import userService from '../../services/user/user.service';
 import conversationService from '../../services/conversation/conversation.service';
 import { useNavigate } from 'react-router-dom';
-import {
-  setCurrentConversations,
-  setSelectedConversation,
-} from '../../features/conversation/conversationSlice';
+import { setSelectedConversation } from '../../features/conversation/conversationSlice';
+import followService from '../../services/follow/follow.service';
+import LikedPanel from './LikedPanel';
+import RepostPanel from './RepostPanel';
 
 function Profile({ profile }) {
   const currentUser = useSelector((state) => state.auth.currentUser);
@@ -72,9 +66,21 @@ function Profile({ profile }) {
     fetchPosts();
   }, [profile.username]);
 
-  const toggleFollow = () => {
-    setFollow((prev) => !prev);
-    setFollowers((prev) => (follow ? prev - 1 : prev + 1));
+  const toggleFollow = async () => {
+    try {
+      if (follow) {
+        await followService.unfollow({
+          followAbleId: profile.id,
+          type: 'user',
+        });
+      } else {
+        await followService.follow({ followAbleId: profile.id, type: 'user' });
+      }
+      setFollow((prev) => !prev);
+      setFollowers((prev) => (follow ? prev - 1 : prev + 1));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -229,6 +235,7 @@ function Profile({ profile }) {
                 )}
                 {activeShare && (
                   <ShareModal
+                    isSharePost={false}
                     isOpen={activeShare}
                     onClose={() => setActiveShare(false)}
                     shareToFriends={false}
@@ -280,7 +287,7 @@ function Profile({ profile }) {
                 {activeFollow && (
                   <ModalProvider isActive={activeFollow}>
                     <FollowModal
-                      username={username}
+                      data={profile}
                       defaultValue={defaultValueFollow}
                       onClose={() => setActiveFollow(false)}
                     />
@@ -420,26 +427,16 @@ function Profile({ profile }) {
                 <VideoList variant="profile" videosData={posts} />
               </TabPanel>
               <TabPanel value={'videos-oldest'}>
-                <VideoList variant="profile" videosData={posts} />
+                <VideoList variant="profile" videosData={posts.reverse()} />
               </TabPanel>
               <TabPanel value={'favorite'}>
                 <VideoList variant="profile" videosData={posts} />
               </TabPanel>
+              <TabPanel value={'repost'}>
+                <RepostPanel profile={profile} />
+              </TabPanel>
               <TabPanel value={'liked'}>
-                <Error
-                  title={'Video được người dùng này thích là riêng tư'}
-                  desc={`Video được ${profile.username} thích hiện đang bị ẩn`}
-                  icon={
-                    <FontAwesomeIcon
-                      icon={faLock}
-                      style={{
-                        width: '90px',
-                        height: '90px',
-                        opacity: '0.34',
-                      }}
-                    />
-                  }
-                />
+                <LikedPanel profile={profile} />
               </TabPanel>
             </TabPanels>
           </Tabs>

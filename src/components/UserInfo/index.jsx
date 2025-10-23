@@ -4,6 +4,7 @@ import clsx from 'clsx';
 import formatNumberShort from '../../utils/formatNumberShort';
 import VerifyBadge from '../VerifyBadge';
 import { Link } from 'react-router-dom';
+import followService from '../../services/follow/follow.service';
 
 function UserInfo({
   user,
@@ -15,8 +16,20 @@ function UserInfo({
   const [followers, setFollowers] = useState(user?.followerCount);
 
   const toggleFollow = async () => {
-    setFollow((prev) => !prev);
-    setFollowers((prev) => (follow ? prev - 1 : prev + 1));
+    try {
+      if (follow) {
+        await followService.unfollow({
+          followAbleId: user.id,
+          type: 'user',
+        });
+      } else {
+        await followService.follow({ followAbleId: user.id, type: 'user' });
+      }
+      setFollow((prev) => !prev);
+      setFollowers((prev) => (follow ? prev - 1 : prev + 1));
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   if (!user?.name) return null;

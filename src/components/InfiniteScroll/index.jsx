@@ -4,6 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import Loading from '../Loading';
 
 const InfiniteScroller = ({
+  initialValue = [],
   fetchData,
   renderItem,
   onReachEnd,
@@ -14,7 +15,7 @@ const InfiniteScroller = ({
   endMessage = <p>Nothing more to load.</p>,
   emptyMessage = <p>No items found.</p>,
 }) => {
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(initialValue);
   const [cursor, setCursor] = useState(initialCursor);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);

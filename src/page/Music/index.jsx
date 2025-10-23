@@ -242,6 +242,7 @@ function Music() {
             </div>
             {activeShare && (
               <ShareModal
+                isSharePost={false}
                 isOpen={activeShare}
                 onClose={() => setActiveShare(false)}
                 shareToFriends={false}

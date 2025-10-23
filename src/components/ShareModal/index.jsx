@@ -8,11 +8,19 @@ import { FaFacebookF, FaTelegram, FaWhatsapp } from 'react-icons/fa';
 import Icon from '../Icon/Icon';
 import { useEffect, useRef } from 'react';
 import handleCopy from '../../utils/handleCopy';
+import {
+  shareToFacebook,
+  shareToTelegram,
+  shareToWhatsApp,
+} from '../../utils/shareOption';
 
 export default function ShareModal({
+  postId = null,
+  authorUserName = null,
+  isSharePost = true,
   isOpen = false,
   onClose = () => {},
-  shareToFriends = true,
+  shareToFriends = false,
 }) {
   const shareOptions = [
     {
@@ -32,7 +40,7 @@ export default function ShareModal({
       ),
       name: 'Copy',
       onClick: () => {
-        handleCopy();
+        isSharePost ? handleCopy({ postId, authorUserName }) : handleCopy({});
         onClose();
       },
     },
@@ -52,6 +60,7 @@ export default function ShareModal({
         />
       ),
       name: 'WhatsApp',
+      onClick: () => shareToWhatsApp(),
     },
     {
       icon: (
@@ -69,6 +78,7 @@ export default function ShareModal({
         />
       ),
       name: 'Embed',
+      // onClick: () => shareToFacebook(),
     },
     {
       icon: (
@@ -85,6 +95,7 @@ export default function ShareModal({
         />
       ),
       name: 'Facebook',
+      onClick: () => shareToFacebook(),
     },
     {
       icon: (
@@ -100,6 +111,7 @@ export default function ShareModal({
         />
       ),
       name: 'Telegram',
+      onClick: () => shareToTelegram(),
     },
   ];
   const shareRef = useRef(null);

@@ -157,6 +157,9 @@ export default function DirectMessages() {
   }, [selectedConversation?.status]);
 
   const [messages, setMessages] = useState([]);
+  useEffect(() => {
+    console.log(messages);
+  }, [messages]);
 
   useEffect(() => {
     const conversationId = searchParams.get('conversation');
@@ -362,11 +365,10 @@ export default function DirectMessages() {
     )
       return;
     if (text) {
-      console.log(selectedConversation?.id);
       const newMesText = {
         content: text,
         type: 'text',
-        replyId: reply?.id,
+        parentId: reply?.id || null,
       };
       await messageService.createMessage(selectedConversation?.id, newMesText);
     }
@@ -393,6 +395,7 @@ export default function DirectMessages() {
         message: file,
         folder: `conversation/${selectedConversation?.id}`,
       });
+
       const data = {
         parentId: reply?.id || null,
         content: url,
@@ -737,7 +740,6 @@ export default function DirectMessages() {
                           className={styles.DivIconAction}
                         >
                           <ReactionIcon />
-
                           <ReactionPicker
                             onClickEmoji={(emoji) => handleReaction(mes, emoji)}
                           />

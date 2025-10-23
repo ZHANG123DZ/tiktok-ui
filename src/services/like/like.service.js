@@ -11,7 +11,7 @@ export const getLikedUserId = async (data) => {
   const res = await httpRequest.get(
     `/likes/list/${data.type}/${data.likeAbleId}`
   );
-  return res;
+  return res.data;
 };
 
 export const like = async (data) => {

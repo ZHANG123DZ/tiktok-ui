@@ -666,7 +666,7 @@ function VideoView({ postId, username }) {
                   {currentPost && <PostComment post={currentPost} />}
                 </TabPanel>
                 <TabPanel value={'creatorVideos'}>
-                  <VideoSimpleList />
+                  {/* <VideoSimpleList /> */}
                 </TabPanel>
               </TabPanels>
             </Tabs>

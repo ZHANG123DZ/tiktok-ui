@@ -19,35 +19,10 @@ import Text from '../Text';
 import searchService from '../../services/search/search.service';
 import MorePopover from '../MorePopover/MorePopover';
 import { useDrawerStore } from '../../store/drawerStore';
-//Call API
-const suggestionsRes = [
-  'israel và iran mới nhất',
-  'israel và iran mới nhất 2025',
-  'israel và iran mới nhất trực tiếp',
-  'israel and iran',
-  'israel và iran mới nhất live',
-  'israel và iran mới nhất thầy hữu giang',
-  'israel và iran mới nhất tin nóng',
-  'israel và iran mới nhất việt nam',
-];
-
-const recentSearchRes = [
-  'Tôi bị ngu',
-  'Hello kitty',
-  'Dỏaemon',
-  'Pdvd',
-  'Sáuke',
-  'hegfe',
-];
-
-const guessSearchRes = [
-  { type: 'trending', text: 'Tôi là siêu nhân cứt' },
-  { type: 'guess', text: 'Tôi là siêu nhân gao' },
-  { type: 'top', text: 'Tôi là siêu nhân xanh' },
-  { type: 'trending', text: 'Tôi là siêu nhân vàng' },
-];
+import { useSelector } from 'react-redux';
 
 function SearchDrawer() {
+  const currentUser = useSelector((state) => state.auth.currentUser);
   const { closeDrawer } = useDrawerStore();
   const navigate = useNavigate();
   const buttonMoreRefs = useRef([]);
@@ -56,8 +31,8 @@ function SearchDrawer() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [search, setSearch] = useState('');
   const [suggestions, setSuggestions] = useState([]);
-  const [recentSearch, setRecentSearch] = useState(recentSearchRes);
-  const [guessSearch, setGuessSearch] = useState(guessSearchRes);
+  const [recentSearch, setRecentSearch] = useState([]);
+  const [guessSearch, setGuessSearch] = useState([]);
   const [seeMore, setSeeMore] = useState(false);
 
   const fetchSuggestions = async (query) => {
@@ -68,6 +43,17 @@ function SearchDrawer() {
       console.error(err);
     }
   };
+
+  useEffect(() => {
+    if (currentUser?.id) {
+      const fetchHistorySearch = async () => {
+        const res = await searchService.history();
+        console.log(res);
+        setRecentSearch(res);
+      };
+      fetchHistorySearch();
+    }
+  }, [currentUser?.id]);
 
   useEffect(() => {
     const searchQuery = searchParams.get('q') || '';
@@ -92,10 +78,11 @@ function SearchDrawer() {
     setSuggestions([]);
   };
 
-  const handleSearch = (e) => {
+  const handleSearch = async (e) => {
     e.preventDefault();
     closeDrawer('search');
     navigate(`/search?q=${encodeURIComponent(search)}`);
+    await searchService.createSearch(search);
   };
 
   return (
@@ -164,7 +151,7 @@ function SearchDrawer() {
               data-e2e="search-transfer-history-title"
               className={styles.DivHeader}
             >
-              Recent searches
+              Tìm kiếm gần đây
             </div>
           )}
           {/* Mỗi <li> bên dưới nên render từ mảng data searchResult */}
@@ -217,45 +204,55 @@ function SearchDrawer() {
               </li>
             ))}
           {!search &&
-            (seeMore ? recentSearch : recentSearch.slice(0, 5)).map(
-              (text, idx) => (
-                <li
-                  key={idx}
-                  id={`sug-list-item-${idx}`}
-                  data-e2e="content-sug-item"
-                  role="option"
-                  className={styles.LiItemContainer}
+            (seeMore ? recentSearch : recentSearch.slice(0, 5)).map((r) => (
+              <li
+                key={r.id}
+                id={`sug-list-item-${r.id}`}
+                data-e2e="content-sug-item"
+                role="option"
+                className={styles.LiItemContainer}
+              >
+                <FontAwesomeIcon
+                  icon={faClock}
+                  className={styles.StyledClockFillDark}
+                  style={{ width: '1rem', height: '1rem' }}
+                />
+                <h4
+                  className={styles.H4ItemText}
+                  onClick={(e) => {
+                    navigate(`/search?q=${encodeURIComponent(r.keyword)}`);
+                    handleSearch(e);
+                  }}
                 >
-                  <FontAwesomeIcon
-                    icon={faClock}
-                    className={styles.StyledClockFillDark}
-                    style={{ width: '1rem', height: '1rem' }}
-                  />
-                  <h4
-                    className={styles.H4ItemText}
-                    onClick={() =>
-                      navigate(`/search?q=${encodeURIComponent(text)}`)
+                  {r.keyword}
+                </h4>
+                <FontAwesomeIcon
+                  icon={faXmark}
+                  className={styles.StyledXMarkDark}
+                  style={{ width: '1rem', height: '1rem' }}
+                  onClick={async () => {
+                    try {
+                      await searchService.deleteSearch(r.id);
+                      setRecentSearch((prev) =>
+                        prev.filter((s) => s.id !== r.id)
+                      );
+                    } catch (err) {
+                      return err;
                     }
-                  >
-                    {text}
-                  </h4>
-                  <FontAwesomeIcon
-                    icon={faXmark}
-                    className={styles.StyledXMarkDark}
-                    style={{ width: '1rem', height: '1rem' }}
-                  />
-                </li>
-              )
-            )}
+                  }}
+                />
+              </li>
+            ))}
           {!search && recentSearch.length > 5 && (
             <div
               data-e2e="search-transfer-history-see-more"
               className={styles.DivFooter}
-              onClick={() => {
+              onClick={async () => {
                 if (!seeMore) {
                   setSeeMore(true);
                 } else {
                   setRecentSearch([]);
+                  await searchService.clearAll();
                   setSeeMore(false);
                 }
               }}
@@ -285,6 +282,10 @@ function SearchDrawer() {
                   data-e2e="search-transfer-guess-search-item"
                   id="transfer-list-item-0"
                   className={styles.LiItemContainer}
+                  onClick={(e) => {
+                    navigate(`/search?q=${encodeURIComponent(guess.text)}`);
+                    handleSearch(e);
+                  }}
                 >
                   {guess.type === 'top' && (
                     <FontAwesomeIcon

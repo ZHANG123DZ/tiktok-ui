@@ -52,11 +52,11 @@ const FollowBox = ({ data }) => {
         type="button"
         data-e2e="follow-back"
         className={`${
-          follow ? styles.ButtonFollowBack : styles.StyledFollowButtonInPanel
+          !follow ? styles.ButtonFollowBack : styles.StyledFollowButtonInPanel
         }`}
         onClick={toggleFollow}
       >
-        {follow ? 'Follow lại' : 'Bạn bè'}
+        {!follow ? 'Follow lại' : 'Bạn bè'}
       </button>
     </div>
   );

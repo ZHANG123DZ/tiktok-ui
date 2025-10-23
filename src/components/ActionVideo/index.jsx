@@ -18,39 +18,18 @@ import formatNumberShort from '../../utils/formatNumberShort';
 import { Link } from 'react-router-dom';
 import bookMarkService from '../../services/bookMark/bookMark.service';
 import likeService from '../../services/like/like.service';
+import repostService from '../../services/repost/repost.service';
+import { shareToFacebook, shareToWhatsApp } from '../../utils/shareOption';
 
 const ActionVideo = ({ data }) => {
+  const postId = data?.id;
+
   const openShareWindow = (shareUrl) => {
     window.open(shareUrl, '_blank');
   };
 
   // Ví dụ
-  const shareToFacebook = () => {
-    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
-      window.location.href
-    )}`;
-    window.open(url, '_blank');
-  };
 
-  const shareToTwitter = () => {
-    const text = encodeURIComponent('Check out this awesome content!');
-    const url = `https://twitter.com/intent/tweet?text=${text}&url=${encodeURIComponent(
-      window.location.href
-    )}`;
-    window.open(url, '_blank');
-  };
-  const shareToTelegram = () => {
-    const url = `https://t.me/share/url?url=${encodeURIComponent(
-      window.location.href
-    )}`;
-    window.open(url, '_blank');
-  };
-
-  const shareToWhatsApp = () => {
-    const message = encodeURIComponent(`${window.location.href}`);
-    const url = `https://wa.me/?text=${message}`;
-    window.open(url, '_blank');
-  };
   const buttons = [
     {
       icon: (
@@ -68,6 +47,7 @@ const ActionVideo = ({ data }) => {
       ),
       name: 'repost',
       label: 'Đăng lại',
+      onClick: async () => await repostService.repost(postId),
     },
     {
       icon: (
@@ -139,6 +119,7 @@ const ActionVideo = ({ data }) => {
       ),
       name: 'whatsapp',
       label: 'Chia sẻ lên WhatsApp',
+      onClick: () => shareToWhatsApp(),
     },
   ];
   const [activeShare, setActiveShare] = useState(false);
@@ -146,7 +127,6 @@ const ActionVideo = ({ data }) => {
   const [likes, setLikes] = useState(data?.likeCount || 0);
   const [bookMarks, setBookMarks] = useState(data?.bookMarkCount || 0);
   const [bookMarked, setBookMarked] = useState(data?.isBookMarked || false);
-  const postId = data?.id;
 
   const toggleLike = async () => {
     try {
@@ -295,6 +275,8 @@ const ActionVideo = ({ data }) => {
             </button>
             {activeShare && (
               <ShareModal
+                postId={data.id}
+                authorUserName={data.author.username}
                 isOpen={activeShare}
                 onClose={() => setActiveShare(false)}
               />
@@ -311,7 +293,10 @@ const ActionVideo = ({ data }) => {
             data-e2e="browse-copy"
             className={styles.ButtonCopyLink}
             onClick={() => {
-              handleCopy();
+              handleCopy({
+                postId: data.id,
+                authorUserName: data.author.username,
+              });
             }}
           >
             Sao chép liên kết
