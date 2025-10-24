@@ -1,4 +1,3 @@
-import GoogleLogo from '../Icon/GoogleLogo';
 import styles from '../../page/Login/LoginOptionContainer/style.module.scss';
 import authService from '../../services/auth/auth.service';
 import { useFacebookLogin } from '../../hooks/useFacebookLogin';
@@ -7,11 +6,11 @@ import { FaFacebookF } from 'react-icons/fa';
 function FacebookAuth() {
   const { login } = useFacebookLogin({
     appId: import.meta.env.VITE_FACEBOOK_APP_ID,
-    redirectUri: 'http://localhost:3000/api/v1/auth/socials/facebook/callback',
+    redirectUri:
+      'https://tiktokk.website:3000/api/v1/auth/socials/facebook/callback',
     onSuccess: async ({ accessToken }) => {
       try {
         await authService.social({ code: accessToken }, 'facebook');
-        console.log('✅ Facebook login success');
       } catch (err) {
         console.error('❌ Login failed:', err);
       }

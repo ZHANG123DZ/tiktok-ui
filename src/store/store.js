@@ -61,7 +61,7 @@ const rootReducer = combineReducers({
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({ serializableCheck: false }).concat(logger),
+    getDefaultMiddleware({ serializableCheck: false }),
 });
 
 export const persistor = persistStore(store);
