@@ -9,6 +9,7 @@ import {
   faLock,
   faPenToSquare,
   faShare,
+  faUser,
 } from '@fortawesome/free-solid-svg-icons';
 
 import defaultAvatar from '../../assets/imgs/defaultAvatar.jpeg';
@@ -82,6 +83,14 @@ function Profile({ profile }) {
       console.log(err);
     }
   };
+  if (!profile) {
+    return (
+      <Error
+        title="Profile not found"
+        icon={<FontAwesomeIcon icon={faUser} />}
+      />
+    );
+  }
 
   return (
     <div className={styles.UserContainer}>

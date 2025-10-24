@@ -20,6 +20,7 @@ import bookMarkService from '../../services/bookMark/bookMark.service';
 import { useSelector } from 'react-redux';
 
 export default function ActionBar({ data }) {
+  const currentUser = useSelector((state) => state.auth.currentUser);
   const authorId = data.author?.id;
   const postId = data.id;
   const [liked, setLiked] = useState(data.isLiked);
@@ -124,7 +125,7 @@ export default function ActionBar({ data }) {
           </div>
         </Link>
 
-        {(!follow || tickShown) && (
+        {(!follow || tickShown) && currentUser?.id !== authorId && (
           <ProtectedButton onClick={toggleFollow}>
             <button
               className={clsx(
