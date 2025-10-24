@@ -3,7 +3,7 @@ import broadcastingService from '../services/broadcasting/broadcasting.service';
 
 const socketClient = new PusherJS(import.meta.env.VITE_SOKETI_KEY, {
   cluster: '',
-  wsHost: '103.20.96.114',
+  wsHost: 'soketi.tiktokk.website',
   wsPort: 6001,
   forceTLS: false,
   encrypted: true,
